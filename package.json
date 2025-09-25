@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --env-file=.env index.js"
+    "start": "nodemon --env-file=.env index.js",
+    "makemigration": "npx knex migrate:make --knexfile ./database/knexfile.js",
+    "migrate": "npx knex migrate:latest --knexfile ./database/knexfile.js"
   },
   "author": "alan",
   "license": "ISC",

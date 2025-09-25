@@ -25,5 +25,6 @@ const register = asyncHandler(async (req, res, next)=>{
 
 
 module.exports = {
-    login
+    login,
+    register
 }
