@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('../partials/head')%>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <!-- Register Form -->
+        <div class="col-md-4">
+            <h3 class="mb-3 text-center">Register</h3>
+            <form action="/auth/register" method="post">
+                <div class="mb-3">
+                    <label for="registerName" class="form-label">Username</label>
+                    <input name="username" type="text" class="form-control" id="registerName" placeholder="Enter username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerName" class="form-label">First Name</label>
+                    <input name="first_name" type="text" class="form-control" id="registerName" placeholder="Enter first name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerName" class="form-label">Last Name</label>
+                    <input name="last_name" type="text" class="form-control" id="registerName" placeholder="Enter last name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerPassword" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="registerPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Register</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

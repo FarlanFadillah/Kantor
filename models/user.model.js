@@ -1,17 +1,20 @@
 const db = require('../database/db');
+const { CustomError } = require('../utils/custom.error');
 
 async function getUser(username){
-    db('Users')
-        .select('*')
+    try {
+        return await db('Users')
         .where('username', username)
-        .first()
-        .catch((err) => {
-            throw err; // fallback for other DB errors
-        })
+        .select('*')
+        .first();
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
 }
 
 async function createUser(user){
-    db('Users')
+    try {
+        await db('Users')
         .insert(user)
         .then(([id]) => {
             console.log(id);
@@ -21,7 +24,10 @@ async function createUser(user){
                 throw new Error('User already exists');
             }
             throw err;
-        })
+        });
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
 }
 
 module.exports = {

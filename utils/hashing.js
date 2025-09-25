@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const {CustomError} = require('../utils/errors');
+const {CustomError} = require('./custom.error');
 
 async function genHashBcrypt(password) {
     const salt = await bcrypt.genSalt(12);
