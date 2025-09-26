@@ -9,6 +9,7 @@
         <!-- Login Form -->
         <div class="col-md-4">
             <h3 class="mb-3 text-center">Login</h3>
+            <%-include('../partials/flash_message')%>
             <form action="/auth/login" method="post">
                 <div class="mb-3">
                     <label for="loginEmail" class="form-label">Username</label>

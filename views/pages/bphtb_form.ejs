@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<%-include('../partials/head')%>
+<body>
+
+<div class="container my-5">
+    <h1 class="mb-4">Form BPHTB</h1>
+
+    <form action="<%=route%>" method="POST">
+        <div class="row g-3">
+
+            <!-- Produk -->
+            <div class="col-md-6">
+                <label for="produk" class="form-label">Produk <span class="text-danger">*</span></label>
+                <select id="produk" name="produk" class="form-select" required>
+                    <option value="">-- Pilih Produk --</option>
+                    <option value="AJB" <%= bphtb?.produk === "AJB" ? 'selected' : ''%> >AJB</option>
+                    <option value="HIBAH" <%= bphtb?.produk === "HIBAH" ? 'selected' : ''%>>HIBAH</option>
+                    <option value="WARIS" <%= bphtb?.produk === "WARIS" ? 'selected' : ''%>>WARIS</option>
+                    <option value="APHB" <%= bphtb?.produk === "APHB" ? 'selected' : ''%>>APHB</option>
+                    <option value="HAK_BARU" <%= bphtb?.produk === "HAK_BARU" ? 'selected' : ''%>>HAK BARU</option>
+                </select>
+            </div>
+
+            <!-- Alas Hak -->
+            <div class="col-md-6">
+                <label for="alas_hak" class="form-label">Alas Hak <span class="text-danger">*</span></label>
+                <select id="alas_hak" name="alas_hak" class="form-select" required>
+                    <option value="">-- Pilih Alas Hak --</option>
+                    <option value="SHM" <%= bphtb?.alas_hak === "SHM" ? 'selected' : ''%>>SHM</option>
+                    <option value="SHGB" <%= bphtb?.alas_hak === "SHGB" ? 'selected' : ''%>>SHGB</option>
+                    <option value="PETA_BIDANG" <%= bphtb?.alas_hak === "PETA_BIDANG" ? 'selected' : ''%>>PETA BIDANG</option>
+                    <option value="NIB" <%= bphtb?.alas_hak === "NIB" ? 'selected' : ''%>>NIB</option>
+                </select>
+            </div>
+
+            <!-- No Alas Hak -->
+            <div class="col-md-6">
+                <label for="no_alas_hak" class="form-label">No. Alas Hak <span class="text-danger">*</span></label>
+                <input type="text" id="no_alas_hak" name="no_alas_hak" class="form-control" required value="<%=bphtb?.no_alas_hak || ''%>">
+            </div>
+
+            <!-- Wajib Pajak -->
+            <div class="col-md-6">
+                <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
+                <input type="text" id="wajib_pajak" name="wajib_pajak" class="form-control" required value="<%=bphtb?.wajib_pajak || ''%>">
+            </div>
+
+            <!-- Hasil Survei -->
+            <div class="col-md-6">
+                <label for="hasil_survei" class="form-label">Hasil Survei</label>
+                <input type="number" id="hasil_survei" name="hasil_survei" class="form-control" min="0" step="1" value="<%=bphtb?.hasil_survei || ''%>">
+            </div>
+
+            <!-- Tanggal Survei -->
+            <div class="col-md-6">
+                <label for="tgl_survei" class="form-label">Tanggal Survei</label>
+                <input type="datetime-local" id="tgl_survei" name="tgl_survei" class="form-control" value="<%=bphtb?.tgl_survei || ''%>">
+            </div>
+
+            <!-- Status -->
+            <div class="col-12">
+                <label for="status" class="form-label">Status</label>
+                <textarea id="status" name="status" class="form-control" rows="2" placeholder="Tuliskan status (opsional)" ><%=bphtb?.status || ''%>
+                </textarea>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="col-12">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="perintah_bayar" name="perintah_bayar" <%=bphtb?.perintah_bayar ? 'checked' : ''%>>
+                    <label class="form-check-label" for="perintah_bayar">Perintah Bayar</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="lunas" name="lunas" <%=bphtb?.lunas ? 'checked' : ''%>>
+                    <label class="form-check-label" for="lunas">Lunas</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="selesai" name="selesai" <%=bphtb?.selesai ? 'checked' : ''%>>
+                    <label class="form-check-label" for="selesai">Selesai</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="/admin/dashboard" class="btn btn-outline-secondary">Batal</a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

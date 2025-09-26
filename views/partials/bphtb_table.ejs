@@ -1,0 +1,51 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Daftar BPHTB</h2>
+        <a href="/bphtb/form" class="btn btn-success">
+            + Tambah Data
+        </a>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>No</th>
+            <th>Produk</th>
+            <th>Alas Hak</th>
+            <th>No Alas Hak</th>
+            <th>Wajib Pajak</th>
+            <th>Hasil Survei</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%if(bphtb.length > 0){%>
+            <%for(let [i, value] of bphtb.entries()){%>
+                <tr>
+                    <th><%=i += 1%></th>
+                    <td><%=value.produk%></td>
+                    <td><%=value.alas_hak%></td>
+                    <td><%=value.no_alas_hak%></td>
+                    <td><%=value.wajib_pajak%></td>
+                    <td><%=value.hasil_survei%></td>
+                    <td>
+                        <%if(value.lunas){%>
+                            <span class="badge bg-success">Sudah Bayar</span>
+                        <%} else {%>
+                            <span class="badge bg-warning">Belum Bayar</span>
+                        <%}%>
+                    </td>
+                    <td>
+                        <a href="/admin/bphtb/view?id=<%=value.id%>" class="btn btn-sm btn-info">Detail</a>
+                        <a href="/bphtb/form?id=<%=value.id%>" class="btn btn-sm btn-primary">Edit</a>
+                        <form action="/bphtb/form/delete?id=<%=value.id%>" onsubmit="return confirm('Are you sure you want to delete this object?')" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            <%}%>
+        <%}%>
+        </tbody>
+    </table>
+</div>

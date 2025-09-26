@@ -1,0 +1,51 @@
+const asyncHandler = require('../utils/asyncHandler');
+const bphtbModel = require('../models/bphtb.model')
+
+const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
+    res.locals.title = 'BPHTB Form';
+
+    const {id} = req.query;
+    res.locals.bphtb = null;
+    if(id === undefined) return res.render('pages/bphtb_form', {route : '/bphtb/form/new'});
+
+    res.locals.bphtb = await bphtbModel.getOne(id);
+    res.render('pages/bphtb_form', {route : `/bphtb/form/edit?id=${id}`});
+});
+
+const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
+    res.locals.title = 'Bphtb View'
+    const {id} = req.query;
+
+    if(id === undefined) return res.redirect('/admin/dashboard');
+
+    res.locals.bphtb = await bphtbModel.getOne(id);
+    res.status(200).render('pages/bphtb_view');
+});
+
+const addBphtb = asyncHandler(async (req, res, next) => {
+    await bphtbModel.add(req.body);
+
+    res.redirect('/admin/dashboard');
+});
+
+const updateBphtb = asyncHandler(async (req, res, next) => {
+    const {id} = req.query;
+
+    await bphtbModel.update(req.body, {id});
+    res.redirect('/admin/dashboard');
+})
+
+const deleteBphtb = asyncHandler(async (req, res, next) => {
+    const {id} = req.query;
+    await bphtbModel.del({id});
+
+    res.redirect('/admin/dashboard');
+})
+
+module.exports = {
+    renderBphtbFormPage,
+    addBphtb,
+    updateBphtb,
+    deleteBphtb,
+    renderBpthbViewPage
+};

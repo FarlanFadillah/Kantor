@@ -42,56 +42,14 @@
         </div>
     </div>
 
-    <!-- BPTHB Table -->
-    <div class="card">
-        <div class="card-header">
-            Recent BPHTB
-        </div>
-        <div class="card-body p-0">
-            <table class="table mb-0">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Produk</th>
-                        <th>Wajib Pajak</th>
-                        <th>SHM/PB/GU</th>
-                        <th>Info</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>AJB</td>
-                        <td>MONDRI</td>
-                        <td>00420/ Nagari Pasia</td>
-                        <td>Tunggu Perintah Bayar</td>
-                        <td>Sedang Proses</td>
-                        <td><button class="btn-primary">SELESAI</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>AJB</td>
-                        <td>MONDRI</td>
-                        <td>00420/ Nagari Pasia</td>
-                        <td>Tunggu Perintah Bayar</td>
-                        <td>Sedang Proses</td>
-                        <td><button class="btn-success">SELESAI</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>AJB</td>
-                        <td>MONDRI</td>
-                        <td>00420/ Nagari Pasia</td>
-                        <td>Tunggu Perintah Bayar</td>
-                        <td>Sedang Proses</td>
-                        <td><button class="btn-primary">SELESAI</button></td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
+
+
+    <%-include('../partials/bphtb_table')%>
+
+    <div class="row">
+        <form action="/auth/logout" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-dark">Logout</button>
+        </form>
     </div>
 
 </div>

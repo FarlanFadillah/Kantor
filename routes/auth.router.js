@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {renderLoginPage, login, register, renderRegisterPage} = require('../controllers/auth.controller');
+const {renderLoginPage, login, register, renderRegisterPage, logout} = require('../controllers/auth.controller');
 const { errorAuthentication } = require('../middlewares/auth.middleware');
 
 router.route('/login')
@@ -9,6 +9,8 @@ router.route('/login')
 router.route('/register')
         .get(renderRegisterPage)
         .post(register);
+
+router.post('/logout', logout);
 
 router.use(errorAuthentication);
 
