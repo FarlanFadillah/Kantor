@@ -1,5 +1,6 @@
 const asyncHandler = require('../utils/asyncHandler');
 const bphtbModel = require('../models/bphtb.model')
+const clientModel = require("../models/clients.model");
 
 const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
@@ -18,7 +19,16 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
 
     if(id === undefined) return res.redirect('/admin/dashboard');
 
-    res.locals.bphtb = await bphtbModel.getOne(id);
+    const bphtb = await bphtbModel.getOne(id);
+
+    let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {nik : bphtb.wajib_pajak});
+
+    last_name = last_name || '';
+
+    bphtb.wajib_pajak = first_name + ' ' + last_name;
+
+    res.locals.bphtb = bphtb;
+
     res.status(200).render('pages/bphtb_view');
 });
 

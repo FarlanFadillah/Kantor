@@ -1,0 +1,137 @@
+<html lang="en">
+<%-include('../partials/head')%>
+<body>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title mb-3">Tambah Client</h3>
+
+                <!-- Change action to your endpoint -->
+                <form id="clientForm" action="/client/form/new" method="POST" novalidate>
+                    <div class="row g-3">
+                        <!-- NIK -->
+                        <div class="col-12 col-md-6">
+                            <label for="nik" class="form-label">NIK <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="nik" name="nik" required maxlength="50" placeholder="Masukkan NIK">
+                            <div class="invalid-feedback">NIK wajib diisi dan unik.</div>
+                        </div>
+
+                        <!-- First name -->
+                        <div class="col-12 col-md-6">
+                            <label for="first_name" class="form-label">Nama Depan <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required placeholder="Nama depan">
+                            <div class="invalid-feedback">Nama depan wajib diisi.</div>
+                        </div>
+
+                        <!-- Last name -->
+                        <div class="col-12 col-md-6">
+                            <label for="last_name" class="form-label">Nama Belakang</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nama belakang (opsional)">
+                        </div>
+
+                        <!-- Birth date -->
+                        <div class="col-12 col-md-6">
+                            <label for="birth_date" class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                            <div class="invalid-feedback">Tanggal lahir wajib diisi.</div>
+                        </div>
+
+                        <!-- birthplace -->
+                        <div class="col-12 col-md-6">
+                            <label for="birth_place" class="form-label">Tempat Lahir <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="birth_place" name="birth_place" required placeholder="Kota/Tempat lahir">
+                            <div class="invalid-feedback">Tempat lahir wajib diisi.</div>
+                        </div>
+
+                        <!-- Job name -->
+                        <div class="col-12 col-md-6">
+                            <label for="job_name" class="form-label">Pekerjaan <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="job_name" name="job_name" required placeholder="Contoh: Karyawan, Petani, dll.">
+                            <div class="invalid-feedback">Pekerjaan wajib diisi.</div>
+                        </div>
+
+                        <!-- Marriage status (enum) -->
+                        <div class="col-12 col-md-6">
+                            <label for="marriage_status" class="form-label">Status Pernikahan <span class="text-danger">*</span></label>
+                            <select id="marriage_status" name="marriage_status" class="form-select" required>
+                                <option value="" selected disabled>Pilih status</option>
+                                <option value="Belum Kawin">Belum Kawin</option>
+                                <option value="Kawin">Kawin</option>
+                                <option value="Cerai Hidup">Cerai Hidup</option>
+                                <option value="Cerai Mati">Cerai Mati</option>
+                            </select>
+                            <div class="invalid-feedback">Pilih status pernikahan.</div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label d-block">Jenis Kelamin <span class="text-danger">*</span></label>
+                            <select id="gender" name="gender" class="form-select" required>
+                                <option value="" selected disabled>Pilih status</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                            <div class="invalid-feedback d-block">Pilih jenis kelamin.</div>
+                        </div>
+
+                        <!-- Address: provinsi -->
+                        <div class="col-12 col-md-6">
+                            <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="provinsi" name="provinsi" required placeholder="Provinsi">
+                            <div class="invalid-feedback">Provinsi wajib diisi.</div>
+                        </div>
+
+                        <!-- kota/kab (mapped to kota_kab) -->
+                        <div class="col-12 col-md-6">
+                            <label for="kota_kab" class="form-label">Kota / Kabupaten <span class="text-danger">*</span></label>
+                            <!-- DB field in migration was `kota/kab` — HTML uses kota_kab for name attribute -->
+                            <input type="text" class="form-control" id="kota_kab" name="kota/kab" required placeholder="Kota atau Kabupaten">
+                            <div class="invalid-feedback">Kota / Kabupaten wajib diisi.</div>
+                        </div>
+
+                        <!-- kec -->
+                        <div class="col-12 col-md-6">
+                            <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="kec" name="kec" required placeholder="Kecamatan">
+                            <div class="invalid-feedback">Kecamatan wajib diisi.</div>
+                        </div>
+
+                        <!-- kel -->
+                        <div class="col-12 col-md-6">
+                            <label for="kel" class="form-label">Kelurahan / Desa <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="kel" name="kel" required placeholder="Kelurahan atau Desa">
+                            <div class="invalid-feedback">Kelurahan / Desa wajib diisi.</div>
+                        </div>
+
+                        <!-- phone number -->
+                        <div class="col-12 col-md-6">
+                            <label for="phone_number" class="form-label">Nomor Telepon</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number"
+                                   pattern="^\+?\d{7,15}$" placeholder="+628123456789">
+                            <div class="form-text">Format internasional disarankan (contoh: +628123456789).</div>
+                            <div class="invalid-feedback">Masukkan nomor telepon yang valid (7–15 digit).</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        <a href="/admin/dashboard" class="btn btn-outline-primary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.querySelectorAll("input[type='text']").forEach((element) => {
+        element.addEventListener("input", () => {
+            element.value = element.value.toUpperCase();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -4,11 +4,15 @@ const morgan = require('morgan');
 const process = require('process');
 const path = require('path');
 
-// routes
+// ssr routes
 const homeRoute = require('./routes/home.router');
 const userRoute = require('./routes/auth.router');
 const adminRoute = require('./routes/admin.router');
 const bphtbRoute = require('./routes/bphtb.router');
+const clientRoute = require('./routes/client.router');
+
+// api routes
+const client_apiRoute = require('./routes/api/client_api.router')
 
 // middlewares
 const session = require('./middlewares/sesison.middleware');
@@ -31,20 +35,27 @@ app.use((req, res, next)=>{
     next();
 })
 
+// set the static files
+app.use(express.static(path.join(__dirname, 'src')));
+
 // set the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// public route (order is important)
+// api route
+app.use('/api/client', client_apiRoute);
+
+// public ssr route (order is important)
 app.get('/', (req, res) => {
     res.redirect(`/admin/dashboard`);
 })
 app.use('/auth', userRoute);
 
-// protected route (order is important)
+// protected ssr route (order is important)
 app.use('/', authentication, homeRoute);
 app.use('/admin', authentication, adminRoute);
 app.use('/bphtb', bphtbRoute);
+app.use('/client', clientRoute);
 
 
 // global error handler

@@ -16,14 +16,14 @@ function authentication(req, res, next){
     }
     console.log('[AUTH PASSED]');
     next();
-};
+}
 
 function errorAuthentication(err, req, res, next){
     // flash message
     addMessage(req, err.type, err.message);
-
     // log
     //log(req, 'error', error.message, {module : 'Auth Router'});
+    console.log(req.session.messages);
 
     const matched = urlMap.find(({url}) => req.originalUrl.includes(url))
     if(matched) {

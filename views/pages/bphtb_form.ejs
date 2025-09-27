@@ -5,7 +5,7 @@
 
 <div class="container my-5">
     <h1 class="mb-4">Form BPHTB</h1>
-
+    <%-include('../partials/flash_message')%>
     <form action="<%=route%>" method="POST">
         <div class="row g-3">
 
@@ -41,9 +41,13 @@
             </div>
 
             <!-- Wajib Pajak -->
+            <!--Nik For verify client-->
             <div class="col-md-6">
+                <label for="wajib_pajak" class="form-label">NIK<span class="text-danger">*</span></label>
+                <input type="text" id="nik_wajib_pajak" name="wajib_pajak" class="form-control" value="<%=bphtb?.wajib_pajak || ''%>" >
+
                 <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
-                <input type="text" id="wajib_pajak" name="wajib_pajak" class="form-control" required value="<%=bphtb?.wajib_pajak || ''%>">
+                <input type="text" id="wajib_pajak" class="form-control" readonly value="<%=bphtb?.wajib_pajak || ''%>" style="background-color: lightgray">
             </div>
 
             <!-- Hasil Survei -->
@@ -92,6 +96,8 @@
         </div>
     </form>
 </div>
+
+<script src="/js/main.js"></script>
 
 </body>
 </html>
