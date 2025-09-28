@@ -8,7 +8,7 @@ exports.up = function(knex) {
         table.enu('produk', ['AJB', 'HIBAH', 'WARIS', 'APHB', 'HAK_BARU']).defaultTo('AJB');
         table.enu('alas_hak', ['SHM', 'SHGB', 'PETA_BIDANG', "NIB"]).defaultTo('SHM');
         table.string('no_alas_hak').notNullable();
-        table.string('wajib_pajak').references('Clients.nik').onUpdate('CASCADE').onDelete('CASCADE');
+        table.string('wajib_pajak').references('Clients.id').onUpdate('CASCADE').onDelete('CASCADE');
 
         table.bigInteger('hasil_survei').nullable();
         table.datetime('tgl_survei').nullable();

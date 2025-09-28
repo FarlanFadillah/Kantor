@@ -6,6 +6,16 @@ const {matchedData} = require('express-validator')
 
 const renderClientFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client Form';
+    const {id} = req.query;
+    res.locals.client_data = null;
+    if(id === undefined) {
+        res.locals.form_action = '/client/new'
+        return res.status(200).render('pages/client_form');
+    }
+
+    res.locals.form_action = `/client/edit?id=${id}`;
+    res.locals.client_data = await clientsModel.getClientBy(req.query);
+
     res.status(200).render('pages/client_form');
 })
 
@@ -34,7 +44,7 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
 const renderClientViewPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client View';
 
-    res.locals.client_data = await clientsModel.getClientByNik(req.query);
+    res.locals.client_data = await clientsModel.getClientBy(req.query);
 
     console.log(res.locals);
 
@@ -42,10 +52,22 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
 })
 
 const addClient = asyncHandler(async (req, res, next) => {
-    console.log(req.body);
     await clientsModel.add(matchedData(req));
+    // flash message
     addMessage(req, 'info', 'Client Added Successfully');
-    res.redirect(req.header('Referer') || '/admin/dashboard');
+
+    res.redirect('/admin/dashboard');
+});
+
+const updateClient = asyncHandler(async (req, res, next)=>{
+
+    console.log(req.body);
+
+    await clientsModel.update(req.body, req.query);
+
+    // flash message
+    addMessage(req, 'info', 'Client Updated Successfully');
+    res.redirect('/client/list?currentPage=1');
 });
 
 
@@ -53,5 +75,6 @@ module.exports = {
     addClient,
     renderClientFormPage,
     renderClientListPage,
-    renderClientViewPage
+    renderClientViewPage,
+    updateClient,
 }

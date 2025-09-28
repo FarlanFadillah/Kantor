@@ -1,5 +1,4 @@
 const { renderDashboardPage } = require('../controllers/admin.controller');
-const { authentication } = require('../middlewares/auth.middleware');
 const {renderBpthbViewPage} = require("../controllers/bphtb.controller");
 
 const router = require('express').Router();

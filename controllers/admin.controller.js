@@ -8,11 +8,12 @@ const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     const bphtb = await bphtbModel.getAll();
 
     for(const data of bphtb){
-        let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {nik : data.wajib_pajak});
+        let {id, first_name, last_name} = await clientModel.getClient(['id','first_name', 'last_name'], {id : data.wajib_pajak});
 
         last_name = last_name || '';
 
         data.wajib_pajak = first_name + ' ' + last_name;
+        data.wajib_pajak_id = id;
     }
     res.locals.bphtb = bphtb;
     res.status(200).render('pages/dashboard_page');

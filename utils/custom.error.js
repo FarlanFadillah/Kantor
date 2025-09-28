@@ -1,7 +1,8 @@
 class CustomError extends Error {
-    constructor(text, type) {
+    constructor(text, type, status = 500) {
         super(text);
-        this.type = type
+        this.type = type;
+        this.status = status;
     }
 }
 

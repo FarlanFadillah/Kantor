@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {renderLoginPage, login, register, renderRegisterPage, logout} = require('../controllers/auth.controller');
-const { errorAuthentication } = require('../middlewares/auth.middleware');
+const { errorAuthentication } = require('../middlewares/error.middleware');
 const { loginValidator, accountProfileValidator, passwordValidator, validatorErrorHandler } = require('../middlewares/validator.middleware');
 const {loginLimiter} = require("../middlewares/ratelimiter.middleware");
 

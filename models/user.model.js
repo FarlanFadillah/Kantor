@@ -21,7 +21,7 @@ async function createUser(user){
         })
         .catch((err) => {
             if(err.code === 'SQLITE_CONSTRAINT'){
-                throw new Error('User already exists');
+                throw new CustomError('User already exists', 'error', 400);
             }
             throw err;
         });

@@ -43,8 +43,14 @@
             <!-- Wajib Pajak -->
             <!--Nik For verify client-->
             <div class="col-md-6">
-                <label for="wajib_pajak" class="form-label">NIK<span class="text-danger">*</span></label>
-                <input type="text" id="nik_wajib_pajak" name="wajib_pajak" class="form-control" value="<%=bphtb?.wajib_pajak || ''%>" >
+                    <label for="nik_wajib_pajak" class="form-label">NIK<span class="text-danger">*</span></label>
+                <div class="input-group mb-3">
+                    <input type="text" id="nik_wajib_pajak" class="form-control" value="<%=bphtb?.wajib_pajak || ''%>" >
+                    <a href="/client/form" target="_blank" class="btn btn-primary">+</a>
+                </div>
+
+
+                <input hidden type="text" id="id_wajib_pajak" name="wajib_pajak" class="form-control">
 
                 <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
                 <input type="text" id="wajib_pajak" class="form-control" readonly value="<%=bphtb?.full_name || ''%>" style="background-color: lightgray">

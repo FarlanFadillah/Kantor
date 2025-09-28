@@ -16,6 +16,10 @@ const client_apiRoute = require('./routes/api/client_api.router')
 // middlewares
 const session = require('./middlewares/sesison.middleware');
 const { authentication } = require('./middlewares/auth.middleware');
+const {globalErrorHandler} = require("./middlewares/error.middleware");
+
+// custom class
+const {CustomError} = require("./utils/custom.error");
 
 const app = express();
 
@@ -34,6 +38,12 @@ app.use((req, res, next)=>{
     next();
 })
 
+// save the previous route
+app.use((req, res, next)=>{
+    res.locals.referer = req.header('Referer') || '';
+    next();
+})
+
 // set the static files
 app.use(express.static(path.join(__dirname, 'src')));
 
@@ -49,6 +59,9 @@ app.get('/', (req, res) => {
     res.redirect(`/admin/dashboard`);
 })
 app.use('/auth', userRoute);
+app.use('/error', (req, res, next) => {
+    next(new CustomError('User not found', 'error', 401));
+})
 
 // protected ssr route (order is important)
 app.use('/admin', authentication, adminRoute);
@@ -57,12 +70,7 @@ app.use('/client', clientRoute);
 
 
 // global error handler
-app.use((err, req, res, next)=>{
-    console.log('global erorrs handler', err.message);
-
-    console.log(err);
-    res.status(400).send('Something Broke');
-})
+app.use(globalErrorHandler);
 
 
 app.listen(process.env.PORT, ()=>{

@@ -34,7 +34,7 @@ const login = asyncHandler(async (req, res, next)=>{
     // flash message
     addMessage(req, 'info', 'User successfully logged in');
 
-    res.redirect('/');
+    res.redirect('/admin/dashboard');
 });
 
 const register = asyncHandler(async (req, res, next)=>{
@@ -47,7 +47,7 @@ const register = asyncHandler(async (req, res, next)=>{
     // flash message
     addMessage(req, 'info', 'User successfully created');
 
-    res.redirect('/');
+    res.redirect('/auth/login');
 })
 
 const logout = asyncHandler(async (req, res, next)=>{

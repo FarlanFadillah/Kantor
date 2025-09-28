@@ -5,16 +5,24 @@ async function add(model){
     console.log(model);
     try {
         await db('Clients').insert(model);
-    }catch (e) {
-        throw new CustomError('Error creating Client DB', 'error');
+    }catch (err) {
+        throw new CustomError(e.message, 'error');
+    }
+}
+
+async function update(field, model){
+    try {
+        await db('Clients').update(field).where(model);
+    }catch (err) {
+        throw new CustomError(err.message, 'error');
     }
 }
 
 async function del(model){
     try {
         await db('Clients').delete().where(model);
-    }catch (e) {
-
+    }catch (err) {
+        throw new CustomError(err.message, 'error');
     }
 }
 
@@ -24,15 +32,15 @@ async function getClient(field, model){
     }catch (err){
         console.log(field);
         console.log(model);
-        throw new CustomError('Error getting client DB', 'error');
+        throw new CustomError(err.message, 'error');
     }
 }
 
-async function getClientByNik(nik){
+async function getClientBy(model){
     try {
-        return await db('Clients').select('*').where(nik).first();
-    }catch (e) {
-        throw new CustomError('Error getting client DB', 'error');
+        return await db('Clients').select('*').where(model).first();
+    }catch (err) {
+        throw new CustomError(err.message, 'error');
     }
 }
 
@@ -41,7 +49,7 @@ async function getPaginationClientList(limit, offset){
         return await db('Clients').limit(limit).offset(offset).orderBy('updated_at');
     }catch (err){
         console.log(limit, offset);
-        throw new CustomError('Error getting client DB', 'error');
+        throw new CustomError(err.message, 'error');
     }
 }
 
@@ -50,7 +58,7 @@ async function getClientTotal(){
         const totalCount = await db('Clients').count('* as total').first();
         return totalCount.total;
     }catch (err){
-        throw new CustomError('Error getting client DB', 'error');
+        throw new CustomError(err.message, 'error');
     }
 }
 
@@ -60,5 +68,6 @@ module.exports = {
     getClient,
     getPaginationClientList,
     getClientTotal,
-    getClientByNik
+    getClientBy,
+    update
 };

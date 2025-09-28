@@ -1,6 +1,7 @@
 const asyncHandler = require('../utils/asyncHandler');
 const bphtbModel = require('../models/bphtb.model')
 const clientModel = require("../models/clients.model");
+const {addMessage} = require("../utils/flash_messages");
 
 const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
@@ -11,7 +12,7 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
 
     res.locals.bphtb = await bphtbModel.getOne(id);
 
-    let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {nik : res.locals.bphtb.wajib_pajak});
+    let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {id : res.locals.bphtb.wajib_pajak});
 
     last_name = last_name || '';
 
@@ -28,7 +29,7 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
 
     const bphtb = await bphtbModel.getOne(id);
 
-    let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {nik : bphtb.wajib_pajak});
+    let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {id : bphtb.wajib_pajak});
 
     last_name = last_name || '';
 
@@ -42,13 +43,19 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
 const addBphtb = asyncHandler(async (req, res, next) => {
     await bphtbModel.add(req.body);
 
+    // flash message
+    addMessage(req, 'info', 'Bphtb successfully created');
+
     res.redirect('/admin/dashboard');
 });
 
 const updateBphtb = asyncHandler(async (req, res, next) => {
     const {id} = req.query;
-
     await bphtbModel.update(req.body, {id});
+
+    // flash message
+    addMessage(req, 'info', 'Bphtb successfully updated');
+
     res.redirect('/admin/dashboard');
 })
 

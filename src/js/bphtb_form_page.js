@@ -1,4 +1,5 @@
 const wajib_pajak = document.querySelector('#wajib_pajak');
+const id_wajib_pajak = document.querySelector('#id_wajib_pajak');
 document.getElementById('nik_wajib_pajak').addEventListener('blur', async (event)=>{
     console.log('hello');
     try {
@@ -14,6 +15,7 @@ document.getElementById('nik_wajib_pajak').addEventListener('blur', async (event
         last_name = last_name || '';
 
         wajib_pajak.value = first_name + ' ' + last_name;
+        id_wajib_pajak.value = data.user.id;
     }catch(error){
         event.target.value = '';
         wajib_pajak.value = '';

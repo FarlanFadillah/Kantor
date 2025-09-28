@@ -35,7 +35,7 @@ async function del(model){
 
 async function update(field, model){
     try {
-        await db('Bphtb').update(field).where(model);
+        await db('Bphtb').update({...field, updated_at : db.fn.now()}).where(model);
     }catch(err){
         throw new CustomError(err.message, 'error');
     }
