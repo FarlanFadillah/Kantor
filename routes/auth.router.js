@@ -10,7 +10,7 @@ router.route('/login')
 
 router.route('/register')
         .get(renderRegisterPage)
-        .post(...accountProfileValidator, ...passwordValidator, validatorErrorHandler, register);
+        .post(register);
 
 router.post('/logout', logout);
 

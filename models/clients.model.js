@@ -28,6 +28,14 @@ async function getClient(field, model){
     }
 }
 
+async function getClientByNik(nik){
+    try {
+        return await db('Clients').select('*').where(nik).first();
+    }catch (e) {
+        throw new CustomError('Error getting client DB', 'error');
+    }
+}
+
 async function getPaginationClientList(limit, offset){
     try{
         return await db('Clients').limit(limit).offset(offset).orderBy('updated_at');
@@ -51,5 +59,6 @@ module.exports = {
     del,
     getClient,
     getPaginationClientList,
-    getClientTotal
+    getClientTotal,
+    getClientByNik
 };

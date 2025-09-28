@@ -1,6 +1,5 @@
-document.querySelectorAll('.click_able_row').forEach((element)=>{
-    const href = element.dataset.href;
-    element.addEventListener('click',function(){
-        window.location = href;
-    })
-})
+function goToPage(page) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('currentPage', page);
+    window.location.href = url.toString();
+}

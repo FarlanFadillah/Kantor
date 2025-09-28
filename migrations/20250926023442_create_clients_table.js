@@ -23,6 +23,9 @@ exports.up = function(knex) {
         table.string('kel').notNullable();
 
         table.string('phone_number').notNullable();
+
+        table.datetime('added_at').defaultTo(knex.fn.now());
+        table.datetime('updated_at').defaultTo(knex.fn.now());
     })
 };
 

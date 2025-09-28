@@ -5,7 +5,6 @@ const process = require('process');
 const path = require('path');
 
 // ssr routes
-const homeRoute = require('./routes/home.router');
 const userRoute = require('./routes/auth.router');
 const adminRoute = require('./routes/admin.router');
 const bphtbRoute = require('./routes/bphtb.router');
@@ -52,7 +51,6 @@ app.get('/', (req, res) => {
 app.use('/auth', userRoute);
 
 // protected ssr route (order is important)
-app.use('/', authentication, homeRoute);
 app.use('/admin', authentication, adminRoute);
 app.use('/bphtb', bphtbRoute);
 app.use('/client', clientRoute);

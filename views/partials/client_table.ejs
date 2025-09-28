@@ -17,18 +17,24 @@
             <th>Gender</th>
             <th>Pekerjaan</th>
             <th>Kota/Kab</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <% if (clients.length > 0) { %>
             <% for (let [i, value] of clients.entries()) { %>
-                <tr class="click_able_row" data-href="/admin/dashboard">
+                <tr>
                     <th><%= (i += 1) + offset%></th>
                     <td><%= value.nik %></td>
                     <td><%= value.first_name + ' ' + (value.last_name || '') %></td>
                     <td><%= value.gender %></td>
-                    <td><%= value.job_name %></td>
+                    <td><%- value.job_name %></td>
                     <td><%= value.kab_kota %></td>
+                    <td>
+                        <a href="/client/view?nik=<%= value.nik %>" class="btn btn-info btn-sm">
+                            View
+                        </a>
+                    </td>
                 </tr>
             <% } %>
         <% } %>
@@ -51,12 +57,5 @@
     </div>
 </div>
 
-<script>
-    function goToPage(page) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('currentPage', page);
-        window.location.href = url.toString();
-    }
-</script>
 
 <script src="/js/client_list_page.js"></script>

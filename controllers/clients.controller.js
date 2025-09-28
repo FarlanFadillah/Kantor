@@ -30,6 +30,17 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
 
    res.status(200).render('pages/client_list_page');
 });
+
+const renderClientViewPage = asyncHandler(async (req, res, next) => {
+    res.locals.title = 'Client View';
+
+    res.locals.client_data = await clientsModel.getClientByNik(req.query);
+
+    console.log(res.locals);
+
+    res.status(200).render('pages/client_view_page');
+})
+
 const addClient = asyncHandler(async (req, res, next) => {
     console.log(req.body);
     await clientsModel.add(matchedData(req));
@@ -42,4 +53,5 @@ module.exports = {
     addClient,
     renderClientFormPage,
     renderClientListPage,
+    renderClientViewPage
 }
