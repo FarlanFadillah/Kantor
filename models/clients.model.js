@@ -28,8 +28,28 @@ async function getClient(field, model){
     }
 }
 
+async function getPaginationClientList(limit, offset){
+    try{
+        return await db('Clients').limit(limit).offset(offset).orderBy('updated_at');
+    }catch (err){
+        console.log(limit, offset);
+        throw new CustomError('Error getting client DB', 'error');
+    }
+}
+
+async function getClientTotal(){
+    try {
+        const totalCount = await db('Clients').count('* as total').first();
+        return totalCount.total;
+    }catch (err){
+        throw new CustomError('Error getting client DB', 'error');
+    }
+}
+
 module.exports = {
     add,
     del,
-    getClient
+    getClient,
+    getPaginationClientList,
+    getClientTotal
 };

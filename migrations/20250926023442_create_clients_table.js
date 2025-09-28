@@ -18,7 +18,7 @@ exports.up = function(knex) {
         table.enu('gender', ['Laki-Laki', 'Perempuan']).notNullable();
 
         table.string('provinsi').notNullable();
-        table.string('kota/kab').notNullable();
+        table.string('kab_kota').notNullable();
         table.string('kec').notNullable();
         table.string('kel').notNullable();
 

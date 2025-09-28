@@ -10,6 +10,13 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     if(id === undefined) return res.render('pages/bphtb_form', {route : '/bphtb/form/new'});
 
     res.locals.bphtb = await bphtbModel.getOne(id);
+
+    let {first_name, last_name} = await clientModel.getClient(['first_name', 'last_name'], {nik : res.locals.bphtb.wajib_pajak});
+
+    last_name = last_name || '';
+
+    res.locals.bphtb.full_name = first_name + ' ' + last_name;
+
     res.render('pages/bphtb_form', {route : `/bphtb/form/edit?id=${id}`});
 });
 

@@ -4,7 +4,7 @@ const clientTextFields = [
     "job_name",
     "birth_place",
     "provinsi",
-    "kota/kab",
+    "kab_kota",
     "kec",
     "kel",
     "birth_date",

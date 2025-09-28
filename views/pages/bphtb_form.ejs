@@ -47,7 +47,7 @@
                 <input type="text" id="nik_wajib_pajak" name="wajib_pajak" class="form-control" value="<%=bphtb?.wajib_pajak || ''%>" >
 
                 <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
-                <input type="text" id="wajib_pajak" class="form-control" readonly value="<%=bphtb?.wajib_pajak || ''%>" style="background-color: lightgray">
+                <input type="text" id="wajib_pajak" class="form-control" readonly value="<%=bphtb?.full_name || ''%>" style="background-color: lightgray">
             </div>
 
             <!-- Hasil Survei -->
@@ -97,7 +97,7 @@
     </form>
 </div>
 
-<script src="/js/main.js"></script>
+<script src="/js/bphtb_form_page.js"></script>
 
 </body>
 </html>

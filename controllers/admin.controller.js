@@ -3,6 +3,7 @@ const bphtbModel = require('../models/bphtb.model');
 const clientModel = require('../models/clients.model')
 const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     res.locals.title = 'Dashboard';
+    res.locals.total_clients = await clientModel.getClientTotal();
 
     const bphtb = await bphtbModel.getAll();
 

@@ -19,7 +19,8 @@ document.getElementById('nik_wajib_pajak').addEventListener('blur', async (event
         wajib_pajak.value = '';
     }
 
-})
+});
+
 
 
 async function verifyNik(nik){
