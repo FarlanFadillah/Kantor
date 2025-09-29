@@ -1,6 +1,6 @@
 const {addMessage} = require("../utils/flash_messages");
 
-function errorAuthentication(err, req, res, next){
+function formErrorHandler(err, req, res, next){
     // flash message
     addMessage(req, err.type, err.message);
     // log
@@ -17,6 +17,6 @@ function globalErrorHandler(err, req, res, next){
 }
 
 module.exports = {
-    errorAuthentication,
+    formErrorHandler,
     globalErrorHandler
 }

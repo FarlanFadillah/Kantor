@@ -35,7 +35,6 @@
                     </td>
                     <td>
                         <a href="/admin/bphtb/view?id=<%=value.id%>" class="btn btn-sm btn-info">Detail</a>
-                        <a href="/bphtb/form?id=<%=value.id%>" class="btn btn-sm btn-primary">Edit</a>
                         <form action="/bphtb/form/delete?id=<%=value.id%>" onsubmit="return confirm('Are you sure you want to delete this object?')" method="POST" style="display:inline;">
                             <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                         </form>

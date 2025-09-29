@@ -71,8 +71,7 @@
             <!-- Status -->
             <div class="col-12">
                 <label for="status" class="form-label">Status</label>
-                <textarea id="status" name="status" class="form-control" rows="2" placeholder="Tuliskan status (opsional)" ><%=bphtb?.status || ''%>
-                </textarea>
+                <textarea id="status" name="status" class="form-control" rows="2" placeholder="Tuliskan status (opsional)" ><%=bphtb?.status || ''%></textarea>
             </div>
 
             <!-- Checkbox -->
@@ -96,7 +95,8 @@
             <!-- Submit Button -->
             <div class="col-12 d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="/admin/dashboard" class="btn btn-outline-secondary">Batal</a>
+                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                <a href="<%=referer%>" class="btn btn-outline-primary">Back</a>
             </div>
 
         </div>

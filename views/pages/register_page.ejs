@@ -13,15 +13,15 @@
             <form action="/auth/register" method="post">
                 <div class="mb-3">
                     <label for="registerName" class="form-label">Username</label>
-                    <input name="username" type="text" class="form-control" id="registerName" placeholder="Enter username" required>
+                    <input value="<%=form_data.username || ''%>" name="username" type="text" class="form-control" id="registerName" placeholder="Enter username" required>
                 </div>
                 <div class="mb-3">
                     <label for="registerName" class="form-label">First Name</label>
-                    <input name="first_name" type="text" class="form-control" id="registerName" placeholder="Enter first name" required>
+                    <input value="<%=form_data.first_name || ''%>" name="first_name" type="text" class="form-control" id="registerName" placeholder="Enter first name" required>
                 </div>
                 <div class="mb-3">
                     <label for="registerName" class="form-label">Last Name</label>
-                    <input name="last_name" type="text" class="form-control" id="registerName" placeholder="Enter last name" required>
+                    <input value="<%=form_data.last_name || ''%>" name="last_name" type="text" class="form-control" id="registerName" placeholder="Enter last name" required>
                 </div>
                 <div class="mb-3">
                     <label for="registerPassword" class="form-label">Password</label>

@@ -64,7 +64,8 @@ app.use('/error', (req, res, next) => {
 })
 
 // protected ssr route (order is important)
-app.use('/admin', authentication, adminRoute);
+app.use(authentication);
+app.use('/admin', adminRoute);
 app.use('/bphtb', bphtbRoute);
 app.use('/client', clientRoute);
 

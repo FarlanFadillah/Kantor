@@ -9,7 +9,7 @@ const renderClientFormPage = asyncHandler(async (req, res, next) => {
     const {id} = req.query;
     res.locals.client_data = null;
     if(id === undefined) {
-        res.locals.form_action = '/client/new'
+        res.locals.form_action = '/client/form/new'
         return res.status(200).render('pages/client_form');
     }
 

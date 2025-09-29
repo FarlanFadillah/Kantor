@@ -5,8 +5,8 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Daftar Client</h2>
-        <a href="/admin/dashboard" class="btn btn-outline-primary">
-            ← Back to Dashboard
+        <a href="<%=referer%>" class="btn btn-outline-primary">
+            ← Back
         </a>
     </div>
 
@@ -37,9 +37,6 @@
                     <td>
                         <a href="/client/view?id=<%= value.id %>" class="btn btn-info btn-sm">
                             View
-                        </a>
-                        <a href="/client/edit?id=<%= value.id %>" class="btn btn-info btn-sm">
-                            Edit
                         </a>
                     </td>
                 </tr>

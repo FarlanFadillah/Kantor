@@ -59,6 +59,7 @@ function validatorErrorHandler(req, res, next){
         for(errMsg of errors.array()) {
             // log(req, 'warn', errMsg.msg, {module : 'ValErr Mddlwre'});
             console.log(errMsg);
+            req.session.form_data = req.body;
             addMessage(req, 'warn', errMsg.msg);
         }
         return next(new CustomError("Validation failed.", 'warn'));

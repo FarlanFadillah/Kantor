@@ -12,6 +12,7 @@ const renderLoginPage = asyncHandler(async (req, res, next)=>{
 
 const renderRegisterPage = asyncHandler(async(req, res, next)=>{
     res.locals.title = 'Register Page';
+
     res.status(200).render('pages/register_page');
 });
 
