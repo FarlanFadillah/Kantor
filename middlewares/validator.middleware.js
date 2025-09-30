@@ -4,7 +4,9 @@ const {addMessage} = require('../utils/flash_messages')
 const {optionalClientTextFields, 
     requiredClientTextFields,
     optionalBphtbTextField,
-    requiredBphtbTextField} = require('../rules/form_fields')
+    requiredBphtbTextField,
+    requiredAlasHakTextField,
+    optionalAlasHakTextField} = require('../rules/form_fields')
 const {requiredTextValidator, optionalTextValidator} = require("../helper/validator.helper");
 const loginValidator = [
     validator.body('username').notEmpty().withMessage('Username / Email is required'),
@@ -90,6 +92,23 @@ const bphtbFormValidator = [
 ]
 
 
+// ALAS HAK VALIDATOR
+
+const alasHakFormValidator = [
+    validator.body('no_alas_hak')
+    .trim()
+    .isNumeric().withMessage('No Alas Hak must be numeric')
+    .notEmpty().withMessage('No Alas Hak is required')
+    .escape(),
+    validator.body('luas')
+    .trim()
+    .isNumeric().withMessage('Luas must be numeric')
+    .notEmpty().withMessage('Luas is required')
+    .escape(),
+    ...requiredAlasHakTextField.map(requiredTextValidator),
+    ...optionalAlasHakTextField.map(optionalTextValidator)
+]
+
 
 module.exports = {
     loginValidator,
@@ -97,5 +116,6 @@ module.exports = {
     passwordValidator,
     clientFormValidator,
     bphtbFormValidator,
+    alasHakFormValidator,
     validatorErrorHandler,
 }

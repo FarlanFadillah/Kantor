@@ -1,0 +1,73 @@
+<html lang="en">
+<%-include('../partials/head')%>
+<body>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Daftar Client</h2>
+        <a href="/admin/dashboard" class="btn btn-outline-primary">
+            Dashboard
+        </a>
+    </div>
+
+
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <% if (datas.length > 0) { %>
+                <th>No</th>
+                <% Object.entries(datas[0]).forEach(([key]) => {%>
+                    <%if(key != 'id') {%>
+                        <th><%= key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()) %></th>
+                    <%}%>
+                <%});%>
+                <th>Actions</th>
+            <% } %>
+        </tr>
+        <% if (datas.length > 0) { %>
+        </thead>
+        <tbody>
+            <% datas.forEach((row, index) => { %>
+            <tr>
+                <td><%=(index + 1) + offset%></td>
+                <% Object.entries(row).forEach(([key, val]) => { %>
+                    <% if (key !== 'id') {%>
+                        <td><%-val%></td>
+                    <% } else { %>
+                        <td>
+                        <a href="<%=view_route%><%= val %>" class="btn btn-info btn-sm">
+                            View
+                        </a>
+                        </td>
+                    <% } %>
+                <% }) %>
+            </tr>
+            <% }) %>
+            
+        <% } else { "This is currently empty" }%>
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" onclick="goToPage(<%=Number(currentPage) - 1%>)"
+                <%=currentPage <= 1 ? 'disabled' : ''%> di>
+            Previous
+        </button>
+
+        <span>Page <%=currentPage%> of <%=totalPages%></span>
+
+        <button class="btn btn-primary" onclick="goToPage(<%=Number(currentPage) + 1%>)"
+                <%=currentPage >= totalPages ? 'disabled' : ''%>>
+            Next
+        </button>
+    </div>
+</div>
+
+
+<script src="/js/client_list_page.js"></script>
+
+
+</body>
+</html>

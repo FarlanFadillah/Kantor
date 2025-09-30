@@ -16,7 +16,6 @@ async function get(table, model, field = '*'){
     try {
         return await db(table).select(field).where(model).first();
     }catch(err){
-        console.log(err);
         throw new CustomError(err.message, 'error');
     }
 }
@@ -25,6 +24,7 @@ async function add(table, model){
     try {
         await db(table).insert(model);
     }catch(err){
+        console.log(model);
         throw new CustomError(err.message, 'error');
     }
 }
@@ -54,9 +54,9 @@ async function count(table){
     }
 }
 
-async function getPaginationList(table, limit, offset, column, order = 'asc'){
+async function getPaginationList(table, fields, limit, offset, column, order = 'asc'){
     try{
-        return await db(table).limit(limit).offset(offset).orderBy(column, order);
+        return await db(table).select(fields).limit(limit).offset(offset).orderBy(column, order);
     }catch (err){
         throw new CustomError(err.message, 'error');
     }

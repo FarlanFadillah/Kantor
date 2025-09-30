@@ -6,7 +6,7 @@
 <div class="container my-5">
     <h1 class="mb-4">Form BPHTB</h1>
     <%-include('../partials/flash_message')%>
-    <form action="<%=route%>" method="POST">
+    <form action="<%=form_action%>" method="POST">
         <div class="row g-3">
 
             <!-- Produk -->
@@ -37,7 +37,7 @@
             <!-- No Alas Hak -->
             <div class="col-md-6">
                 <label for="no_alas_hak" class="form-label">No. Alas Hak <span class="text-danger">*</span></label>
-                <input type="text" id="no_alas_hak" name="no_alas_hak" class="form-control" required value="<%=form_data?.no_alas_hak || ''%>">
+                <input type="text" id="no_alas_hak" name="no_alas_hak" class="form-control" required value="<%-form_data?.no_alas_hak || ''%>">
             </div>
 
             <!-- Wajib Pajak -->

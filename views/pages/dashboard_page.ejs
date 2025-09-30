@@ -19,10 +19,10 @@
         </div>
         <div class="col-md-3">
             <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Posts</h5>
-                    <p class="card-text">45</p>
-                </div>
+                <a href="/alas_hak/list" class="card-body">
+                    <h5 class="card-title">Alas Hak</h5>
+                    <p class="card-text"><%=total_alas_hak%></p>
+                </a>
             </div>
         </div>
         <div class="col-md-3">
@@ -49,6 +49,9 @@
     </a>
     <a href="/client/form" class="btn btn-success">
         + Tambah Data Client
+    </a>
+     <a href="/alas_hak/form" class="btn btn-success">
+        + Tambah Data Alas Hak
     </a>
     <%-include('../partials/bphtb_table')%>
 

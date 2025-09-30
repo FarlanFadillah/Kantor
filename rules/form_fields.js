@@ -30,9 +30,27 @@ const optionalBphtbTextField = [
     'tgl_survei',
 ]
 
+const requiredAlasHakTextField = [
+    'jenis_hak',
+    'provinsi',
+    'kec',
+    'kel'
+]
+
+
+const optionalAlasHakTextField = [
+    'jor',
+    'tgl_alas_hak',
+    'no_surat_ukur',
+    'tgl_surat_ukur',
+    'ket'
+]
+
 module.exports = {
     requiredClientTextFields,
     optionalClientTextFields,
     requiredBphtbTextField,
-    optionalBphtbTextField
+    optionalBphtbTextField,
+    requiredAlasHakTextField,
+    optionalAlasHakTextField
 }

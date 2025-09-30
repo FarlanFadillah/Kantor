@@ -3,6 +3,7 @@ const mainModel = require('../models/main.model')
 const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     res.locals.title = 'Dashboard';
     res.locals.total_clients = await mainModel.count('Clients');
+    res.locals.total_alas_hak = await mainModel.count('Alas_Hak');
 
     const bphtb = await mainModel.getAll('Bphtb');
 

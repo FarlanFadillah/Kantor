@@ -1,20 +1,22 @@
 const {addClient, renderClientFormPage, renderClientListPage, renderClientViewPage, updateClient} = require("../controllers/clients.controller");
 const router = require('express').Router();
 const {clientFormValidator, validatorErrorHandler} = require('../middlewares/validator.middleware');
-const {saveFormState, getFormState} = require("../middlewares/form.middleware");
+const {saveFormState, getFormState, clearFormState} = require("../middlewares/form.middleware");
 const {formErrorHandler} = require("../middlewares/error.middleware");
+const { pagination } = require("../middlewares/pagination.middleware");
 
 router.route('/form')
-        .get(getFormState, renderClientFormPage)
+        .get(getFormState, clearFormState, renderClientFormPage)
 
-router.get('/list', renderClientListPage);
+router.route('/list')
+        .get(pagination, renderClientListPage);
 
-router.post('/form/new', ...clientFormValidator, saveFormState, validatorErrorHandler, addClient, formErrorHandler);
+router.post('/form/new', ...clientFormValidator, saveFormState, validatorErrorHandler, clearFormState, addClient, formErrorHandler);
 
 router.get('/view', renderClientViewPage);
 
 router.route('/edit')
     .get(getFormState, renderClientFormPage)
-    .post(...clientFormValidator, saveFormState, validatorErrorHandler, updateClient, formErrorHandler);
+    .post(...clientFormValidator, saveFormState, validatorErrorHandler, clearFormState, updateClient, formErrorHandler);
 
 module.exports = router;

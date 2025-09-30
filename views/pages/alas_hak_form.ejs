@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body class="container py-5">
+  <h2 class="mb-4">Form Alas Hak</h2>
+
+  <form action="<%=form_action%>" method="POST" class="row g-3">
+    <!-- no_alas_hak -->
+    <div class="col-md-6">
+      <label for="no_alas_hak" class="form-label">No Alas Hak</label>
+      <input type="text" class="form-control" id="no_alas_hak" name="no_alas_hak" required value="<%= form_data?.no_alas_hak || '' %>">
+    </div>
+
+    <!-- jenis_hak -->
+    <div class="col-md-6">
+      <label for="jenis_hak" class="form-label">Jenis Hak</label>
+      <select class="form-select" id="jenis_hak" name="jenis_hak" required>
+        <option value="">-- Pilih --</option>
+        <% ['SHM','SHGB','PETA_BIDANG','NIB'].forEach(opt => { %>
+          <option value="<%= opt %>" <%= form_data?.jenis_hak === opt ? 'selected' : '' %>><%= opt %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <!-- luas -->
+    <div class="col-md-6">
+      <label for="luas" class="form-label">Luas (m²)</label>
+      <input type="number" class="form-control" id="luas" name="luas" required value="<%= form_data?.luas || '' %>">
+    </div>
+
+    <!-- tgl_alas_hak -->
+    <div class="col-md-6">
+      <label for="tgl_alas_hak" class="form-label">Tanggal Alas Hak</label>
+      <input type="date" class="form-control" id="tgl_alas_hak" name="tgl_alas_hak" value="<%= form_data?.tgl_alas_hak ? form_data.tgl_alas_hak.toLocaleString() : '' %>">
+    </div>
+
+    <!-- provinsi -->
+    <div class="col-md-6">
+      <label for="provinsi" class="form-label">Provinsi</label>
+      <input type="text" class="form-control" id="provinsi" name="provinsi" required value="<%= form_data?.provinsi || '' %>">
+    </div>
+
+    <!-- kec -->
+    <div class="col-md-6">
+      <label for="kec" class="form-label">Kecamatan</label>
+      <input type="text" class="form-control" id="kec" name="kec" required value="<%= form_data?.kec || '' %>">
+    </div>
+
+    <!-- kel -->
+    <div class="col-md-6">
+      <label for="kel" class="form-label">Kelurahan</label>
+      <input type="text" class="form-control" id="kel" name="kel" required value="<%= form_data?.kel || '' %>">
+    </div>
+
+    <!-- jor -->
+    <div class="col-md-6">
+      <label for="jor" class="form-label">Jorong</label>
+      <input type="text" class="form-control" id="jor" name="jor" value="<%= form_data?.jor || '' %>">
+    </div>
+
+    <!-- no_surat_ukur -->
+    <div class="col-md-6">
+      <label for="no_surat_ukur" class="form-label">No Surat Ukur</label>
+      <input type="text" class="form-control" id="no_surat_ukur" name="no_surat_ukur" value="<%- form_data?.no_surat_ukur || '' %>">
+    </div>
+
+    <!-- tgl_surat_ukur -->
+    <div class="col-md-6">
+      <label for="tgl_surat_ukur" class="form-label">Tanggal Surat Ukur</label>
+      <input type="date" class="form-control" id="tgl_surat_ukur" name="tgl_surat_ukur" value="<%= form_data?.tgl_surat_ukur ? form_data.tgl_surat_ukur.toLocaleString() : '' %>">
+    </div>
+
+    <!-- ket -->
+    <div class="col-12">
+      <label for="ket" class="form-label">Keterangan</label>
+      <textarea class="form-control" id="ket" name="ket"><%= form_data?.ket || '' %></textarea>
+    </div>
+
+    <!-- submit -->
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Simpan</button>
+      <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
+    </div>
+  </form>
+</body>
+</html>

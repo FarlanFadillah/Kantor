@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body class="container py-5">
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <h2>Detail Alas Hak</h2>
+    <div>
+      <a href="/alas_hak/form?id=<%= alas_hak.id %>" class="btn btn-warning">Edit</a>
+      <a href="/admin/dashboard" class="btn btn-secondary">Dashboard</a>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9"><%= alas_hak.id %></dd>
+
+        <dt class="col-sm-3">No Alas Hak</dt>
+        <dd class="col-sm-9"><%= alas_hak.no_alas_hak %></dd>
+
+        <dt class="col-sm-3">Jenis Hak</dt>
+        <dd class="col-sm-9"><%= alas_hak.jenis_hak %></dd>
+
+        <dt class="col-sm-3">Luas (m²)</dt>
+        <dd class="col-sm-9"><%= alas_hak.luas %></dd>
+
+        <dt class="col-sm-3">Tanggal Alas Hak</dt>
+        <dd class="col-sm-9"><%= alas_hak.tgl_alas_hak ? alas_hak.tgl_alas_hak.toLocaleString() : '-' %></dd>
+
+        <dt class="col-sm-3">Provinsi</dt>
+        <dd class="col-sm-9"><%= alas_hak.provinsi %></dd>
+
+        <dt class="col-sm-3">Kecamatan</dt>
+        <dd class="col-sm-9"><%= alas_hak.kec %></dd>
+
+        <dt class="col-sm-3">Kelurahan</dt>
+        <dd class="col-sm-9"><%= alas_hak.kel %></dd>
+
+        <dt class="col-sm-3">Jorong</dt>
+        <dd class="col-sm-9"><%= alas_hak.jor || '-' %></dd>
+
+        <dt class="col-sm-3">No Surat Ukur</dt>
+        <dd class="col-sm-9"><%- alas_hak.no_surat_ukur || '-' %></dd>
+
+        <dt class="col-sm-3">Tanggal Surat Ukur</dt>
+        <dd class="col-sm-9"><%= alas_hak.tgl_surat_ukur ? alas_hak.tgl_surat_ukur.toLocaleString() : '-' %></dd>
+
+        <dt class="col-sm-3">Keterangan</dt>
+        <dd class="col-sm-9"><%= alas_hak.ket || '-' %></dd>
+      </dl>
+        <p class="mb-1 text-muted"><small>Ditambahkan:
+                <%= alas_hak.added_at ? alas_hak.added_at.toLocaleString() : '-' %>
+            </small></p>
+        <p class="mb-0 text-muted"><small>Terakhir Diupdate:
+                <%= alas_hak.updated_at ? alas_hak.updated_at.toLocaleString() : '-' %>
+            </small></p>
+    </div>
+  </div>
+</body>
+</html>
