@@ -14,41 +14,41 @@
                         <!-- NIK -->
                         <div class="col-12 col-md-6">
                             <label for="nik" class="form-label">NIK <span class="text-danger">*</span></label>
-                            <input value="<%=client_data?.nik || ''%>" type="text" class="form-control" id="nik" name="nik" required maxlength="50" placeholder="Masukkan NIK">
+                            <input value="<%=form_data?.nik || ''%>" type="text" class="form-control" id="nik" name="nik" required maxlength="50" placeholder="Masukkan NIK">
                             <div class="invalid-feedback">NIK wajib diisi dan unik.</div>
                         </div>
 
                         <!-- First name -->
                         <div class="col-12 col-md-6">
                             <label for="first_name" class="form-label">Nama Depan <span class="text-danger">*</span></label>
-                            <input value="<%=client_data?.first_name || ''%>" type="text" class="form-control" id="first_name" name="first_name" required placeholder="Nama depan">
+                            <input value="<%=form_data?.first_name || ''%>" type="text" class="form-control" id="first_name" name="first_name" required placeholder="Nama depan">
                             <div class="invalid-feedback">Nama depan wajib diisi.</div>
                         </div>
 
                         <!-- Last name -->
                         <div class="col-12 col-md-6">
                             <label for="last_name" class="form-label">Nama Belakang</label>
-                            <input value="<%=client_data?.last_name || ''%>" type="text" class="form-control" id="last_name" name="last_name" placeholder="Nama belakang (opsional)">
+                            <input value="<%=form_data?.last_name || ''%>" type="text" class="form-control" id="last_name" name="last_name" placeholder="Nama belakang (opsional)">
                         </div>
 
                         <!-- Birth date -->
                         <div class="col-12 col-md-6">
                             <label for="birth_date" class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
-                            <input value="<%=client_data?.birth_date || ''%>" type="date" class="form-control" id="birth_date" name="birth_date" required>
+                            <input value="<%=form_data?.birth_date || ''%>" type="date" class="form-control" id="birth_date" name="birth_date" required>
                             <div class="invalid-feedback">Tanggal lahir wajib diisi.</div>
                         </div>
 
                         <!-- birthplace -->
                         <div class="col-12 col-md-6">
                             <label for="birth_place" class="form-label">Tempat Lahir <span class="text-danger">*</span></label>
-                            <input value="<%=client_data?.birth_place || ''%>" type="text" class="form-control" id="birth_place" name="birth_place" required placeholder="Kota/Tempat lahir">
+                            <input value="<%=form_data?.birth_place || ''%>" type="text" class="form-control" id="birth_place" name="birth_place" required placeholder="Kota/Tempat lahir">
                             <div class="invalid-feedback">Tempat lahir wajib diisi.</div>
                         </div>
 
                         <!-- Job name -->
                         <div class="col-12 col-md-6">
                             <label for="job_name" class="form-label">Pekerjaan <span class="text-danger">*</span></label>
-                            <input value="<%-client_data?.job_name || ''%>" type="text" class="form-control" id="job_name" name="job_name" required placeholder="Contoh: Karyawan, Petani, dll.">
+                            <input value="<%-form_data?.job_name || ''%>" type="text" class="form-control" id="job_name" name="job_name" required placeholder="Contoh: Karyawan, Petani, dll.">
                             <div class="invalid-feedback">Pekerjaan wajib diisi.</div>
                         </div>
 
@@ -57,10 +57,10 @@
                             <label for="marriage_status" class="form-label">Status Pernikahan <span class="text-danger">*</span></label>
                             <select id="marriage_status" name="marriage_status" class="form-select" required>
                                 <option value="" selected disabled>Pilih status</option>
-                                <option value="Belum Kawin" <%=client_data?.marriage_status === "Belum Kawin" ? 'selected' : ''%>>Belum Kawin</option>
-                                <option value="Kawin" <%=client_data?.marriage_status === "Kawin" ? 'selected' : ''%>>Kawin</option>
-                                <option value="Cerai Hidup" <%=client_data?.marriage_status === "Cerai Hidup" ? 'selected' : ''%>>Cerai Hidup</option>
-                                <option value="Cerai Mati" <%=client_data?.marriage_status === "Cerai Mati" ? 'selected' : ''%>>Cerai Mati</option>
+                                <option value="Belum Kawin" <%=form_data?.marriage_status === "Belum Kawin" ? 'selected' : ''%>>Belum Kawin</option>
+                                <option value="Kawin" <%=form_data?.marriage_status === "Kawin" ? 'selected' : ''%>>Kawin</option>
+                                <option value="Cerai Hidup" <%=form_data?.marriage_status === "Cerai Hidup" ? 'selected' : ''%>>Cerai Hidup</option>
+                                <option value="Cerai Mati" <%=form_data?.marriage_status === "Cerai Mati" ? 'selected' : ''%>>Cerai Mati</option>
                             </select>
                             <div class="invalid-feedback">Pilih status pernikahan.</div>
                         </div>
@@ -70,8 +70,8 @@
                             <label class="form-label d-block">Jenis Kelamin <span class="text-danger">*</span></label>
                             <select id="gender" name="gender" class="form-select" required>
                                 <option value="" selected disabled>Pilih status</option>
-                                <option value="Laki-Laki" <%=client_data?.gender === "Laki-Laki" ? 'selected' : ''%>>Laki-Laki</option>
-                                <option value="Perempuan" <%=client_data?.gender === "Perempuan" ? 'selected' : ''%>>Perempuan</option>
+                                <option value="Laki-Laki" <%=form_data?.gender === "Laki-Laki" ? 'selected' : ''%>>Laki-Laki</option>
+                                <option value="Perempuan" <%=form_data?.gender === "Perempuan" ? 'selected' : ''%>>Perempuan</option>
                             </select>
                             <div class="invalid-feedback d-block">Pilih jenis kelamin.</div>
                         </div>
@@ -79,7 +79,7 @@
                         <!-- Address: provinsi -->
                         <div class="col-12 col-md-6">
                             <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
-                            <input value="<%-client_data?.provinsi || ''%>" type="text" class="form-control" id="provinsi" name="provinsi" required placeholder="Provinsi">
+                            <input value="<%-form_data?.provinsi || ''%>" type="text" class="form-control" id="provinsi" name="provinsi" required placeholder="Provinsi">
                             <div class="invalid-feedback">Provinsi wajib diisi.</div>
                         </div>
 
@@ -87,46 +87,46 @@
                         <div class="col-12 col-md-6">
                             <label for="kota_kab" class="form-label">Kota / Kabupaten <span class="text-danger">*</span></label>
                             <!-- DB field in migration was `kota/kab` — HTML uses kota_kab for name attribute -->
-                            <input value="<%-client_data?.kab_kota || ''%>" type="text" class="form-control" id="kota_kab" name="kab_kota" required placeholder="Kota atau Kabupaten">
+                            <input value="<%-form_data?.kab_kota || ''%>" type="text" class="form-control" id="kota_kab" name="kab_kota" required placeholder="Kota atau Kabupaten">
                             <div class="invalid-feedback">Kota / Kabupaten wajib diisi.</div>
                         </div>
 
                         <!-- kec -->
                         <div class="col-12 col-md-6">
                             <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
-                            <input value="<%-client_data?.kec || ''%>" type="text" class="form-control" id="kec" name="kec" required placeholder="Kecamatan">
+                            <input value="<%-form_data?.kec || ''%>" type="text" class="form-control" id="kec" name="kec" required placeholder="Kecamatan">
                             <div class="invalid-feedback">Kecamatan wajib diisi.</div>
                         </div>
 
                         <!-- kel -->
                         <div class="col-12 col-md-6">
                             <label for="kel" class="form-label">Kelurahan / Desa <span class="text-danger">*</span></label>
-                            <input value="<%-client_data?.kel || ''%>" type="text" class="form-control" id="kel" name="kel" required placeholder="Kelurahan atau Desa">
+                            <input value="<%-form_data?.kel || ''%>" type="text" class="form-control" id="kel" name="kel" required placeholder="Kelurahan atau Desa">
                             <div class="invalid-feedback">Kelurahan / Desa wajib diisi.</div>
                         </div>
 
                         <!-- kel -->
                         <div class="col-12 col-md-6">
                             <label for="jalan" class="form-label">Jalan</label>
-                            <input value="<%-client_data?.jalan || ''%>" type="text" class="form-control" id="jalan" name="jalan" placeholder="Jalan">
+                            <input value="<%-form_data?.jalan || ''%>" type="text" class="form-control" id="jalan" name="jalan" placeholder="Jalan">
                             <div class="invalid-feedback">Jalan (optional).</div>
                         </div>
 
                         <!-- rt/rw -->
                         <div class="col-12 col-md-6">
                             <label for="rt" class="form-label">RT</label>
-                            <input value="<%-client_data?.rt || ''%>" type="text" class="form-control" id="rt" name="rt" placeholder="RT 000">
+                            <input value="<%-form_data?.rt || ''%>" type="text" class="form-control" id="rt" name="rt" placeholder="RT 000">
                             <div class="invalid-feedback">RT (optional).</div>
 
                             <label for="rw" class="form-label">RW</label>
-                            <input value="<%-client_data?.rw || ''%>" type="text" class="form-control" id="rw" name="rw" placeholder="RW 000">
+                            <input value="<%-form_data?.rw || ''%>" type="text" class="form-control" id="rw" name="rw" placeholder="RW 000">
                             <div class="invalid-feedback">RW (optional).</div>
                         </div>
 
                         <!-- phone number -->
                         <div class="col-12 col-md-6">
                             <label for="phone_number" class="form-label">Nomor Telepon</label>
-                            <input value="<%-client_data?.phone_number || ''%>" type="tel" class="form-control" id="phone_number" name="phone_number"
+                            <input value="<%-form_data?.phone_number || ''%>" type="tel" class="form-control" id="phone_number" name="phone_number"
                                    pattern="^\+?\d{7,15}$" placeholder="+628123456789">
                             <div class="form-text">Format internasional disarankan (contoh: +628123456789).</div>
                             <div class="invalid-feedback">Masukkan nomor telepon yang valid (7–15 digit).</div>

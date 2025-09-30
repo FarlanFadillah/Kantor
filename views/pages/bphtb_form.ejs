@@ -12,32 +12,32 @@
             <!-- Produk -->
             <div class="col-md-6">
                 <label for="produk" class="form-label">Produk <span class="text-danger">*</span></label>
-                <select id="produk" name="produk" class="form-select" required>
+                <select id="produk" name="produk" class="form-select">
                     <option value="">-- Pilih Produk --</option>
-                    <option value="AJB" <%= bphtb?.produk === "AJB" ? 'selected' : ''%> >AJB</option>
-                    <option value="HIBAH" <%= bphtb?.produk === "HIBAH" ? 'selected' : ''%>>HIBAH</option>
-                    <option value="WARIS" <%= bphtb?.produk === "WARIS" ? 'selected' : ''%>>WARIS</option>
-                    <option value="APHB" <%= bphtb?.produk === "APHB" ? 'selected' : ''%>>APHB</option>
-                    <option value="HAK_BARU" <%= bphtb?.produk === "HAK_BARU" ? 'selected' : ''%>>HAK BARU</option>
+                    <option value="AJB" <%= form_data?.produk === "AJB" ? 'selected' : ''%> >AJB</option>
+                    <option value="HIBAH" <%= form_data?.produk === "HIBAH" ? 'selected' : ''%>>HIBAH</option>
+                    <option value="WARIS" <%= form_data?.produk === "WARIS" ? 'selected' : ''%>>WARIS</option>
+                    <option value="APHB" <%= form_data?.produk === "APHB" ? 'selected' : ''%>>APHB</option>
+                    <option value="HAK_BARU" <%= form_data?.produk === "HAK_BARU" ? 'selected' : ''%>>HAK BARU</option>
                 </select>
             </div>
 
             <!-- Alas Hak -->
             <div class="col-md-6">
                 <label for="alas_hak" class="form-label">Alas Hak <span class="text-danger">*</span></label>
-                <select id="alas_hak" name="alas_hak" class="form-select" required>
+                <select id="alas_hak" name="alas_hak" class="form-select">
                     <option value="">-- Pilih Alas Hak --</option>
-                    <option value="SHM" <%= bphtb?.alas_hak === "SHM" ? 'selected' : ''%>>SHM</option>
-                    <option value="SHGB" <%= bphtb?.alas_hak === "SHGB" ? 'selected' : ''%>>SHGB</option>
-                    <option value="PETA_BIDANG" <%= bphtb?.alas_hak === "PETA_BIDANG" ? 'selected' : ''%>>PETA BIDANG</option>
-                    <option value="NIB" <%= bphtb?.alas_hak === "NIB" ? 'selected' : ''%>>NIB</option>
+                    <option value="SHM" <%= form_data?.alas_hak === "SHM" ? 'selected' : ''%>>SHM</option>
+                    <option value="SHGB" <%= form_data?.alas_hak === "SHGB" ? 'selected' : ''%>>SHGB</option>
+                    <option value="PETA_BIDANG" <%= form_data?.alas_hak === "PETA_BIDANG" ? 'selected' : ''%>>PETA BIDANG</option>
+                    <option value="NIB" <%= form_data?.alas_hak === "NIB" ? 'selected' : ''%>>NIB</option>
                 </select>
             </div>
 
             <!-- No Alas Hak -->
             <div class="col-md-6">
                 <label for="no_alas_hak" class="form-label">No. Alas Hak <span class="text-danger">*</span></label>
-                <input type="text" id="no_alas_hak" name="no_alas_hak" class="form-control" required value="<%=bphtb?.no_alas_hak || ''%>">
+                <input type="text" id="no_alas_hak" name="no_alas_hak" class="form-control" required value="<%=form_data?.no_alas_hak || ''%>">
             </div>
 
             <!-- Wajib Pajak -->
@@ -45,7 +45,7 @@
             <div class="col-md-6">
                     <label for="nik_wajib_pajak" class="form-label">NIK<span class="text-danger">*</span></label>
                 <div class="input-group mb-3">
-                    <input type="text" id="nik_wajib_pajak" class="form-control" value="<%=bphtb?.wajib_pajak || ''%>" >
+                    <input type="text" id="nik_wajib_pajak" class="form-control" value="<%=form_data?.nik_wajib_pajak || ''%>" >
                     <a href="/client/form" target="_blank" class="btn btn-primary">+</a>
                 </div>
 
@@ -53,41 +53,41 @@
                 <input hidden type="text" id="id_wajib_pajak" name="wajib_pajak" class="form-control">
 
                 <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
-                <input type="text" id="wajib_pajak" class="form-control" readonly value="<%=bphtb?.full_name || ''%>" style="background-color: lightgray">
+                <input type="text" id="wajib_pajak" class="form-control" readonly value="<%=form_data?.full_name || ''%>" style="background-color: lightgray">
             </div>
 
             <!-- Hasil Survei -->
             <div class="col-md-6">
                 <label for="hasil_survei" class="form-label">Hasil Survei</label>
-                <input type="number" id="hasil_survei" name="hasil_survei" class="form-control" min="0" step="1" value="<%=bphtb?.hasil_survei || ''%>">
+                <input type="number" id="hasil_survei" name="hasil_survei" class="form-control" min="0" step="1" value="<%=form_data?.hasil_survei || ''%>">
             </div>
 
             <!-- Tanggal Survei -->
             <div class="col-md-6">
                 <label for="tgl_survei" class="form-label">Tanggal Survei</label>
-                <input type="datetime-local" id="tgl_survei" name="tgl_survei" class="form-control" value="<%=bphtb?.tgl_survei || ''%>">
+                <input type="datetime-local" id="tgl_survei" name="tgl_survei" class="form-control" value="<%=form_data?.tgl_survei || ''%>">
             </div>
 
             <!-- Status -->
             <div class="col-12">
                 <label for="status" class="form-label">Status</label>
-                <textarea id="status" name="status" class="form-control" rows="2" placeholder="Tuliskan status (opsional)" ><%=bphtb?.status || ''%></textarea>
+                <textarea id="status" name="status" class="form-control" rows="2" placeholder="Tuliskan status (opsional)" ><%=form_data?.status || ''%></textarea>
             </div>
 
             <!-- Checkbox -->
             <div class="col-12">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="perintah_bayar" name="perintah_bayar" <%=bphtb?.perintah_bayar ? 'checked' : ''%>>
+                    <input class="form-check-input" type="checkbox" id="perintah_bayar" name="perintah_bayar" <%=form_data?.perintah_bayar ? 'checked' : ''%>>
                     <label class="form-check-label" for="perintah_bayar">Perintah Bayar</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="lunas" name="lunas" <%=bphtb?.lunas ? 'checked' : ''%>>
+                    <input class="form-check-input" type="checkbox" id="lunas" name="lunas" <%=form_data?.lunas ? 'checked' : ''%>>
                     <label class="form-check-label" for="lunas">Lunas</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="selesai" name="selesai" <%=bphtb?.selesai ? 'checked' : ''%>>
+                    <input class="form-check-input" type="checkbox" id="selesai" name="selesai" <%=form_data?.selesai ? 'checked' : ''%>>
                     <label class="form-check-label" for="selesai">Selesai</label>
                 </div>
             </div>

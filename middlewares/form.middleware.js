@@ -11,6 +11,7 @@ export function saveFormState(req, res, next){
 } // this middleware should be used on routes that handle form submissions
 
 export function getFormState(req, res, next){
+    console.log(req.session.form_data);
     res.locals.form_data = req.session.form_data || {};
     req.session.form_data = {};
     next();

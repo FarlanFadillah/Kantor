@@ -1,6 +1,5 @@
-const clientTextFields = [
+const requiredClientTextFields = [
     "first_name",
-    "last_name",
     "job_name",
     "birth_place",
     "provinsi",
@@ -12,6 +11,28 @@ const clientTextFields = [
     "gender"
 ];
 
+const optionalClientTextFields = [
+    "last_name",
+    "jalan",
+    "rt",
+    "rw",
+]
+
+const requiredBphtbTextField = [
+    'produk',
+    'alas_hak',
+    'no_alas_hak',
+    'wajib_pajak',
+    
+]
+
+const optionalBphtbTextField = [
+    'tgl_survei',
+]
+
 module.exports = {
-    clientTextFields
+    requiredClientTextFields,
+    optionalClientTextFields,
+    requiredBphtbTextField,
+    optionalBphtbTextField
 }

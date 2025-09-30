@@ -1,14 +1,13 @@
 const asyncHandler = require("../utils/asyncHandler");
-const bphtbModel = require('../models/bphtb.model');
-const clientModel = require('../models/clients.model')
+const mainModel = require('../models/main.model')
 const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     res.locals.title = 'Dashboard';
-    res.locals.total_clients = await clientModel.getClientTotal();
+    res.locals.total_clients = await mainModel.count('Clients');
 
-    const bphtb = await bphtbModel.getAll();
+    const bphtb = await mainModel.getAll('Bphtb');
 
     for(const data of bphtb){
-        let {id, first_name, last_name} = await clientModel.getClient(['id','first_name', 'last_name'], {id : data.wajib_pajak});
+        let {id, first_name, last_name} = await mainModel.get('Clients', {id : data.wajib_pajak}, ['id','first_name', 'last_name']);
 
         last_name = last_name || '';
 

@@ -1,8 +1,11 @@
 const validator = require('express-validator');
 const {CustomError} = require("../utils/custom.error");
 const {addMessage} = require('../utils/flash_messages')
-const {clientTextFields} = require('../rules/form_fields')
-const {textValidator} = require("../helper/validator.helper");
+const {optionalClientTextFields, 
+    requiredClientTextFields,
+    optionalBphtbTextField,
+    requiredBphtbTextField} = require('../rules/form_fields')
+const {requiredTextValidator, optionalTextValidator} = require("../helper/validator.helper");
 const loginValidator = [
     validator.body('username').notEmpty().withMessage('Username / Email is required'),
     validator.body('password').notEmpty().withMessage('Password is required')
@@ -70,11 +73,21 @@ function validatorErrorHandler(req, res, next){
 const clientFormValidator = [
     validator.body('nik').isNumeric().notEmpty(),
     validator.body('phone_number').isNumeric().notEmpty(),
-    ...clientTextFields.map(textValidator)
+    ...requiredClientTextFields.map(requiredTextValidator),
+    ...optionalClientTextFields.map(optionalTextValidator)
 ]
 
 
 
+// BPHTB VALIDATOR
+
+const bphtbFormValidator = [
+    validator.body('hasil_survei').custom((value)=>{
+        return value >= 0;
+    }),
+    ...requiredBphtbTextField.map(requiredTextValidator),
+    ...optionalBphtbTextField.map(optionalTextValidator)
+]
 
 
 
@@ -83,5 +96,6 @@ module.exports = {
     accountProfileValidator,
     passwordValidator,
     clientFormValidator,
-    validatorErrorHandler
+    bphtbFormValidator,
+    validatorErrorHandler,
 }
