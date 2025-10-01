@@ -1,86 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<%- include('../partials/head') %>
-<body class="container py-5">
-  <h2 class="mb-4">Form Alas Hak</h2>
+<% layout('pages/base_layout') %>
+<div class="container py-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="mb-4">Form Alas Hak</h2>
 
-  <form action="<%=form_action%>" method="POST" class="row g-3">
-    <!-- no_alas_hak -->
-    <div class="col-md-6">
-      <label for="no_alas_hak" class="form-label">No Alas Hak</label>
-      <input type="text" class="form-control" id="no_alas_hak" name="no_alas_hak" required value="<%= form_data?.no_alas_hak || '' %>">
-    </div>
+          <form action="<%=form_action%>" method="POST" class="row g-3">
+            <!-- no_alas_hak -->
+            <div class="col-md-6">
+              <label for="no_alas_hak" class="form-label">No Alas Hak</label>
+              <input type="text" class="form-control" id="no_alas_hak" name="no_alas_hak" required value="<%= form_data?.no_alas_hak || '' %>">
+            </div>
 
-    <!-- jenis_hak -->
-    <div class="col-md-6">
-      <label for="jenis_hak" class="form-label">Jenis Hak</label>
-      <select class="form-select" id="jenis_hak" name="jenis_hak" required>
-        <option value="">-- Pilih --</option>
-        <% ['SHM','SHGB','PETA_BIDANG','NIB'].forEach(opt => { %>
-          <option value="<%= opt %>" <%= form_data?.jenis_hak === opt ? 'selected' : '' %>><%= opt %></option>
-        <% }) %>
-      </select>
-    </div>
+            <!-- jenis_hak -->
+            <div class="col-md-6">
+              <label for="jenis_hak" class="form-label">Jenis Hak</label>
+              <select class="form-select" id="jenis_hak" name="jenis_hak" required>
+                <option value="">-- Pilih --</option>
+                <% ['SHM','SHGB','PETA_BIDANG','NIB'].forEach(opt => { %>
+                  <option value="<%= opt %>" <%= form_data?.jenis_hak === opt ? 'selected' : '' %>><%= opt %></option>
+                <% }) %>
+              </select>
+            </div>
 
-    <!-- luas -->
-    <div class="col-md-6">
-      <label for="luas" class="form-label">Luas (m²)</label>
-      <input type="number" class="form-control" id="luas" name="luas" required value="<%= form_data?.luas || '' %>">
-    </div>
+            <!-- luas -->
+            <div class="col-md-6">
+              <label for="luas" class="form-label">Luas (m²)</label>
+              <input type="number" class="form-control" id="luas" name="luas" required value="<%= form_data?.luas || '' %>">
+            </div>
 
-    <!-- tgl_alas_hak -->
-    <div class="col-md-6">
-      <label for="tgl_alas_hak" class="form-label">Tanggal Alas Hak</label>
-      <input type="date" class="form-control" id="tgl_alas_hak" name="tgl_alas_hak" value="<%= form_data?.tgl_alas_hak ? form_data.tgl_alas_hak.toLocaleString() : '' %>">
-    </div>
+            <!-- tgl_alas_hak -->
+            <div class="col-md-6">
+              <label for="tgl_alas_hak" class="form-label">Tanggal Alas Hak</label>
+              <input type="date" class="form-control" id="tgl_alas_hak" name="tgl_alas_hak" value="<%= form_data?.tgl_alas_hak ? form_data.tgl_alas_hak.toLocaleString() : '' %>">
+            </div>
 
-    <!-- provinsi -->
-    <div class="col-md-6">
-      <label for="provinsi" class="form-label">Provinsi</label>
-      <input type="text" class="form-control" id="provinsi" name="provinsi" required value="<%= form_data?.provinsi || '' %>">
-    </div>
+            <!-- provinsi -->
+            <div class="col-md-6">
+              <label for="provinsi" class="form-label">Provinsi</label>
+              <input type="text" class="form-control" id="provinsi" name="provinsi" required value="<%= form_data?.provinsi || '' %>">
+            </div>
 
-    <!-- kec -->
-    <div class="col-md-6">
-      <label for="kec" class="form-label">Kecamatan</label>
-      <input type="text" class="form-control" id="kec" name="kec" required value="<%= form_data?.kec || '' %>">
-    </div>
+            <!-- kec -->
+            <div class="col-md-6">
+              <label for="kec" class="form-label">Kecamatan</label>
+              <input type="text" class="form-control" id="kec" name="kec" required value="<%= form_data?.kec || '' %>">
+            </div>
 
-    <!-- kel -->
-    <div class="col-md-6">
-      <label for="kel" class="form-label">Kelurahan</label>
-      <input type="text" class="form-control" id="kel" name="kel" required value="<%= form_data?.kel || '' %>">
-    </div>
+            <!-- kel -->
+            <div class="col-md-6">
+              <label for="kel" class="form-label">Kelurahan</label>
+              <input type="text" class="form-control" id="kel" name="kel" required value="<%= form_data?.kel || '' %>">
+            </div>
 
-    <!-- jor -->
-    <div class="col-md-6">
-      <label for="jor" class="form-label">Jorong</label>
-      <input type="text" class="form-control" id="jor" name="jor" value="<%= form_data?.jor || '' %>">
-    </div>
+            <!-- jor -->
+            <div class="col-md-6">
+              <label for="jor" class="form-label">Jorong</label>
+              <input type="text" class="form-control" id="jor" name="jor" value="<%= form_data?.jor || '' %>">
+            </div>
 
-    <!-- no_surat_ukur -->
-    <div class="col-md-6">
-      <label for="no_surat_ukur" class="form-label">No Surat Ukur</label>
-      <input type="text" class="form-control" id="no_surat_ukur" name="no_surat_ukur" value="<%- form_data?.no_surat_ukur || '' %>">
-    </div>
+            <!-- no_surat_ukur -->
+            <div class="col-md-6">
+              <label for="no_surat_ukur" class="form-label">No Surat Ukur</label>
+              <input type="text" class="form-control" id="no_surat_ukur" name="no_surat_ukur" value="<%- form_data?.no_surat_ukur || '' %>">
+            </div>
 
-    <!-- tgl_surat_ukur -->
-    <div class="col-md-6">
-      <label for="tgl_surat_ukur" class="form-label">Tanggal Surat Ukur</label>
-      <input type="date" class="form-control" id="tgl_surat_ukur" name="tgl_surat_ukur" value="<%= form_data?.tgl_surat_ukur ? form_data.tgl_surat_ukur.toLocaleString() : '' %>">
-    </div>
+            <!-- tgl_surat_ukur -->
+            <div class="col-md-6">
+              <label for="tgl_surat_ukur" class="form-label">Tanggal Surat Ukur</label>
+              <input type="date" class="form-control" id="tgl_surat_ukur" name="tgl_surat_ukur" value="<%= form_data?.tgl_surat_ukur ? form_data.tgl_surat_ukur.toLocaleString() : '' %>">
+            </div>
 
-    <!-- ket -->
-    <div class="col-12">
-      <label for="ket" class="form-label">Keterangan</label>
-      <textarea class="form-control" id="ket" name="ket"><%= form_data?.ket || '' %></textarea>
-    </div>
+            <!-- ket -->
+            <div class="col-12">
+              <label for="ket" class="form-label">Keterangan</label>
+              <textarea class="form-control" id="ket" name="ket"><%= form_data?.ket || '' %></textarea>
+            </div>
 
-    <!-- submit -->
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary">Simpan</button>
-      <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
+            <!-- owner -->
+             <div class="col-md-6">
+               <label for="client_nik" class="form-label">Nik</label>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" id="client_nik" value="<%=form_data?.client_nik || ''%>">
+                <a class="btn btn-primary" id="add_owner_list">+</a>
+              </div>
+
+              <label for="client_fullname" class="form-label">Nama Pemilik</label>
+              <input type="text" class="form-control" id="client_fullname" value="<%=form_data?.client_fullname || ''%>">
+              
+            </div>
+            
+            <div class="col-md-6" id="owner_list">
+              
+              <ul id="owner_list_view">
+              </ul>
+
+            </div>
+            <!-- submit -->
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+              <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
+            </div>
+          </form>
+        </div>
     </div>
-  </form>
-</body>
-</html>
+</div>
+
+<script>
+  const client_id = document.querySelector('#client_id');
+  const client_fullname = document.querySelector('#client_fullname');
+  const client_nik = document.querySelector('#client_nik');
+  let data = {}
+
+  client_nik.addEventListener('blur', async (event)=>{
+    console.log('nik verifing');
+    try {
+        const nik = event.target.value;
+        if(!nik > 0) return;
+
+        data = await verifyNik(nik);
+
+        let first_name = data.user.first_name;
+        let last_name = data.user.last_name;
+
+        // preventing null value
+        last_name = last_name || '';
+
+        client_fullname.value = first_name + ' ' + last_name;
+        
+    }catch(error){
+        event.target.value = '';
+        wajib_pajak.value = '';
+    }
+  });
+
+  document.querySelector('#add_owner_list').addEventListener('click', (event)=>{
+    console.log('button pressed');
+    document.querySelector('#owner_list')
+    .innerHTML += `<input value="${data.id}" type="text" class="form-control" id="client_id" name="client_id" hidden>`;
+
+    document.querySelector('#owner_list_view')
+    .innerHTML += `<li>${data.user.first_name} ${data.user.last_name}</li>`
+
+    client_fullname.value = ''
+    client_nik.value = ''
+    data = {};
+  });
+
+
+  async function verifyNik(nik){
+    try {
+        const res = await fetch(`/api/client/nik_verify?nik=${nik}`);
+        if (!res.ok) {
+            // Baca text biar bisa lihat error aslinya
+            const text = await res.text();
+            throw new Error(JSON.parse(text).msg);
+        }
+        return res.json();
+    }catch (e) {
+        alert("Terjadi error: " + e.message);
+    }
+}
+
+</script>

@@ -3,6 +3,7 @@ const mainModel = require('../models/main.model');
 const { matchedData } = require("express-validator");
 const { addMessage } = require("../utils/flash_messages");
 const { CustomError } = require("../utils/custom.error");
+const { getRequireData } = require("../helper/alas_hak_ctrl.helper");
 
 
 const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
@@ -61,15 +62,32 @@ const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
 
 
 const addAlasHak = asyncHandler(async (req, res, next)=>{
+
+    // getting the required fields
+    // prevent other column added
+    // helping the AlasHak_Clients table data insertion
+    let column_name = await mainModel.getAllColumnName('Alas_Hak');
+    console.log(column_name);
+    const fields = getRequireData(column_name, matchedData(req));
+
     // add data to table
-    await mainModel.add('Alas_hak', matchedData(req));
+    //res.locals.alasHak_id = await mainModel.add('Alas_hak', fields);
 
     // flash message
     addMessage(req, 'success', 'Alas Hak added successfully');
 
-    // redirect to dashboard
-    res.redirect('/admin/dashboard');
+    // going to addAlasHakOwner
+    next();
 });
+
+const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
+    const {client_id} = matchedData(req);
+    const alasHak_id = res.locals.alasHak_id;
+
+    //await mainModel.add('AlasHak_Clients', {client_id, alasHak_id})
+
+    res.redirect('/alas_hak/form');
+})
 
 const updateAlasHak = asyncHandler(async (req, res, next)=>{
     await mainModel.update('Alas_Hak', matchedData(req), req.query);
@@ -89,5 +107,6 @@ module.exports = {
     renderAlasHakViewPage,
     renderAlasHakListPage,
     addAlasHak,
-    updateAlasHak
+    updateAlasHak,
+    addAlasHakOwner
 }

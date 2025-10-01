@@ -8,7 +8,7 @@
     "start": "nodemon --env-file=.env index.js",
     "makemigration": "npx knex migrate:make --knexfile ./database/knexfile.js",
     "migrate": "npx knex migrate:latest --knexfile ./database/knexfile.js",
-    "rollback" : "npx knex migrate:rollback --knexfile ./database/knexfile.js"
+    "rollback": "npx knex migrate:rollback --knexfile ./database/knexfile.js"
   },
   "author": "alan",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "dompurify": "^3.2.7",
     "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
     "express": "^5.1.0",
     "express-rate-limit": "^8.1.0",
     "express-session": "^1.18.2",

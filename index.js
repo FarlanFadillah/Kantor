@@ -3,6 +3,10 @@ const cors = require('cors');
 const morgan = require('morgan');
 const process = require('process');
 const path = require('path');
+const engine = require('ejs-mate');
+
+// debuging : delete later please
+const db = require('./database/db')
 
 process.on('uncaughtException', err => {
     console.error('Uncaught Exception:', err);
@@ -65,12 +69,25 @@ app.use((req, res, next)=>{
 app.use(express.static(path.join(__dirname, 'src')));
 
 // set the view engine
+app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // api route
 app.use('/api/client', client_apiRoute);
 app.use('/api/alas_hak', alas_hak_apiRoute)
+
+// debuging
+app.get('/knex/test', async (req, res)=>{
+    const table_info = await db.raw('PRAGMA table_info(Alas_Hak)');
+    const column_name = [];
+
+    table_info.forEach(element => {
+        if(element.notnull) column_name.push(element.name);
+    });
+
+    res.status(200).json(column_name);
+})
 
 // public ssr route (order is important)
 app.use('/auth', userRoute);

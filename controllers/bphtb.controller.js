@@ -1,18 +1,16 @@
 const asyncHandler = require('../utils/asyncHandler');
 const mainModel = require('../models/main.model');
 const {addMessage} = require("../utils/flash_messages");
+const { matchedData } = require('express-validator');
 
 const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
     res.locals.form_action = '/bphtb/form/new';
 
-    const {id} = req.query;
-
-
     // this scenario when a user request for an empty form
-    if(id !== undefined) {
+    if(req.query.id !== undefined) {
         // form action
-        res.locals.form_action = `/bphtb/form/edit?id=${id}`;
+        res.locals.form_action = `/bphtb/form/edit?id=${req.query.id}`;
 
         // filled form
         // create form_data to store the bphtb 
@@ -34,6 +32,7 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
         form_data.alas_hak = no_alas_hak + '/' + kel;
 
         res.locals.form_data = form_data;
+        
     }
 
     res.render('pages/bphtb_form');
@@ -70,13 +69,19 @@ const addBphtb = asyncHandler(async (req, res, next) => {
 });
 
 const updateBphtb = asyncHandler(async (req, res, next) => {
+    const cleandata = matchedData(req);
     const {id} = req.query;
-    await mainModel.update('Bphtb', req.body, {id});
+    await mainModel.update('Bphtb', {
+        ...cleandata, 
+        perintah_bayar : req.body?.perintah_bayar || false,
+        lunas : req.body?.lunas || false,
+        selesai : req.body?.selesai || false
+    }, {id});
 
     // flash message
     addMessage(req, 'info', 'Bphtb successfully updated');
 
-    res.redirect('/admin/dashboard');
+    res.redirect(`/admin/bphtb/view?id=${req.query.id}`);
 })
 
 const deleteBphtb = asyncHandler(async (req, res, next) => {

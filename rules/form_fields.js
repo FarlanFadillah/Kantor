@@ -33,7 +33,8 @@ const requiredAlasHakTextField = [
     'jenis_hak',
     'provinsi',
     'kec',
-    'kel'
+    'kel',
+    'owner_alas_hak'
 ]
 
 

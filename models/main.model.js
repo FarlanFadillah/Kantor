@@ -22,7 +22,8 @@ async function get(table, model, field = '*'){
 
 async function add(table, model){
     try {
-        await db(table).insert(model);
+        const [{id}] = await db(table).insert(model).returning('id');
+        return id;
     }catch(err){
         console.log(model);
         throw new CustomError(err.message, 'error');
@@ -62,6 +63,22 @@ async function getPaginationList(table, fields, limit, offset, column, order = '
     }
 }
 
+async function getAllColumnName(table){
+    try {
+        const table_info =  await db.raw(`PRAGMA table_info(${table})`);
+        const column_name = [];
+
+        table_info.forEach(element => {
+            column_name.push(element.name);
+        });
+
+        return column_name;
+
+    } catch (error) {
+        
+    }
+}
+
 
 module.exports = {
     add,
@@ -70,6 +87,7 @@ module.exports = {
     getPaginationList, 
     update,
     del, 
-    count
+    count,
+    getAllColumnName
 }
 
