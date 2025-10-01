@@ -21,11 +21,17 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
         // getting nik, first name, and last name by getting the clients data by its id
         let {nik, first_name, last_name} = await mainModel.get('Clients', {id : form_data.wajib_pajak}, ['nik', 'first_name', 'last_name']);
 
+        // getting alas hak data
+        let {no_alas_hak, kel} = await mainModel.get('Alas_Hak', {id : form_data.alas_hak_id}, ["no_alas_hak", "kel"])
+
         // incase last name is null, because its nullable
         last_name = last_name || '';
 
         form_data.full_name = first_name + ' ' + last_name;
-        form_data.nik_wajib_pajak = nik; 
+        form_data.nik_wajib_pajak = nik;
+
+        form_data.no_alas_hak = no_alas_hak;
+        form_data.alas_hak = no_alas_hak + '/' + kel;
 
         res.locals.form_data = form_data;
     }
@@ -40,11 +46,14 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
 
     const bphtb = await mainModel.get('Bphtb', req.query);
 
+    // getting wajib pajak data
     let {first_name, last_name} = await mainModel.get('Clients', {id : bphtb.wajib_pajak}, ['first_name', 'last_name']);
-
     last_name = last_name || '';
-
     bphtb.wajib_pajak = first_name + ' ' + last_name;
+
+    // getting alas hak data
+    let {no_alas_hak, kel} = await mainModel.get('Alas_Hak', {id : bphtb.alas_hak_id}, ["no_alas_hak", "kel"]);
+    bphtb.alas_hak = no_alas_hak + '/' + kel;
 
     res.locals.bphtb = bphtb;
 

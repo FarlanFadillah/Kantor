@@ -20,8 +20,7 @@ const optionalClientTextFields = [
 
 const requiredBphtbTextField = [
     'produk',
-    'alas_hak',
-    'no_alas_hak',
+    'alas_hak_id',
     'wajib_pajak',
     
 ]

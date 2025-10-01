@@ -71,6 +71,15 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
     res.redirect('/admin/dashboard');
 });
 
+const updateAlasHak = asyncHandler(async (req, res, next)=>{
+    await mainModel.update('Alas_Hak', matchedData(req), req.query);
+
+    // flash message
+    addMessage(req, 'success', 'Alas Hak updated successfully');
+
+    res.redirect(`/alas_hak/view?id=${req.query.id}`);
+})
+
 
 
 
@@ -79,5 +88,6 @@ module.exports = {
     renderAlasHakForm,
     renderAlasHakViewPage,
     renderAlasHakListPage,
-    addAlasHak
+    addAlasHak,
+    updateAlasHak
 }

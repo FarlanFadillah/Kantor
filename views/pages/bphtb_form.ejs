@@ -24,20 +24,14 @@
 
             <!-- Alas Hak -->
             <div class="col-md-6">
-                <label for="alas_hak" class="form-label">Alas Hak <span class="text-danger">*</span></label>
-                <select id="alas_hak" name="alas_hak" class="form-select">
-                    <option value="">-- Pilih Alas Hak --</option>
-                    <option value="SHM" <%= form_data?.alas_hak === "SHM" ? 'selected' : ''%>>SHM</option>
-                    <option value="SHGB" <%= form_data?.alas_hak === "SHGB" ? 'selected' : ''%>>SHGB</option>
-                    <option value="PETA_BIDANG" <%= form_data?.alas_hak === "PETA_BIDANG" ? 'selected' : ''%>>PETA BIDANG</option>
-                    <option value="NIB" <%= form_data?.alas_hak === "NIB" ? 'selected' : ''%>>NIB</option>
-                </select>
-            </div>
-
-            <!-- No Alas Hak -->
-            <div class="col-md-6">
                 <label for="no_alas_hak" class="form-label">No. Alas Hak <span class="text-danger">*</span></label>
-                <input type="text" id="no_alas_hak" name="no_alas_hak" class="form-control" required value="<%-form_data?.no_alas_hak || ''%>">
+                <input type="text" id="no_alas_hak" class="form-control" required value="<%=form_data?.no_alas_hak || ''%>">
+
+                <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" required>
+
+                <label for="alas_hak" class="form-label">Alas Hak<span class="text-danger">*</span></label>
+                <input type="text" id="alas_hak" class="form-control" required readonly value="<%=form_data?.alas_hak || ''%>" style="background-color: lightgray">
+
             </div>
 
             <!-- Wajib Pajak -->
@@ -96,7 +90,7 @@
             <div class="col-12 d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Simpan</button>
                 <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                <a href="<%=referer%>" class="btn btn-outline-primary">Back</a>
+                <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
             </div>
 
         </div>

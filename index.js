@@ -21,7 +21,8 @@ const clientRoute = require('./routes/client.router');
 const alasHakRoute = require('./routes/alas_hak.router');
 
 // api routes
-const client_apiRoute = require('./routes/api/client_api.router')
+const client_apiRoute = require('./routes/api/client_api.router');
+const alas_hak_apiRoute = require('./routes/api/alas_hak_api.router')
 
 // middlewares
 const session = require('./middlewares/sesison.middleware');
@@ -69,6 +70,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // api route
 app.use('/api/client', client_apiRoute);
+app.use('/api/alas_hak', alas_hak_apiRoute)
 
 // public ssr route (order is important)
 app.use('/auth', userRoute);

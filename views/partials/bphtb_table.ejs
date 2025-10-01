@@ -9,7 +9,6 @@
             <th>No</th>
             <th>Produk</th>
             <th>Alas Hak</th>
-            <th>No Alas Hak</th>
             <th>Wajib Pajak</th>
             <th>Hasil Survei</th>
             <th>Status</th>
@@ -22,8 +21,7 @@
                 <tr>
                     <th><%=i += 1%></th>
                     <td><%=value.produk%></td>
-                    <td><%=value.alas_hak%></td>
-                    <td><%-value.no_alas_hak%></td>
+                    <td><a href="/alas_hak/view?id=<%=value.alas_hak_id%>"><%=value.alas_hak%></a></td>
                     <td><a href="/client/view?id=<%=value.wajib_pajak_id%>"><%=value.wajib_pajak%></a></td>
                     <td>Rp.<%=value.hasil_survei.toLocaleString()%></td>
                     <td>
