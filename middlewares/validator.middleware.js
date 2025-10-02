@@ -74,7 +74,7 @@ function validatorErrorHandler(req, res, next){
 
 const clientFormValidator = [
     validator.body('nik').isNumeric().notEmpty(),
-    validator.body('phone_number').isNumeric().notEmpty(),
+    validator.body('phone_number').optional({values : 'falsy'}).isNumeric().withMessage('Phone number must be an numeric'),
     ...requiredClientTextFields.map(requiredTextValidator),
     ...optionalClientTextFields.map(optionalTextValidator)
 ]

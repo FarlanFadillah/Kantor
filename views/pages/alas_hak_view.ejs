@@ -36,14 +36,27 @@
             <dt class="col-sm-3">Tanggal Surat Ukur</dt>
             <dd class="col-sm-9"><%= alas_hak.tgl_surat_ukur ? alas_hak.tgl_surat_ukur.toLocaleString() : '-' %></dd>
 
+            <dt class="col-sm-3">Atas Nama</dt>
+            <% if(alas_hak_owners.length > 0) {%>
+              <dd class="col-sm-9">
+                <ul>
+                  <% for(const owner of alas_hak_owners) {%>
+                    <li><a href="/client/view?id=<%= owner.id %>"><%=owner.first_name%> <%= owner?.last_name || '' %></a></li>
+                  <% } %>
+                </ul>
+              </dd>
+            <% } else {%>
+                <dd class="col-sm-9">-</dd>
+            <% } %>
+
             <dt class="col-sm-3">Keterangan</dt>
             <dd class="col-sm-9"><%= alas_hak.ket || '-' %></dd>
           </dl>
             <p class="mb-1 text-muted"><small>Ditambahkan:
-                    <%= alas_hak.added_at ? alas_hak.added_at.toLocaleString() : '-' %>
+                    <%= alas_hak.added_at ? alas_hak.added_at : '-' %>
                 </small></p>
             <p class="mb-0 text-muted"><small>Terakhir Diupdate:
-                    <%= alas_hak.updated_at ? alas_hak.updated_at.toLocaleString() : '-' %>
+                    <%= alas_hak.updated_at ? alas_hak.updated_at : '-' %>
                 </small></p>
 
             <div class="mt-3">

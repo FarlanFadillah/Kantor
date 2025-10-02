@@ -1,3 +1,5 @@
+
+// CLIENTS
 const requiredClientTextFields = [
     "first_name",
     "job_name",
@@ -18,6 +20,8 @@ const optionalClientTextFields = [
     "rw",
 ]
 
+
+// BPHTB
 const requiredBphtbTextField = [
     'produk',
     'alas_hak_id',
@@ -29,6 +33,8 @@ const optionalBphtbTextField = [
     'tgl_survei',
 ]
 
+
+// ALAS HAK
 const requiredAlasHakTextField = [
     'jenis_hak',
     'provinsi',

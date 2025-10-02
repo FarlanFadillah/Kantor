@@ -1,6 +1,7 @@
 const { renderAlasHakForm, addAlasHak, renderAlasHakViewPage, renderAlasHakListPage, updateAlasHak, addAlasHakOwner,
     updateAlasHakOwner
 } = require('../controllers/alas_hak.controller');
+const { getAlasHakOwner } = require('../middlewares/alas_hak.middleware');
 const { getFormState, saveFormState, clearFormState } = require('../middlewares/form.middleware');
 const { pagination } = require('../middlewares/pagination.middleware');
 const { alasHakFormValidator, validatorErrorHandler } = require('../middlewares/validator.middleware');
@@ -20,7 +21,8 @@ router.post('/form/edit',
     validatorErrorHandler, clearFormState,
     updateAlasHak, updateAlasHakOwner);
 
-router.get('/view', renderAlasHakViewPage);
+router.route('/view') 
+        .get(getAlasHakOwner, renderAlasHakViewPage);
 
 
 router.route('/list')

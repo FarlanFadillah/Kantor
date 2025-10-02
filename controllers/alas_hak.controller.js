@@ -3,7 +3,8 @@ const mainModel = require('../models/main.model');
 const { matchedData } = require("express-validator");
 const { addMessage } = require("../utils/flash_messages");
 const { CustomError } = require("../utils/custom.error");
-const { getRequireData } = require("../helper/alas_hak_ctrl.helper");
+const { getRequireData, convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
+const { makeDateString } = require("../utils/string_tools");
 
 
 const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
@@ -45,9 +46,11 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
     if(req.query === undefined) return next(new CustomError('Not Found', 'error', 401));
 
     const alas_hak = await mainModel.get('Alas_hak', req.query);
+    // convert the date time to local time asia/jakarta
+    convertLocalDT(alas_hak);
+    console.log(alas_hak);
 
     res.locals.alas_hak = alas_hak;
-
     res.status(200).render('pages/alas_hak_view');
 });
 
@@ -132,7 +135,8 @@ const updateAlasHakOwner = asyncHandler (async (req, res, next)=>{
     await mainModel.del('AlasHak_Clients', {alasHak_id : alasHak_id});
 
     if(client_id && client_id.length > 0){
-        for(const id of ([client_id])){
+        for(const id of client_id){
+            console.log(id);
             await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id})
         }
     }

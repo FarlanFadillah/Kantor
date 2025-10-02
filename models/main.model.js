@@ -12,6 +12,14 @@ async function getAll(table){
     }
 }
 
+async function getAllWhere(table, model){
+    try {
+        return await db(table).select('*').where(model);
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
+}
+
 async function get(table, model, field = '*'){
     try {
         return await db(table).select(field).where(model).first();
@@ -116,6 +124,7 @@ module.exports = {
     getAllColumnName,
     addReturnColumn,
     filter,
-    rowExist
+    rowExist,
+    getAllWhere
 }
 

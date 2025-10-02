@@ -1,7 +1,8 @@
 const asyncHandler = require("../utils/asyncHandler");
 const {addMessage} = require("../utils/flash_messages");
 const mainModel = require('../models/main.model')
-const {matchedData} = require('express-validator')
+const {matchedData} = require('express-validator');
+const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 
 
 const renderClientFormPage = asyncHandler(async (req, res, next) => {
@@ -37,6 +38,7 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
         'updated_at', 
         'desc'
     );
+    
     // view route
     res.locals.view_route = '/client/view?id=';
 
@@ -48,6 +50,9 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
 
     // get the client data by its id
     res.locals.client_data = await mainModel.get('Clients', req.query);
+
+    // convert the date time to local time asia/jakarta
+    convertLocalDT(res.locals.client_data);
 
     res.status(200).render('pages/client_view_page');
 })

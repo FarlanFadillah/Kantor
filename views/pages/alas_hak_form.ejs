@@ -82,14 +82,16 @@
               <div class="input-group mb-3">
                 <input type="text" class="form-control" id="client_nik" value="<%=form_data?.client_nik || ''%>">
                 <a class="btn btn-primary" id="add_owner_list">+</a>
+                <a href="/client/form" target="_blank" class="btn btn-outline-primary">Tambah Client</a>
               </div>
 
               <label for="client_fullname" class="form-label">Nama Pemilik</label>
-              <input type="text" class="form-control" id="client_fullname" value="<%=form_data?.client_fullname || ''%>">
+              <input style="background-color: lightgray;" readonly type="text" class="form-control" id="client_fullname" value="<%=form_data?.client_fullname || ''%>">
               
             </div>
 
               <div class="col-md-6" id="owner_list">
+                  <label for="owner_list_view">Atas Nama</label>
                   <ul id="owner_list_view" class="list-group">
                       <% for (let owner of form_data?.owners) { %>
                           <li id="owner_<%= owner.id %>" class="list-group-item d-flex justify-content-between align-items-center">
@@ -102,7 +104,11 @@
                       <% } %>
                   </ul>
               </div>
+            
+              <div class="col-12" id="msgs">
 
+
+              </div>
 
               <!-- submit -->
             <div class="col-12">
@@ -117,7 +123,14 @@
 <script>
   const client_fullname = document.querySelector('#client_fullname');
   const client_nik = document.querySelector('#client_nik');
-  let data = {}
+  let data = {};
+  let added_id = [];
+
+
+  // initialize the added_id
+  document.querySelectorAll('.client_id').forEach((e)=>{
+    added_id.push(Number(e.value));
+  })
 
   client_nik.addEventListener('blur', async (event)=>{
     console.log('nik verifing');
@@ -140,8 +153,8 @@
         wajib_pajak.value = '';
     }
   });
-  let added_id = [];
   document.querySelector('#add_owner_list').addEventListener('click', (event)=>{
+    console.log(added_id);
     if(!added_id.includes(data.user.id)) {
         document.querySelector('#owner_list_view')
         .innerHTML += `
@@ -154,6 +167,9 @@
             </li>`
 
         added_id.push(data.user.id);
+        document.querySelector('#msgs').innerHTML = ''
+    } else{
+      document.querySelector('#msgs').innerHTML += `<div class="alert alert-danger" role="alert">Client already added</div>`
     }
     client_fullname.value = ''
     client_nik.value = ''

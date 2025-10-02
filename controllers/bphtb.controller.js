@@ -2,6 +2,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const mainModel = require('../models/main.model');
 const {addMessage} = require("../utils/flash_messages");
 const { matchedData } = require('express-validator');
+const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
 
 const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
@@ -44,6 +45,8 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
     if(req.query === undefined) return res.redirect('/admin/dashboard');
 
     const bphtb = await mainModel.get('Bphtb', req.query);
+    // convert the date time to local time asia/jakarta
+    convertLocalDT(bphtb);
 
     // getting wajib pajak data
     let {first_name, last_name} = await mainModel.get('Clients', {id : bphtb.wajib_pajak}, ['first_name', 'last_name']);
