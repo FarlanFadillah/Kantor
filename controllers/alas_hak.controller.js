@@ -9,6 +9,7 @@ const { getRequireData } = require("../helper/alas_hak_ctrl.helper");
 const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
     res.locals.title = 'Form Alas Hak';
     res.locals.form_action = '/alas_hak/form/new';
+    res.locals.form_data.owners = [];
 
 
     if(req.query.id !== undefined){
@@ -16,10 +17,25 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
         res.locals.form_action = `/alas_hak/form/edit?id=${req.query.id}`;
         // get the alas hak data by its id
         const alas_hak_data = await mainModel.get('Alas_hak', req.query);
+
+        // get owner
+        const owner_ids = await mainModel.filter('AlasHak_Clients', {alasHak_id : alas_hak_data.id})
+
+
+        alas_hak_data.owners = []
+        for(const {client_id} of owner_ids){
+            console.log(client_id);
+            alas_hak_data.owners.push(
+                await mainModel.get(
+                    'Clients',
+                    {id : client_id},
+                    ['id', 'first_name', 'last_name'])
+            );
+        }
         res.locals.form_data = alas_hak_data;
     }
 
-    console.log(res.locals.form_data);    
+    // console.log(res.locals.form_data);
     res.status(200).render('pages/alas_hak_form');
 });
 
@@ -67,11 +83,10 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
     // prevent other column added
     // helping the AlasHak_Clients table data insertion
     let column_name = await mainModel.getAllColumnName('Alas_Hak');
-    console.log(column_name);
     const fields = getRequireData(column_name, matchedData(req));
 
     // add data to table
-    //res.locals.alasHak_id = await mainModel.add('Alas_hak', fields);
+    res.locals.alasHak = await mainModel.addReturnColumn('Alas_hak', fields, 'id');
 
     // flash message
     addMessage(req, 'success', 'Alas Hak added successfully');
@@ -80,24 +95,50 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
     next();
 });
 
-const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
-    const {client_id} = matchedData(req);
-    const alasHak_id = res.locals.alasHak_id;
-
-    //await mainModel.add('AlasHak_Clients', {client_id, alasHak_id})
-
-    res.redirect('/alas_hak/form');
-})
 
 const updateAlasHak = asyncHandler(async (req, res, next)=>{
-    await mainModel.update('Alas_Hak', matchedData(req), req.query);
+
+    // getting the required fields
+    // prevent other column added
+    // helping the AlasHak_Clients table data insertion
+    let column_name = await mainModel.getAllColumnName('Alas_Hak');
+    const fields = getRequireData(column_name, matchedData(req));
+
+    await mainModel.update('Alas_Hak', fields, req.query);
 
     // flash message
     addMessage(req, 'success', 'Alas Hak updated successfully');
 
-    res.redirect(`/alas_hak/view?id=${req.query.id}`);
+    next();
 })
 
+const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
+    let {client_id} = req.body;
+    const alasHak_id = res.locals.alasHak.id;
+
+    if(!Array.isArray(client_id)) client_id = [client_id];
+
+    for(const id of client_id){
+        await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id});
+    }
+
+    res.redirect(`/alas_hak/view?id=${alasHak_id}`);
+})
+
+const updateAlasHakOwner = asyncHandler (async (req, res, next)=>{
+    const {client_id} = req.body;
+    const alasHak_id = req.query.id;
+
+    await mainModel.del('AlasHak_Clients', {alasHak_id : alasHak_id});
+
+    if(client_id && client_id.length > 0){
+        for(const id of ([client_id])){
+            await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id})
+        }
+    }
+
+    res.redirect(`/alas_hak/view?id=${req.query.id}`);
+})
 
 
 
@@ -108,5 +149,6 @@ module.exports = {
     renderAlasHakListPage,
     addAlasHak,
     updateAlasHak,
-    addAlasHakOwner
+    addAlasHakOwner,
+    updateAlasHakOwner
 }

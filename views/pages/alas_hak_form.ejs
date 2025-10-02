@@ -2,7 +2,7 @@
 <div class="container py-5">
     <div class="card shadow-sm">
         <div class="card-body">
-          <h1 class="mb-4">Form Alas Hak</h2>
+          <h1 class="mb-4">Form Alas Hak</h1>
 
           <form action="<%=form_action%>" method="POST" class="row g-3">
             <!-- no_alas_hak -->
@@ -88,14 +88,23 @@
               <input type="text" class="form-control" id="client_fullname" value="<%=form_data?.client_fullname || ''%>">
               
             </div>
-            
-            <div class="col-md-6" id="owner_list">
-              
-              <ul id="owner_list_view">
-              </ul>
 
-            </div>
-            <!-- submit -->
+              <div class="col-md-6" id="owner_list">
+                  <ul id="owner_list_view" class="list-group">
+                      <% for (let owner of form_data?.owners) { %>
+                          <li id="owner_<%= owner.id %>" class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                  <%= owner.first_name %> <%= owner.last_name %>
+                                  <input type="hidden" class="client_id" name="client_id" value="<%= owner.id %>">
+                                </span>
+                                <a id="rm_owner" data-owner="<%= owner.id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                          </li>
+                      <% } %>
+                  </ul>
+              </div>
+
+
+              <!-- submit -->
             <div class="col-12">
               <button type="submit" class="btn btn-primary">Simpan</button>
               <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
@@ -106,7 +115,6 @@
 </div>
 
 <script>
-  const client_id = document.querySelector('#client_id');
   const client_fullname = document.querySelector('#client_fullname');
   const client_nik = document.querySelector('#client_nik');
   let data = {}
@@ -132,19 +140,33 @@
         wajib_pajak.value = '';
     }
   });
-
+  let added_id = [];
   document.querySelector('#add_owner_list').addEventListener('click', (event)=>{
-    console.log('button pressed');
-    document.querySelector('#owner_list')
-    .innerHTML += `<input value="${data.id}" type="text" class="form-control" id="client_id" name="client_id" hidden>`;
+    if(!added_id.includes(data.user.id)) {
+        document.querySelector('#owner_list_view')
+        .innerHTML += `
+            <li id="owner_${data.user.id}" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    ${data.user.first_name} ${data.user.last_name}
+                    <input type="hidden" class="client_id" name="client_id" value="${data.user.id}">
+                </span>
+                <a id="rm_owner" data-owner="${data.user.id}" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+            </li>`
 
-    document.querySelector('#owner_list_view')
-    .innerHTML += `<li>${data.user.first_name} ${data.user.last_name}</li>`
-
+        added_id.push(data.user.id);
+    }
     client_fullname.value = ''
     client_nik.value = ''
     data = {};
   });
+
+
+  document.querySelector('#owner_list_view').addEventListener('click', (event)=>{
+      if(event.target && event.target.classList.contains('remove-owner-btn')){
+          event.target.closest('li').remove();
+          added_id = added_id.filter(elem => elem !== Number(event.target.dataset.owner));
+      }
+  })
 
 
   async function verifyNik(nik){

@@ -34,7 +34,6 @@ const requiredAlasHakTextField = [
     'provinsi',
     'kec',
     'kel',
-    'owner_alas_hak'
 ]
 
 
@@ -43,7 +42,7 @@ const optionalAlasHakTextField = [
     'tgl_alas_hak',
     'no_surat_ukur',
     'tgl_surat_ukur',
-    'ket'
+    'ket',
 ]
 
 module.exports = {

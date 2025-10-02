@@ -8,6 +8,9 @@ exports.up = function(knex) {
         table.integer('alasHak_id').references('Alas_Hak.id').onDelete('CASCADE').onUpdate('CASCADE');
 
         table.primary(['Client_id', 'alasHak_id']);
+
+        table.datetime('added_at').defaultTo(knex.fn.now());
+        table.datetime('updated_at').defaultTo(knex.fn.now());
     })
   
 };

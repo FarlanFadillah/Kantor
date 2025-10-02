@@ -20,10 +20,27 @@ async function get(table, model, field = '*'){
     }
 }
 
+async function filter(table, filter){
+    try {
+        return await db(table).where(filter).select('*');
+    }catch(err){
+        throw new CustomError(err.message, 'error');
+    }
+}
+
+async function addReturnColumn(table, model, column){
+    try {
+        const [res] = await db(table).insert(model).returning(column);
+        return res;
+    }catch(err){
+        console.log(model);
+        throw new CustomError(err.message, 'error');
+    }
+}
+
 async function add(table, model){
     try {
-        const [{id}] = await db(table).insert(model).returning('id');
-        return id;
+        await db(table).insert(model);
     }catch(err){
         console.log(model);
         throw new CustomError(err.message, 'error');
@@ -75,7 +92,15 @@ async function getAllColumnName(table){
         return column_name;
 
     } catch (error) {
-        
+        throw new CustomError(err.message, 'error');
+    }
+}
+
+async function rowExist(table, model){
+    try {
+        return !! await db(table).select('*').where(model).first();
+    }catch(err){
+        throw new CustomError(err.message, 'error');
     }
 }
 
@@ -88,6 +113,9 @@ module.exports = {
     update,
     del, 
     count,
-    getAllColumnName
+    getAllColumnName,
+    addReturnColumn,
+    filter,
+    rowExist
 }
 
