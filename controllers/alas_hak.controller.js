@@ -4,7 +4,6 @@ const { matchedData } = require("express-validator");
 const { addMessage } = require("../utils/flash_messages");
 const { CustomError } = require("../utils/custom.error");
 const { getRequireData, convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
-const { makeDateString } = require("../utils/string_tools");
 
 
 const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
@@ -48,7 +47,6 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
     const alas_hak = await mainModel.get('Alas_hak', req.query);
     // convert the date time to local time asia/jakarta
     convertLocalDT(alas_hak);
-    console.log(alas_hak);
 
     res.locals.alas_hak = alas_hak;
     res.status(200).render('pages/alas_hak_view');
@@ -70,11 +68,14 @@ const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
         'desc'
     );
 
-    // debug
-    console.log(res.locals.datas);
-
     // view route
     res.locals.view_route = '/alas_hak/view?id=';
+
+    // delete route
+    res.locals.delete_route = '/alas_hak/delete?id=';
+
+    // form route
+    res.locals.form_route = '/alas_hak/form';
 
     res.status(200).render('pages/table_list_page');
 })
@@ -92,7 +93,7 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
     res.locals.alasHak = await mainModel.addReturnColumn('Alas_hak', fields, 'id');
 
     // flash message
-    addMessage(req, 'success', 'Alas Hak added successfully');
+    addMessage(req, 'info', 'Alas Hak added successfully');
 
     // going to addAlasHakOwner
     next();
@@ -110,9 +111,20 @@ const updateAlasHak = asyncHandler(async (req, res, next)=>{
     await mainModel.update('Alas_Hak', fields, req.query);
 
     // flash message
-    addMessage(req, 'success', 'Alas Hak updated successfully');
+    addMessage(req, 'info', 'Alas Hak updated successfully');
 
     next();
+})
+
+const deleteAlasHak = asyncHandler(async (req, res, next)=>{
+    if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
+
+    await mainModel.del('Alas_Hak', req.query);
+
+    // flash message
+    addMessage(req, 'info', 'Alas Hak deleted successfully');
+
+    res.redirect('/alas_hak/list');
 })
 
 const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
@@ -154,5 +166,6 @@ module.exports = {
     addAlasHak,
     updateAlasHak,
     addAlasHakOwner,
-    updateAlasHakOwner
+    updateAlasHakOwner,
+    deleteAlasHak
 }

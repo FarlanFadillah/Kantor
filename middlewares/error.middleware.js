@@ -10,9 +10,6 @@ function formErrorHandler(err, req, res, next){
 }
 
 function globalErrorHandler(err, req, res, next){
-
-    console.log(err);
-
     res.locals.title = 'Error Page';
     res.status(err.status).render('pages/error_page', {error : err});
 }

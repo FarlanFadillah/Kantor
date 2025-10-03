@@ -3,6 +3,7 @@ const {addMessage} = require("../utils/flash_messages");
 const mainModel = require('../models/main.model')
 const {matchedData} = require('express-validator');
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
+const {CustomError} = require("../utils/custom.error");
 
 
 const renderClientFormPage = asyncHandler(async (req, res, next) => {
@@ -42,6 +43,12 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
     // view route
     res.locals.view_route = '/client/view?id=';
 
+    // delete route
+    res.locals.delete_route = '/client/delete?id=';
+
+    // form route
+    res.locals.form_route = '/client/form';
+
     res.status(200).render('pages/table_list_page');
 });
 
@@ -66,6 +73,18 @@ const addClient = asyncHandler(async (req, res, next) => {
     res.redirect('/admin/dashboard');
 });
 
+const deleteClient = asyncHandler(async (req, res, next) => {
+
+    if(!req.query) return next(new CustomError('Id is not defined', 'error', 200));
+
+    await mainModel.del('Clients', req.query);
+
+    // flash message
+    addMessage(req, 'info', 'Client Deleted Successfully');
+
+    res.redirect('/client/list');
+});
+
 const updateClient = asyncHandler(async (req, res, next)=>{
     await mainModel.update('Clients', req.body, req.query);
 
@@ -82,4 +101,5 @@ module.exports = {
     renderClientListPage,
     renderClientViewPage,
     updateClient,
+    deleteClient
 }

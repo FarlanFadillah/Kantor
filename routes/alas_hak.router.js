@@ -1,10 +1,11 @@
 const { renderAlasHakForm, addAlasHak, renderAlasHakViewPage, renderAlasHakListPage, updateAlasHak, addAlasHakOwner,
-    updateAlasHakOwner
+    updateAlasHakOwner, deleteAlasHak
 } = require('../controllers/alas_hak.controller');
 const { getAlasHakOwner } = require('../middlewares/alas_hak.middleware');
 const { getFormState, saveFormState, clearFormState } = require('../middlewares/form.middleware');
 const { pagination } = require('../middlewares/pagination.middleware');
 const { alasHakFormValidator, validatorErrorHandler } = require('../middlewares/validator.middleware');
+const {formErrorHandler} = require("../middlewares/error.middleware");
 
 const router = require('express').Router();
 
@@ -15,11 +16,11 @@ router.route('/form')
 router.post('/form/new',
     ...alasHakFormValidator, saveFormState,
     validatorErrorHandler, clearFormState,
-    addAlasHak, addAlasHakOwner);
+    addAlasHak, addAlasHakOwner, formErrorHandler);
 router.post('/form/edit',
     ...alasHakFormValidator, saveFormState,
     validatorErrorHandler, clearFormState,
-    updateAlasHak, updateAlasHakOwner);
+    updateAlasHak, updateAlasHakOwner, formErrorHandler);
 
 router.route('/view') 
         .get(getAlasHakOwner, renderAlasHakViewPage);
@@ -27,6 +28,8 @@ router.route('/view')
 
 router.route('/list')
         .get(pagination, renderAlasHakListPage);
-    
+
+router.route('/delete')
+        .post(deleteAlasHak);
 
 module.exports = router;

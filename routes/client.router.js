@@ -1,4 +1,4 @@
-const {addClient, renderClientFormPage, renderClientListPage, renderClientViewPage, updateClient} = require("../controllers/clients.controller");
+const {addClient, renderClientFormPage, renderClientListPage, renderClientViewPage, updateClient, deleteClient} = require("../controllers/clients.controller");
 const router = require('express').Router();
 const {clientFormValidator, validatorErrorHandler} = require('../middlewares/validator.middleware');
 const {saveFormState, getFormState, clearFormState} = require("../middlewares/form.middleware");
@@ -18,5 +18,8 @@ router.get('/view', renderClientViewPage);
 router.route('/edit')
     .get(getFormState, renderClientFormPage)
     .post(...clientFormValidator, saveFormState, validatorErrorHandler, clearFormState, updateClient, formErrorHandler);
+
+router.route('/delete')
+    .post(deleteClient);
 
 module.exports = router;

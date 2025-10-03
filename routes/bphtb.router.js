@@ -1,4 +1,4 @@
-const {renderBphtbFormPage, addBphtb, updateBphtb, deleteBphtb} = require("../controllers/bphtb.controller");
+const {renderBphtbFormPage, addBphtb, updateBphtb, deleteBphtb, renderBpthbViewPage} = require("../controllers/bphtb.controller");
 const {bphtbFormValidator, validatorErrorHandler} = require('../middlewares/validator.middleware');
 const {saveFormState, getFormState, clearFormState} = require('../middlewares/form.middleware');
 const { formErrorHandler } = require("../middlewares/error.middleware");
@@ -12,7 +12,10 @@ router.post('/form/new', ...bphtbFormValidator, saveFormState, validatorErrorHan
 
 router.post('/form/edit', ...bphtbFormValidator, saveFormState, validatorErrorHandler, updateBphtb, clearFormState, formErrorHandler);
 
-router.post('/form/delete', deleteBphtb); 
+router.post('/delete', deleteBphtb);
+
+router.route('/view')
+    .get(renderBpthbViewPage);
 
 
 module.exports = router;

@@ -2,8 +2,8 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Daftar Client</h2>
-        <a href="/admin/dashboard" class="btn btn-outline-primary">
-            Dashboard
+        <a href="<%=form_route%>" class="btn btn-success shadow-sm fw-semibold px-4 py-2 rounded-pill">
+            + Tambah
         </a>
     </div>
 
@@ -36,6 +36,10 @@
                         <a href="<%=view_route%><%= val %>" class="btn btn-info btn-sm">
                             View
                         </a>
+                        <button type="submit" form="delete_form" href="" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                            <form id="delete_form" onsubmit="return confirm('Are you sure you want to delete this object?')" method="post" action="<%=delete_route%><%= val %>"></form>
                         </td>
                     <% } %>
                 <% }) %>

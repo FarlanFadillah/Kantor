@@ -3,6 +3,7 @@ const mainModel = require('../models/main.model');
 const {addMessage} = require("../utils/flash_messages");
 const { matchedData } = require('express-validator');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
+const {CustomError} = require("../utils/custom.error");
 
 const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
@@ -73,23 +74,27 @@ const addBphtb = asyncHandler(async (req, res, next) => {
 
 const updateBphtb = asyncHandler(async (req, res, next) => {
     const cleandata = matchedData(req);
-    const {id} = req.query;
+
+    if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
+
     await mainModel.update('Bphtb', {
         ...cleandata, 
         perintah_bayar : req.body?.perintah_bayar || false,
         lunas : req.body?.lunas || false,
         selesai : req.body?.selesai || false
-    }, {id});
+    }, req.query);
 
     // flash message
     addMessage(req, 'info', 'Bphtb successfully updated');
 
-    res.redirect(`/admin/bphtb/view?id=${req.query.id}`);
+    res.redirect(`/bphtb/view?id=${req.query.id}`);
 })
 
 const deleteBphtb = asyncHandler(async (req, res, next) => {
-    const {id} = req.query;
-    await mainModel.del('Bphtb', {id});
+
+    if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
+
+    await mainModel.del('Bphtb', req.query);
 
     res.redirect('/admin/dashboard');
 })

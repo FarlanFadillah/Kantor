@@ -51,6 +51,7 @@ async function add(table, model){
         await db(table).insert(model);
     }catch(err){
         console.log(model);
+        if(err.message.includes('SQLITE_CONSTRAINT: UNIQUE')) throw new CustomError('Data already exist', 'error', 200)
         throw new CustomError(err.message, 'error');
     }
 }
