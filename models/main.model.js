@@ -1,9 +1,11 @@
 
 const db = require('../database/db');
-const { CustomError } = require('../utils/custom.error'); 
+const { CustomError } = require('../utils/custom.error');
 
 
-
+/**
+ * @param {string} table
+ */
 async function getAll(table){
     try {
         return await db(table).select('*');
@@ -11,7 +13,10 @@ async function getAll(table){
         throw new CustomError(error.message, 'error');
     }
 }
-
+/**
+ * @param {string} table
+ * @param {string} model
+ */
 async function getAllWhere(table, model){
     try {
         return await db(table).select('*').where(model);
@@ -19,15 +24,23 @@ async function getAllWhere(table, model){
         throw new CustomError(error.message, 'error');
     }
 }
-
-async function get(table, model, field = '*'){
+/**
+ * @param {string} table
+ * @param {string} model
+ * @param {Array} fields
+ */
+async function get(table, model, fields = ['*']){
     try {
-        return await db(table).select(field).where(model).first();
+        return await db(table).select(fields).where(model).first();
     }catch(err){
         throw new CustomError(err.message, 'error');
     }
 }
 
+/**
+ * @param {string} table
+ * @param {string} filter
+ */
 async function filter(table, filter){
     try {
         return await db(table).where(filter).select('*');
@@ -36,6 +49,11 @@ async function filter(table, filter){
     }
 }
 
+/**
+ * @param {string} table
+ * @param {string} model
+ * @param {string} column
+ */
 async function addReturnColumn(table, model, column){
     try {
         const [res] = await db(table).insert(model).returning(column);
@@ -46,6 +64,10 @@ async function addReturnColumn(table, model, column){
     }
 }
 
+/**
+ * @param {string} table
+ * @param {string} model
+ */
 async function add(table, model){
     try {
         await db(table).insert(model);
@@ -56,6 +78,10 @@ async function add(table, model){
     }
 }
 
+/**
+ * @param {string} table
+ * @param {string} model
+ */
 async function del(table, model){
     try {
         await db(table).delete().where(model);
@@ -64,14 +90,22 @@ async function del(table, model){
     }
 }
 
-async function update(table, field, model){
+/**
+ * @param {string} table
+ * @param {string} model
+ * @param {Array} fields
+ */
+async function update(table, fields, model){
     try {
-        await db(table).update({...field, updated_at : db.fn.now()}).where(model);
+        await db(table).update({...fields, updated_at : db.fn.now()}).where(model);
     }catch(err){
         throw new CustomError(err.message, 'error');
     }
 }
 
+/**
+ * @param {string} table
+ */
 async function count(table){
     try {
         const rows = await db(table).count('* as total').first();
@@ -81,6 +115,9 @@ async function count(table){
     }
 }
 
+/**
+ * @param {string} table
+ */
 async function getPaginationList(table, fields, limit, offset, column, order = 'asc'){
     try{
         return await db(table).select(fields).limit(limit).offset(offset).orderBy(column, order);
@@ -113,6 +150,46 @@ async function rowExist(table, model){
     }
 }
 
+/**
+ * @param {Object} options
+ * @param {string} [options.table1_key]
+ * @param {string} [options.table2_key]
+ * @param {Array} [options.fields]
+ */
+async function joinTwoTable(table1, table2, options = {}){
+    await db(table1)
+    const {
+        table1_key,
+        table2_key,
+        fields = []
+    } = options;
+    try {
+        return await db(table1)
+            .join(table2, table1_key, table2_key)
+            .select(fields);
+    }catch(err){
+        throw new CustomError(err.message, 'error');
+    }
+}
+
+async function joinTableWithJunction(table1, table2, j_table, options = {}){
+    const {
+        table1_key,
+        table2_key,
+        j_table_key,
+        field = []
+    } = options;
+
+    try {
+        return await db(table)
+            .join(j_table, table1_key, j_table_key)
+            .join(table2, j_table_key, table2_key)
+            .select(field);
+    }catch(err){
+        throw new CustomError(err.message, 'error');
+    }
+}
+
 
 module.exports = {
     add,
@@ -126,6 +203,8 @@ module.exports = {
     addReturnColumn,
     filter,
     rowExist,
-    getAllWhere
+    getAllWhere,
+    joinTable,
+    joinTableWithJunction
 }
 
