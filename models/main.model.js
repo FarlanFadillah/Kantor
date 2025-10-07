@@ -157,7 +157,6 @@ async function rowExist(table, model){
  * @param {Array} [options.fields]
  */
 async function joinTwoTable(table1, table2, options = {}){
-    await db(table1)
     const {
         table1_key,
         table2_key,
@@ -204,7 +203,7 @@ module.exports = {
     filter,
     rowExist,
     getAllWhere,
-    joinTable,
+    joinTwoTable,
     joinTableWithJunction
 }
 
