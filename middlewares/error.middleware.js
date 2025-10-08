@@ -11,7 +11,8 @@ function formErrorHandler(err, req, res, next){
 
 function globalErrorHandler(err, req, res, next){
     res.locals.title = 'Error Page';
-    res.status(err.status).render('pages/error_page', {error : err});
+    console.log(err.message)
+    res.status(err.status || 500).render('pages/error_page', {error : err});
 }
 
 module.exports = {

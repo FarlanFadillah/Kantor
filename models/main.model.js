@@ -105,6 +105,7 @@ async function update(table, fields, model){
 
 /**
  * @param {string} table
+ * @return the total of rows
  */
 async function count(table){
     try {
@@ -117,6 +118,12 @@ async function count(table){
 
 /**
  * @param {string} table
+ * @param {Array} fields
+ * @param {integer} limit
+ * @param {integer} offset
+ * @param {string} column
+ * @param {string} order
+ * @return all pagination data from a table
  */
 async function getPaginationList(table, fields, limit, offset, column, order = 'asc'){
     try{
@@ -126,6 +133,11 @@ async function getPaginationList(table, fields, limit, offset, column, order = '
     }
 }
 
+/**
+ * 
+ * @param {string} table 
+ * @returns arrays of all column name
+ */
 async function getAllColumnName(table){
     try {
         const table_info =  await db.raw(`PRAGMA table_info(${table})`);
@@ -142,6 +154,12 @@ async function getAllColumnName(table){
     }
 }
 
+/**
+ * 
+ * @param {string} table 
+ * @param {Array} model 
+ * @returns a boolean wether a certain row is exist
+ */
 async function rowExist(table, model){
     try {
         return !! await db(table).select('*').where(model).first();
