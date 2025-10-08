@@ -21,8 +21,8 @@
                 <tr>
                     <th><%=i += 1%></th>
                     <td><%=value.produk%></td>
-                    <td><a href="/alas_hak/view?id=<%=value.alas_hak_id%>"><%=value.alas_hak%></a></td>
-                    <td><a href="/client/view?id=<%=value.wajib_pajak_id%>"><%=value.wajib_pajak%></a></td>
+                    <td><a href="/alas_hak/view?id=<%=value.alas_hak_id%>"><%=value.no_alas_hak%>/<%=value.alas_hak_kel%></a></td>
+                    <td><a href="/client/view?id=<%=value.client_id%>"><%=value.first_name%> <%=value.last_name || ''%></a></td>
                     <td>Rp.<%=value.hasil_survei.toLocaleString()%></td>
                     <td>
                         <%if(value.lunas){%>
