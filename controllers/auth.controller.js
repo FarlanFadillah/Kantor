@@ -4,19 +4,27 @@ const { CustomError } = require('../utils/custom.error');
 const hashing = require('../utils/hashing')
 const {addMessage} = require("../utils/flash_messages");
 
+/**
+ * Render login page
+ */
 const renderLoginPage = asyncHandler(async (req, res, next)=>{
     if(req.session.isAuthenticated) return res.redirect('/');
     res.locals.title = 'Login Page';
     res.status(200).render('pages/login_page');
 });
 
+/**
+ * Render register page
+ */
 const renderRegisterPage = asyncHandler(async(req, res, next)=>{
     res.locals.title = 'Register Page';
-    res.locals.form_data = req.session.form_data || {};
 
     res.status(200).render('pages/register_page');
 });
 
+/**
+ * Login controller
+ */
 const login = asyncHandler(async (req, res, next)=>{
     const {username, password} = req.body;
 
@@ -39,6 +47,9 @@ const login = asyncHandler(async (req, res, next)=>{
     res.redirect('/admin/dashboard');
 });
 
+/**
+ * Register controller
+ */
 const register = asyncHandler(async (req, res, next)=>{
     const {username, first_name, last_name, password} = req.body;
 
@@ -52,6 +63,9 @@ const register = asyncHandler(async (req, res, next)=>{
     res.redirect('/auth/login');
 })
 
+/**
+ * Logout controller
+ */
 const logout = asyncHandler(async (req, res, next)=>{
     req.session.destroy();
     res.redirect('/auth/login');

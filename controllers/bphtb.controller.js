@@ -5,6 +5,12 @@ const { matchedData } = require('express-validator');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
 const {CustomError} = require("../utils/custom.error");
 
+/**
+ * Bphtb Form Page.
+ * The form state is determined by the query parameter — if the query
+ * contains an id, the form is filled with existing data; if the id is undefined, 
+ * the form is rendered empty.
+ */
 const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
     res.locals.form_action = '/bphtb/form/new';

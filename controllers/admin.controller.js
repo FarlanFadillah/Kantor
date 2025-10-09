@@ -1,6 +1,8 @@
 const asyncHandler = require("../utils/asyncHandler");
 const mainModel = require('../models/main.model');
-const bphtbModel = require('../models/bphtb.model')
+const bphtbModel = require('../models/bphtb.model');
+
+
 const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     // set the title for the page
     res.locals.title = 'Dashboard';

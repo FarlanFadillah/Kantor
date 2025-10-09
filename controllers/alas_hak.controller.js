@@ -7,7 +7,14 @@ const { getRequireData, convertLocalDT } = require("../helper/alas_hak_ctrl.help
 const alasHakModel = require('../models/alas_hak.model');
 const {reduceAlasHakTable} = require('../helper/alas_hak_ctrl.helper');
 
+ 
 
+
+/**
+ * The form state is determined by the query parameter — if the query
+ * contains an id, the form is filled with existing data; if the id is undefined, 
+ * the form is rendered empty.
+ */
 const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
     res.locals.title = 'Form Alas Hak';
     res.locals.form_action = '/alas_hak/form/new';
@@ -24,6 +31,10 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
     res.status(200).render('pages/alas_hak_form');
 });
 
+/**
+ * Alas hak view page.
+ * This page contained details about alas hak.
+ */
 const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
     res.locals.title = 'Alas Hak View';
 
@@ -39,7 +50,13 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
     res.status(200).render('pages/alas_hak_view');
 });
 
-
+/**
+ * Alas Hak List Page.
+ * This page renders a paginated list of Alas Hak data.
+ * 
+ * Note: Set the routes for the view, delete, and form (empty Alas Hak form page);
+ * these routes will populate the table page template.
+*/
 const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
     res.locals.title = 'Alas Hak List';
     // total pages
@@ -64,12 +81,14 @@ const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
     // form route
     res.locals.form_route = '/alas_hak/form';
 
-
-
     res.status(200).render('pages/table_list_page');
 })
 
-
+/**
+ * This is actually an middleware
+ * after adding alasHak data the next controller 
+ * is addAlasHakOwner
+ */
 const addAlasHak = asyncHandler(async (req, res, next)=>{
 
     // getting the required fields
@@ -88,6 +107,9 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
     next();
 });
 
+/**
+ * Delete alas hak controller.
+ */
 const deleteAlasHak = asyncHandler(async (req, res, next)=>{
     if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
 
@@ -99,6 +121,11 @@ const deleteAlasHak = asyncHandler(async (req, res, next)=>{
     res.redirect('/alas_hak/list');
 })
 
+/**
+ * This is actually an middleware
+ * after updating alasHak data the next controller 
+ * is updateAlasHakOwner
+ */
 const updateAlasHak = asyncHandler(async (req, res, next)=>{
     console.log(req.body);
 
@@ -116,6 +143,10 @@ const updateAlasHak = asyncHandler(async (req, res, next)=>{
     next();
 })
 
+/**
+ * Add alas hak owner controller.
+ * this is will run after addAlasHak
+ */
 const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
     let {client_id} = req.body;
     const alasHak_id = res.locals.alasHak.id;
@@ -132,6 +163,10 @@ const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
     res.redirect(`/alas_hak/view?id=${alasHak_id}`);
 })
 
+/**
+ * Update alas hak owner controller.
+ * this is will run after updateAlasHak
+ */
 const updateAlasHakOwner = asyncHandler (async (req, res, next)=>{
     const {client_id} = req.body;
     const alasHak_id = req.query.id;
