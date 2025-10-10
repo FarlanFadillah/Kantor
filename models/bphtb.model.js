@@ -42,5 +42,6 @@ async function getBphtbData(id){
 }
 
 module.exports = {
-    getBphtbAllList
+    getBphtbAllList,
+    getBphtbData
 }

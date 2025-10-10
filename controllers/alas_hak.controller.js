@@ -11,6 +11,7 @@ const {reduceAlasHakTable} = require('../helper/alas_hak_ctrl.helper');
 
 
 /**
+ * Alas Hak Form Page.
  * The form state is determined by the query parameter — if the query
  * contains an id, the form is filled with existing data; if the id is undefined, 
  * the form is rendered empty.
