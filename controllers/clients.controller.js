@@ -5,7 +5,11 @@ const {matchedData} = require('express-validator');
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const {CustomError} = require("../utils/custom.error");
 
-
+/**
+ * The form state is determined by the query parameter — if the query
+ * contains an id, the form is filled with existing data; if the id is undefined, 
+ * the form is rendered empty.
+ */
 const renderClientFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client Form';
     res.locals.form_action = '/client/form/new';
@@ -24,6 +28,13 @@ const renderClientFormPage = asyncHandler(async (req, res, next) => {
     res.status(200).render('pages/client_form');
 })
 
+/**
+ * Clients List Page.
+ * This page renders a paginated list of Clients data.
+ * 
+ * Note: Set the routes for the view, delete, and form (empty Clients form page);
+ * these routes will populate the table page template.
+*/
 const renderClientListPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client List';
 
@@ -52,6 +63,10 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
     res.status(200).render('pages/table_list_page');
 });
 
+/**
+ * Clients view page.
+ * This page contained details about a Client.
+ */
 const renderClientViewPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client View';
 
@@ -64,6 +79,9 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
     res.status(200).render('pages/client_view_page');
 })
 
+/**
+ * Add client controller
+ */
 const addClient = asyncHandler(async (req, res, next) => {
     await mainModel.add('Clients', matchedData(req));
 
@@ -73,6 +91,9 @@ const addClient = asyncHandler(async (req, res, next) => {
     res.redirect('/admin/dashboard');
 });
 
+/**
+ * Delete client controller
+ */
 const deleteClient = asyncHandler(async (req, res, next) => {
 
     if(!req.query) return next(new CustomError('Id is not defined', 'error', 200));
@@ -85,6 +106,9 @@ const deleteClient = asyncHandler(async (req, res, next) => {
     res.redirect('/client/list');
 });
 
+/**
+ * Update client controller
+ */
 const updateClient = asyncHandler(async (req, res, next)=>{
     await mainModel.update('Clients', req.body, req.query);
 

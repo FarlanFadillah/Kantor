@@ -1,13 +1,20 @@
 const { makeDateString } = require("../utils/string_tools");
 
-function getRequireData(array, body){
+/**
+ * 
+ * @param {Array} array 
+ * @param {Object} body 
+ * @returns filtered object. 
+ */
+function getRequireData(filter, object){
     let fields = {};
     // Loop through keys
-    for (const key in body) {
-        if(array.includes(key)) fields[key] = body[key];
+    for (const key in object) {
+        if(filter.includes(key)) fields[key] = object[key];
     }
     return fields;
 }
+
 /**
  * 
  * @param {Object} data 

@@ -1,5 +1,12 @@
 const validator = require('express-validator');
 
+/**
+ * 
+ * @param {string} field 
+ * 
+ * This validator make sure the field is not empty, 
+ * does not contain any html tag, and sanitize the value
+ */
 const requiredTextValidator = (field) => {
     return validator.body(field)
         .trim()
@@ -8,6 +15,12 @@ const requiredTextValidator = (field) => {
         .escape()
 }
 
+/**
+ * 
+ * @param {string} field 
+ * This validator make sure that the field 
+ * does not contain any html tag, and sanitize the value
+ */
 const optionalTextValidator = (field) => {
     return validator.body(field)
         .trim()

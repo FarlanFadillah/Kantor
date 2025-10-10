@@ -1,6 +1,10 @@
 const asyncHandler = require('../../utils/asyncHandler');
 const mainModel = require('../../models/main.model');
 
+/**
+ * Alas Hak Api endpoint
+ * @return alas hak by its id
+ */
 const getAlasHak = asyncHandler(async (req, res, next)=>{
     // getting alashak data by its id with specific columns
     const alasHak = await mainModel.get('Alas_Hak', req.query, ['id', 'no_alas_hak', 'kel']);

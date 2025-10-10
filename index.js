@@ -23,6 +23,7 @@ const adminRoute = require('./routes/admin.router');
 const bphtbRoute = require('./routes/bphtb.router');
 const clientRoute = require('./routes/client.router');
 const alasHakRoute = require('./routes/alas_hak.router');
+const pbbRoute = require('./routes/pbb.router');
 
 // api routes
 const client_apiRoute = require('./routes/api/client_api.router');
@@ -101,6 +102,7 @@ app.use('/admin', adminRoute);
 app.use('/bphtb', bphtbRoute);
 app.use('/client', clientRoute);
 app.use('/alas_hak', alasHakRoute);
+app.use('/pbb', pbbRoute);
 
 // handler route that does not exists
 app.use((req, res, next)=>{

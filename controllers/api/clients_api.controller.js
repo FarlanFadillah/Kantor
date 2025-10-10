@@ -1,7 +1,11 @@
 const asyncHandler = require("../../utils/asyncHandler");
 const mainModel = require('../../models/main.model');
 
-
+/**
+ * Clients Api endpoint
+ * 
+ * @return client data by nik column
+ */
 const verifyClientsNik = asyncHandler(async (req, res, next) => {
     // getting client data by its id with specific columns
     const client = await mainModel.get('Clients', req.query, ['id', 'first_name', 'last_name']);

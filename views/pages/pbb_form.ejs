@@ -1,0 +1,91 @@
+<% layout('pages/base_layout') %>
+<div class="container py-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1 class="mb-4">Form PBB SKNJOP</h1>
+
+      <form action="<%= form_action %>" method="POST" id="pbb_sknjop_form">
+        <div class="row g-3">
+
+          <!-- NOP -->
+          <div class="col-md-6">
+            <label for="nop" class="form-label">NOP <span class="text-danger">*</span></label>
+            <input type="text" id="nop" name="nop" class="form-control" required value="<%= form_data?.nop || '' %>">
+          </div>
+
+          <!-- Alamat -->
+          <div class="col-md-6">
+            <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
+            <input type="text" id="provinsi" name="provinsi" class="form-control" required value="<%= form_data?.provinsi || '' %>">
+          </div>
+
+          <div class="col-md-6">
+            <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
+            <input type="text" id="kec" name="kec" class="form-control" required value="<%= form_data?.kec || '' %>">
+          </div>
+
+          <div class="col-md-6">
+            <label for="kel" class="form-label">Kelurahan <span class="text-danger">*</span></label>
+            <input type="text" id="kel" name="kel" class="form-control" required value="<%= form_data?.kel || '' %>">
+          </div>
+
+          <div class="col-md-6">
+            <label for="jor" class="form-label">Jorong</label>
+            <input type="text" id="jor" name="jor" class="form-control" value="<%= form_data?.jor || '' %>">
+          </div>
+
+          <!-- Client -->
+          <div class="col-md-6">
+            <label for="nik_wajib_pajak" class="form-label">NIK (Client)</label>
+            <div class="input-group mb-3">
+              <input type="text" id="nik_wajib_pajak" class="form-control" value="<%= form_data?.nik_client || '' %>">
+              <a href="/client/form" target="_blank" class="btn btn-primary">+</a>
+            </div>
+
+            <input hidden type="text" id="id_wajib_pajak" name="client_id" class="form-control" value="<%= form_data?.client_id || '' %>">
+
+            <label for="wajib_pajak" class="form-label">Nama Client</label>
+            <input type="text" id="wajib_pajak" class="form-control" readonly value="<%= form_data?.client_name || '' %>" style="background-color: lightgray">
+          </div>
+
+          <!-- Alas Hak -->
+          <div class="col-md-6">
+            <label for="no_alas_hak" class="form-label">No. Alas Hak</label>
+            <input type="text" id="no_alas_hak" class="form-control" value="<%= form_data?.no_alas_hak || '' %>">
+
+            <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" value="<%= form_data?.alas_hak_id || '' %>">
+
+            <label for="alas_hak" class="form-label">Alas Hak</label>
+            <input type="text" id="alas_hak" class="form-control" readonly value="<%= form_data?.alas_hak || '' %>" style="background-color: lightgray">
+          </div>
+
+          <!-- Informasi Tanah -->
+          <div class="col-md-6">
+            <label for="luas_tanah" class="form-label">Luas Tanah (m²)</label>
+            <input type="number" id="luas_tanah" name="luas_tanah" class="form-control" min="0" step="1" value="<%= form_data?.luas_tanah || 0 %>">
+          </div>
+
+          <div class="col-md-6">
+            <label for="luas_bangunan" class="form-label">Luas Bangunan (m²)</label>
+            <input type="number" id="luas_bangunan" name="luas_bangunan" class="form-control" min="0" step="1" value="<%= form_data?.luas_bangunan || 0 %>">
+          </div>
+
+          <div class="col-md-6">
+            <label for="njop" class="form-label">NJOP</label>
+            <input type="number" id="njop" name="njop" class="form-control" min="0" step="1" value="<%= form_data?.njop || '' %>">
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="col-12 d-flex gap-2">
+            <button type="submit" form="pbb_sknjop_form" class="btn btn-primary">Simpan</button>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/bphtb_form_page.js"></script>

@@ -46,6 +46,11 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.render('pages/bphtb_form');
 });
 
+
+/**
+ * Bphtb view page.
+ * This page contained details about Bphtb.
+ */
 const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Bphtb View'
 
@@ -69,6 +74,10 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
     res.status(200).render('pages/bphtb_view');
 });
 
+
+/**
+ * Add bphtb controller
+ */
 const addBphtb = asyncHandler(async (req, res, next) => {
     await mainModel.add('Bphtb', req.body);
 
@@ -78,6 +87,9 @@ const addBphtb = asyncHandler(async (req, res, next) => {
     res.redirect('/admin/dashboard');
 });
 
+/**
+ * Update bphtb controller
+ */
 const updateBphtb = asyncHandler(async (req, res, next) => {
     const cleandata = matchedData(req);
 
@@ -96,6 +108,9 @@ const updateBphtb = asyncHandler(async (req, res, next) => {
     res.redirect(`/bphtb/view?id=${req.query.id}`);
 })
 
+/**
+ * Delete bphtb controller
+ */
 const deleteBphtb = asyncHandler(async (req, res, next) => {
 
     if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
