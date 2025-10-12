@@ -31,6 +31,7 @@ const requiredBphtbTextField = [
 
 const optionalBphtbTextField = [
     'tgl_survei',
+    'pbb_id'
 ]
 
 
@@ -38,6 +39,7 @@ const optionalBphtbTextField = [
 const requiredAlasHakTextField = [
     'jenis_hak',
     'provinsi',
+    'kab_kota',
     'kec',
     'kel',
 ]

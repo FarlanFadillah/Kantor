@@ -134,7 +134,9 @@ const updateAlasHak = asyncHandler(async (req, res, next)=>{
     // prevent other column added
     // helping the AlasHak_Clients table data insertion
     let column_name = await mainModel.getAllColumnName('Alas_Hak');
+    
     const fields = getRequireData(column_name, matchedData(req));
+    console.log('fields', fields);
 
     await mainModel.update('Alas_Hak', fields, req.query);
 

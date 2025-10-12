@@ -13,11 +13,19 @@
                 </tr>
                 <tr>
                     <th scope="row">Alas Hak</th>
-                    <td><%= bphtb?.alas_hak || '-' %></td>
+                    <td><a href='/alas_hak/view?id=<%=bphtb?.alas_hak_id%>'><%= bphtb?.no_alas_hak || '-' %>/ <%= bphtb?.alas_hak_kel %></a></td>
                 </tr>
+
+                <tr>
+                    <th scope="row">PBB</th>
+                    <td><a href="/pbb/view?id=<%=bphtb?.pbb_id%>"><%= bphtb?.nop || '-' %></a></td>
+                </tr>
+
                 <tr>
                     <th scope="row">Wajib Pajak</th>
-                    <td><%= bphtb?.wajib_pajak || '-' %></td>
+                    <td><a href="/client/view?id=<%= bphtb?.client_id%>">
+                        <%= bphtb?.first_name || '-' %> <%= bphtb?.last_name || '-' %></a>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Hasil Survei</th>

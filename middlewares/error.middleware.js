@@ -34,7 +34,7 @@ function formErrorHandler(err, req, res, next){
  */
 function globalErrorHandler(err, req, res, next){
     res.locals.title = 'Error Page';
-    console.log(err.message)
+    console.log(err)
     res.status(err.status || 500).render('pages/error_page', {error : err});
 }
 

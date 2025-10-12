@@ -31,7 +31,7 @@ async function getAllWhere(table, model){
  */
 async function get(table, model, fields = ['*']){
     try {
-        return await db(table).select(fields).where(model).first();
+        return await db(table).select(fields || '*').where(model).first();
     }catch(err){
         throw new CustomError(err.message, 'error');
     }

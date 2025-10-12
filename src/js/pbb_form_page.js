@@ -1,6 +1,7 @@
 const wajib_pajak = document.querySelector('#wajib_pajak');
 const id_wajib_pajak = document.querySelector('#id_wajib_pajak');
-document.getElementById('nik_wajib_pajak').addEventListener('blur', async (event)=>{
+const nik_wajib_pajak = document.getElementById('nik_wajib_pajak');
+nik_wajib_pajak.addEventListener('blur', async (event)=>{
     try {
         const nik = event.target.value;
         if(!nik > 0) return;
@@ -24,8 +25,8 @@ document.getElementById('nik_wajib_pajak').addEventListener('blur', async (event
 
 const id_alas_hak = document.querySelector('#alas_hak_id');
 const alas_hak = document.querySelector('#alas_hak');
-
-document.querySelector('#no_alas_hak').addEventListener('blur', async (event)=>{
+const no_alas_hak = document.querySelector('#no_alas_hak');
+no_alas_hak.addEventListener('blur', async (event)=>{
     try {
         const no_alas_hak = event.target.value;
 
@@ -34,28 +35,23 @@ document.querySelector('#no_alas_hak').addEventListener('blur', async (event)=>{
         alas_hak.value = data.alasHak.no_alas_hak + "/" + data.alasHak.kel;
         id_alas_hak.value = data.alasHak.id;
     }catch(error){
-        event.target.value = '';
-        alas_hak.value = '';
+        event.target.value = null;
+        alas_hak.value = null;
     }
-})
+});
 
-const pbb_status = document.querySelector('#nop-status');
-const nop = document.querySelector('#nop');
-const pbb_id = document.querySelector('#pbb_id');
-nop.addEventListener('blur', async (e)=>{
-    try {
-        if(!e.target.value) throw new Error('Nop undefined');
-        const res = await verifyPbb(e.target.value);
-        if(!res.data) throw new Error('NOP not found');
+// remove current wajib pajak
+document.getElementById('rm_wajib_pajak').addEventListener('click', (e)=>{
+    wajib_pajak.value = null;
+    id_wajib_pajak.value = null;
+    nik_wajib_pajak.value = null;
+});
 
-        pbb_id.value = res.data.id;
-        pbb_status.innerHTML = `<i class="bi bi-check-circle-fill text-success"></i>`;
-    } catch (error) {
-        alert(error.message);
-        e.target.value = null;
-        pbb_id.value = null;
-        pbb_status.innerHTML = `<i id="pbb_status" class="bi bi-x-circle-fill text-danger"></i>`;
-    }
+// remove current alas hak
+document.querySelector('#rm_alas_hak').addEventListener('click', (e)=>{
+    alas_hak.value = null;
+    id_alas_hak.value = null;
+    no_alas_hak.value = null;
 })
 
 
@@ -87,24 +83,6 @@ async function verifyAlasHak(no_alas_hak){
         alert("Terjadi error: " + e.message);
     }
 }
-
-async function verifyPbb(nop){
-    try {
-        const res = await fetch(`/api/pbb/verify?nop=${nop}`);
-        if(!res.ok){
-            // Baca text biar bisa lihat error aslinya
-            const text = await res.text();
-            throw new Error(JSON.parse(text).msg);
-        }
-        return res.json();
-    } catch (error) {
-        pbb_status.innerHTML = `<i id="pbb_status" class="bi bi-x-circle-fill text-danger"></i>`;
-        alert("Terjadi error: " + e.message);
-    }
-}
-
-
-
 
 /**
  * All input text are uppercase

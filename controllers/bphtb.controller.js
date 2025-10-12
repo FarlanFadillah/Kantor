@@ -1,5 +1,6 @@
 const asyncHandler = require('../utils/asyncHandler');
 const mainModel = require('../models/main.model');
+const bphtbModel = require('../models/bphtb.model');
 const {addMessage} = require("../utils/flash_messages");
 const { matchedData } = require('express-validator');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
@@ -21,23 +22,8 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
         res.locals.form_action = `/bphtb/form/edit?id=${req.query.id}`;
 
         // filled form
-        // create form_data to store the bphtb 
-        const form_data = await mainModel.get('Bphtb', req.query);
-
-        // getting nik, first name, and last name by getting the clients data by its id
-        let {nik, first_name, last_name} = await mainModel.get('Clients', {id : form_data.wajib_pajak}, ['nik', 'first_name', 'last_name']);
-
-        // getting alas hak data
-        let {no_alas_hak, kel} = await mainModel.get('Alas_Hak', {id : form_data.alas_hak_id}, ["no_alas_hak", "kel"])
-
-        // incase last name is null, because its nullable
-        last_name = last_name || '';
-
-        form_data.full_name = first_name + ' ' + last_name;
-        form_data.nik_wajib_pajak = nik;
-
-        form_data.no_alas_hak = no_alas_hak;
-        form_data.alas_hak = no_alas_hak + '/' + kel;
+        // get form_data to store the bphtb form 
+        const form_data = await bphtbModel.getBphtbData(req.query.id);
 
         res.locals.form_data = form_data;
         
@@ -56,18 +42,10 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
 
     if(req.query === undefined) return res.redirect('/admin/dashboard');
 
-    const bphtb = await mainModel.get('Bphtb', req.query);
+    const bphtb = await bphtbModel.getBphtbData(req.query.id);
+    
     // convert the date time to local time asia/jakarta
     convertLocalDT(bphtb);
-
-    // getting wajib pajak data
-    let {first_name, last_name} = await mainModel.get('Clients', {id : bphtb.wajib_pajak}, ['first_name', 'last_name']);
-    last_name = last_name || '';
-    bphtb.wajib_pajak = first_name + ' ' + last_name;
-
-    // getting alas hak data
-    let {no_alas_hak, kel} = await mainModel.get('Alas_Hak', {id : bphtb.alas_hak_id}, ["no_alas_hak", "kel"]);
-    bphtb.alas_hak = no_alas_hak + '/' + kel;
 
     res.locals.bphtb = bphtb;
 
@@ -92,6 +70,9 @@ const addBphtb = asyncHandler(async (req, res, next) => {
  */
 const updateBphtb = asyncHandler(async (req, res, next) => {
     const cleandata = matchedData(req);
+
+    // make sure the foreign key is not undefined
+    cleandata.pbb_id = cleandata.pbb_id || null;
 
     if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
 

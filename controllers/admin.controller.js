@@ -2,7 +2,9 @@ const asyncHandler = require("../utils/asyncHandler");
 const mainModel = require('../models/main.model');
 const bphtbModel = require('../models/bphtb.model');
 
-
+/**
+ * render dashboard page with bphtb list
+ */
 const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     // set the title for the page
     res.locals.title = 'Dashboard';
@@ -12,6 +14,9 @@ const renderDashboardPage = asyncHandler(async(req, res, next)=>{
 
     // getting alas hak total
     res.locals.total_alas_hak = await mainModel.count('Alas_Hak');
+
+    // getting pbb total
+    res.locals.total_pbb = await mainModel.count('PBB_SKNJOP');
 
     // getting all bphtb with join table
     const bpthb_table = await bphtbModel.getBphtbAllList();

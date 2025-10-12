@@ -10,6 +10,7 @@ exports.up = function(knex) {
 
     // adress fields
     table.string('provinsi').notNullable();
+    table.string('kab_kota').notNullable();
     table.string('kec').notNullable();
     table.string('kel').notNullable();
     table.string('jor').nullable();
@@ -26,6 +27,9 @@ exports.up = function(knex) {
     table.integer('luas_tanah').defaultTo(0);
     table.integer('luas_bangunan').defaultTo(0);
     table.bigInteger('njop').nullable();
+
+    table.datetime('added_at').defaultTo(knex.fn.now());
+    table.datetime('updated_at').defaultTo(knex.fn.now());
 
   })
 };

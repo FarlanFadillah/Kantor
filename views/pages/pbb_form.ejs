@@ -20,6 +20,11 @@
           </div>
 
           <div class="col-md-6">
+            <label for="kab_kota" class="form-label">Kabupaten/Kota <span class="text-danger">*</span></label>
+            <input type="text" id="kab_kota" name="kab_kota" class="form-control" required value="<%= form_data?.kab_kota || '' %>">
+          </div>
+
+          <div class="col-md-6">
             <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
             <input type="text" id="kec" name="kec" class="form-control" required value="<%= form_data?.kec || '' %>">
           </div>
@@ -45,7 +50,10 @@
             <input hidden type="text" id="id_wajib_pajak" name="client_id" class="form-control" value="<%= form_data?.client_id || '' %>">
 
             <label for="wajib_pajak" class="form-label">Nama Client</label>
-            <input type="text" id="wajib_pajak" class="form-control" readonly value="<%= form_data?.client_name || '' %>" style="background-color: lightgray">
+            <div class="input-group mb-3">
+              <input type="text" id="wajib_pajak" class="form-control" readonly value="<%= form_data?.client_first_name%> <%= form_data?.client_last_name || '' %>" style="background-color: lightgray">
+              <a id="rm_wajib_pajak" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+            </div>
           </div>
 
           <!-- Alas Hak -->
@@ -56,7 +64,10 @@
             <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" value="<%= form_data?.alas_hak_id || '' %>">
 
             <label for="alas_hak" class="form-label">Alas Hak</label>
-            <input type="text" id="alas_hak" class="form-control" readonly value="<%= form_data?.alas_hak || '' %>" style="background-color: lightgray">
+            <div class="input-group mb-3">
+              <input type="text" id="alas_hak" class="form-control" readonly value="<%= form_data?.no_alas_hak || '' %>/<%= form_data?.alas_hak_kel  %>" style="background-color: lightgray">
+              <a id="rm_alas_hak" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+            </div>
           </div>
 
           <!-- Informasi Tanah -->
@@ -88,4 +99,4 @@
   </div>
 </div>
 
-<script src="/js/bphtb_form_page.js"></script>
+<script src="/js/pbb_form_page.js"></script>
