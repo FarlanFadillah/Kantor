@@ -21,7 +21,23 @@
                     <!-- Alas Hak -->
                     <div class="col-md-6">
                         <label for="no_alas_hak" class="form-label">No. Alas Hak <span class="text-danger">*</span></label>
-                        <input type="text" id="no_alas_hak" class="form-control" required value="<%=form_data?.no_alas_hak || ''%>">
+                        
+                        <div class="input-group mb-3 dropdown" data-bs-spy="scroll">
+                            <input autocomplete="off" type="text" id="no_alas_hak" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.no_alas_hak || ''%>">
+                            <a href="/alas_hak/form" target="_blank" class="btn btn-primary">+</a>
+                            <ul class="dropdown-menu">
+                                <!-- <li><a class="dropdown-item" href="#">019250918250918250918</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                            </ul>
+                        </div>
+
 
                         <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" value="<%= form_data?.alas_hak_id || ''%>">
 
@@ -117,3 +133,4 @@
     </div>
 </div>
 <script src="/js/bphtb_form_page.js"></script>
+<script src="/js/alasHak_search.js"></script>

@@ -207,6 +207,22 @@ async function joinTableWithJunction(table1, table2, j_table, options = {}){
     }
 }
 
+/**
+ * 
+ * @param {string} table 
+ * @param {Object} model 
+ * @param {Array} field 
+ * @returns rows that match the model
+ */
+async function search(table, query, field = ['*']){
+    try {
+        // console.log(await db(table).select(field).whereLike(query.key, '%'+query.value+'%').toQuery());
+        return await db(table).select(field).whereLike(query.key, '%'+query.value+'%');
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
+}
+
 
 module.exports = {
     add,
@@ -222,6 +238,7 @@ module.exports = {
     rowExist,
     getAllWhere,
     joinTwoTable,
-    joinTableWithJunction
+    joinTableWithJunction,
+    search
 }
 

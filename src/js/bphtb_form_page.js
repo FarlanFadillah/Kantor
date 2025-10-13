@@ -22,22 +22,22 @@ document.getElementById('nik_wajib_pajak').addEventListener('blur', async (event
 
 });
 
-const id_alas_hak = document.querySelector('#alas_hak_id');
-const alas_hak = document.querySelector('#alas_hak');
+// const id_alas_hak = document.querySelector('#alas_hak_id');
+// const alas_hak = document.querySelector('#alas_hak');
 
-document.querySelector('#no_alas_hak').addEventListener('blur', async (event)=>{
-    try {
-        const no_alas_hak = event.target.value;
+// document.querySelector('#no_alas_hak').addEventListener('blur', async (event)=>{
+//     try {
+//         const no_alas_hak = event.target.value;
 
-        const data = await verifyAlasHak(no_alas_hak);
+//         const data = await verifyAlasHak(no_alas_hak);
 
-        alas_hak.value = data.alasHak.no_alas_hak + "/" + data.alasHak.kel;
-        id_alas_hak.value = data.alasHak.id;
-    }catch(error){
-        event.target.value = '';
-        alas_hak.value = '';
-    }
-})
+//         alas_hak.value = data.alasHak.no_alas_hak + "/" + data.alasHak.kel;
+//         id_alas_hak.value = data.alasHak.id;
+//     }catch(error){
+//         event.target.value = '';
+//         alas_hak.value = '';
+//     }
+// })
 
 const pbb_status = document.querySelector('#nop-status');
 const nop = document.querySelector('#nop');

@@ -1,5 +1,6 @@
 const asyncHandler = require('../../utils/asyncHandler');
 const mainModel = require('../../models/main.model');
+const { CustomError } = require('../../utils/custom.error');
 
 /**
  * Alas Hak Api endpoint
@@ -20,6 +21,28 @@ const getAlasHak = asyncHandler(async (req, res, next)=>{
 });
 
 
+/**
+ * Search alas hak by no_alas_hak
+ */
+const searchAlasHak = asyncHandler(async(req, res, next)=>{
+
+    const {key, value} = req.query;
+    
+    const model = {};
+    model[key] = value;
+
+    console.log(model);
+
+    if(!key || key === undefined || !value || value === undefined) 
+        return res.status(200).json({success : false, msg : 'no_alas_hak is undefined'})
+
+    const data = await mainModel.search('Alas_Hak', req.query, ['no_alas_hak', 'kel', 'id']);
+
+    res.status(200).json({success : true, data : data})
+})
+
+
 module.exports = {
     getAlasHak,
+    searchAlasHak
 }
