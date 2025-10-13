@@ -1,4 +1,4 @@
-const { renderPbbFormPage, renderPbbListPage, addPbb, renderPbbViewPage, updatePbb } = require('../controllers/pbb.controller');
+const { renderPbbFormPage, renderPbbListPage, addPbb, renderPbbViewPage, updatePbb, deletePbb } = require('../controllers/pbb.controller');
 const { formErrorHandler } = require('../middlewares/error.middleware');
 const { getFormState, saveFormState, clearFormState } = require('../middlewares/form.middleware');
 const { pagination } = require('../middlewares/pagination.middleware');
@@ -20,6 +20,8 @@ router.route('/form/edit')
 router.get('/view', renderPbbViewPage);
 
 router.get('/list', pagination, renderPbbListPage);
+
+router.post('/delete', deletePbb);
 
 router.use(formErrorHandler);
 

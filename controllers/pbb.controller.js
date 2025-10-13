@@ -3,6 +3,7 @@ const mainModel = require('../models/main.model');
 const pbbModel = require('../models/pbb.model');
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const { addMessage } = require("../utils/flash_messages");
+const { matchedData } = require("express-validator");
 
 
 /**
@@ -80,34 +81,50 @@ const renderPbbViewPage = asyncHandler(async (req, res, next)=>{
 });
 
 
+/**
+ * Add PBB controller
+ */
 const addPbb = asyncHandler(async (req, res, next)=>{
+    const data = matchedData(req);
 
     // make sure the foreign key is not undefined
-    req.body.client_id = req.body.client_id || null;
-    req.body.alas_hak_id = req.body.alas_hak_id || null;
+    data.client_id = data.client_id || null;
+    data.alas_hak_id = data.alas_hak_id || null;
 
-    await mainModel.add('PBB_SKNJOP', req.body);
+    await mainModel.add('PBB_SKNJOP', data);
     res.redirect('/pbb/list');
 });
 
 /**
- * Update Pbb controller
+ * Update PBB controller
  */
 const updatePbb = asyncHandler(async (req, res, next) => {
-    // const cleandata = matchedData(req);
+    const data = matchedData(req);
 
     if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
 
     // make sure the foreign key is null
-    req.body.client_id = req.body.client_id || null;
-    req.body.alas_hak_id = req.body.alas_hak_id || null;
+    data.client_id = data.client_id || null;
+    data.alas_hak_id = data.alas_hak_id || null;
 
-    await mainModel.update('PBB_SKNJOP', req.body, req.query);
+    await mainModel.update('PBB_SKNJOP', data, req.query);
 
     // flash message
     addMessage(req, 'info', 'Pbb successfully updated');
 
     res.redirect(`/pbb/view?id=${req.query.id}`);
+})
+
+/**
+ * Delete PBB controller
+ */
+const deletePbb = asyncHandler(async (req, res, next) => {
+
+    if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
+
+    await mainModel.del('PBB_SKNJOP', req.query);
+
+    res.redirect('/pbb/list');
 })
 
 
@@ -116,5 +133,6 @@ module.exports = {
     renderPbbListPage,
     renderPbbViewPage,
     addPbb,
-    updatePbb
+    updatePbb,
+    deletePbb
 }
