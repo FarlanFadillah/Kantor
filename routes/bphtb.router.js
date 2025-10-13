@@ -10,12 +10,14 @@ router.route('/form')
 
 router.post('/form/new', ...bphtbFormValidator, saveFormState, validatorErrorHandler, clearFormState, addBphtb, formErrorHandler);
 
-router.post('/form/edit', ...bphtbFormValidator, saveFormState, validatorErrorHandler, updateBphtb, clearFormState, formErrorHandler);
+router.post('/form/edit', ...bphtbFormValidator, saveFormState, validatorErrorHandler, clearFormState, updateBphtb, formErrorHandler);
 
 router.post('/delete', deleteBphtb);
 
 router.route('/view')
     .get(renderBpthbViewPage);
+
+router.use(formErrorHandler);
 
 
 module.exports = router;

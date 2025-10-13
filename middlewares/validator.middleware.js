@@ -6,7 +6,9 @@ const {optionalClientTextFields,
     optionalBphtbTextField,
     requiredBphtbTextField,
     requiredAlasHakTextField,
-    optionalAlasHakTextField} = require('../rules/form_fields')
+    optionalAlasHakTextField,
+    requiredPbbTextField,
+    optionalPbbTextField} = require('../rules/form_fields')
 const {requiredTextValidator, optionalTextValidator} = require("../helper/validator.helper");
 const loginValidator = [
     validator.body('username').notEmpty().withMessage('Username / Email is required'),
@@ -102,11 +104,23 @@ const alasHakFormValidator = [
     .escape(),
     validator.body('luas')
     .trim()
-    .isNumeric().withMessage('Luas must be numeric')
+    .isNumeric().withMessage('Luas must be a numeric')
     .notEmpty().withMessage('Luas is required')
     .escape(),
     ...requiredAlasHakTextField.map(requiredTextValidator),
     ...optionalAlasHakTextField.map(optionalTextValidator)
+]
+
+
+// PBB VALIDATOR
+const pbbValidator = [
+    validator.body('nop')
+    .trim()
+    .isNumeric().withMessage('Nop must be a numeric')
+    .notEmpty().withMessage('Nop is required')
+    .escape(),
+    ...requiredPbbTextField.map(requiredTextValidator),
+    ...optionalPbbTextField.map(optionalTextValidator)
 ]
 
 
@@ -117,5 +131,6 @@ module.exports = {
     clientFormValidator,
     bphtbFormValidator,
     alasHakFormValidator,
-    validatorErrorHandler,
+    pbbValidator,
+    validatorErrorHandler
 }

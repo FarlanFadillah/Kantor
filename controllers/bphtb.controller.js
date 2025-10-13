@@ -57,7 +57,17 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
  * Add bphtb controller
  */
 const addBphtb = asyncHandler(async (req, res, next) => {
-    await mainModel.add('Bphtb', req.body);
+    const cleandata = matchedData(req);
+    
+    // make sure the foreign key is not undefined
+    cleandata.pbb_id = cleandata.pbb_id || null;
+
+    await mainModel.add('Bphtb', {
+        ...cleandata,
+        perintah_bayar : req.body?.perintah_bayar || false,
+        lunas : req.body?.lunas || false,
+        selesai : req.body?.selesai || false
+    });
 
     // flash message
     addMessage(req, 'info', 'Bphtb successfully created');

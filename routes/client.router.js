@@ -11,15 +11,16 @@ router.route('/form')
 router.route('/list')
         .get(pagination, renderClientListPage);
 
-router.post('/form/new', ...clientFormValidator, saveFormState, validatorErrorHandler, clearFormState, addClient, formErrorHandler);
-
 router.get('/view', renderClientViewPage);
 
+router.post('/form/new', ...clientFormValidator, saveFormState, validatorErrorHandler, clearFormState, addClient, formErrorHandler);
+
 router.route('/edit')
-    .get(getFormState, renderClientFormPage)
     .post(...clientFormValidator, saveFormState, validatorErrorHandler, clearFormState, updateClient, formErrorHandler);
 
 router.route('/delete')
     .post(deleteClient);
+
+router.use(formErrorHandler);
 
 module.exports = router;

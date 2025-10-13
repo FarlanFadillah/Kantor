@@ -53,11 +53,29 @@ const optionalAlasHakTextField = [
     'ket',
 ]
 
+// PBB
+
+const requiredPbbTextField = [
+    'provinsi',
+    'kab_kota',
+    'kec',
+    'kel',
+]
+
+const optionalPbbTextField = [
+    'jor',
+    'luas_tanah',
+    'luas_bangunan',
+    'njop',
+]
+
 module.exports = {
     requiredClientTextFields,
     optionalClientTextFields,
     requiredBphtbTextField,
     optionalBphtbTextField,
     requiredAlasHakTextField,
-    optionalAlasHakTextField
+    optionalAlasHakTextField,
+    requiredPbbTextField,
+    optionalPbbTextField
 }

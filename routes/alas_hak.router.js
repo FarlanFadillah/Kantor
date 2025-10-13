@@ -31,4 +31,6 @@ router.route('/list')
 router.route('/delete')
         .post(deleteAlasHak);
 
+router.use(formErrorHandler);
+
 module.exports = router;
