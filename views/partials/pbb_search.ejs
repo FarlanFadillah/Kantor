@@ -3,7 +3,7 @@
     <label for="nop" class="form-label">NOP</span></label>
     <div class="input-group mb-3 dropdown">
         <input autocomplete="off" type="text" id="nop" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.nop || ''%>">
-
+        <a href="/pbb/form" target="_blank" class="btn btn-outline-primary">New</a>
         <% if(form_data?.nop) {%>
             <span class="input-group-text bg-transparent border-0" id="nop-status">
                 <i class="bi bi-check-circle-fill text-success"></i>

@@ -46,10 +46,10 @@ function reduceAlasHakTable(table, columnNames){
         });
         return acc;
     }, {});
-}
+};
 
 module.exports = {
     getRequireData,
     convertLocalDT,
-    reduceAlasHakTable
+    reduceAlasHakTable,
 }

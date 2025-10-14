@@ -1,80 +1,48 @@
-const client_fullname = document.querySelector('#client_fullname');
-  const client_nik = document.querySelector('#client_nik');
-  let data = {};
-  let added_id = [];
+// client_fullname, client_nik, and client_id already declare in client_search.js
+// just use it
+let added_id = [];
+const message = document.querySelector('#msgs');
 
-
-  // initialize the added_id
-  document.querySelectorAll('.client_id').forEach((e)=>{
+// initialize the added_id for existed id
+document.querySelectorAll('.client_id').forEach((e)=>{
     added_id.push(Number(e.value));
-  })
+})
 
-  client_nik.addEventListener('blur', async (event)=>{
-    console.log('nik verifing');
-    try {
-        const nik = event.target.value;
-        if(!nik > 0) return;
-
-        data = await verifyNik(nik);
-
-        let first_name = data.user.first_name;
-        let last_name = data.user.last_name;
-
-        // preventing null value
-        last_name = last_name || '';
-
-        client_fullname.value = first_name + ' ' + last_name;
-        
-    }catch(error){
-        event.target.value = '';
-        wajib_pajak.value = '';
-    }
-  });
-  document.querySelector('#add_owner_list').addEventListener('click', (event)=>{
+document.querySelector('#add_owner_list').addEventListener('click', (event)=>{
     console.log(added_id);
-    if(!added_id.includes(data.user.id)) {
+    if (!client_id.value) {
+        message.innerHTML = '<div class="alert alert-danger" role="alert">Cannot add empty client</div>';
+        return;
+    }
+    if(!added_id.includes(Number(client_id.value))) {
         document.querySelector('#owner_list_view')
         .innerHTML += `
-            <li id="owner_${data.user.id}" class="list-group-item d-flex justify-content-between align-items-center">
+            <li id="owner_${client_id.value}" class="list-group-item d-flex justify-content-between align-items-center">
                 <span>
-                    ${data.user.first_name} ${data.user.last_name}
-                    <input type="hidden" class="client_id" name="client_id" value="${data.user.id}">
+                    ${client_fullname.value}
+                    <input type="hidden" class="client_id" name="client_id" value="${client_id.value}">
                 </span>
-                <a id="rm_owner" data-owner="${data.user.id}" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                <a id="rm_owner" data-owner="${client_id.value}" class="btn btn-danger btn-sm remove-owner-btn">x</a>
             </li>`
 
-        added_id.push(data.user.id);
-        document.querySelector('#msgs').innerHTML = ''
+        added_id.push(Number(client_id.value));
+        message.innerHTML = ''
     } else{
-      document.querySelector('#msgs').innerHTML += `<div class="alert alert-danger" role="alert">Client already added</div>`
+        message.innerHTML = `<div class="alert alert-danger" role="alert">Client already added</div>`
     }
-    client_fullname.value = ''
-    client_nik.value = ''
-    data = {};
-  });
+    client_fullname.value = null;
+    client_id.value = null;
+    client_nik.value = null;
+});
 
 
-  document.querySelector('#owner_list_view').addEventListener('click', (event)=>{
-      if(event.target && event.target.classList.contains('remove-owner-btn')){
-          event.target.closest('li').remove();
-          added_id = added_id.filter(elem => elem !== Number(event.target.dataset.owner));
-      }
-  })
-
-
-  async function verifyNik(nik){
-    try {
-        const res = await fetch(`/api/client/nik_verify?nik=${nik}`);
-        if (!res.ok) {
-            // Baca text biar bisa lihat error aslinya
-            const text = await res.text();
-            throw new Error(JSON.parse(text).msg);
-        }
-        return res.json();
-    }catch (e) {
-        alert("Terjadi error: " + e.message);
+document.querySelector('#owner_list_view').addEventListener('click', (event)=>{
+    if(event.target && event.target.classList.contains('remove-owner-btn')){
+        event.target.closest('li').remove();
+        added_id = added_id.filter(elem => elem !== Number(event.target.dataset.owner));
     }
-}
+})
+
 
 /**
  * All input text are uppercase

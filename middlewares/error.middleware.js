@@ -14,6 +14,8 @@ function formErrorHandler(err, req, res, next){
     // flash message
     addMessage(req, err.type, err.message);
 
+    console.log('form Error Handler:', err.message);
+
     // log
     //log(req, 'error', error.message, {module : 'Auth Router'});
     res.redirect(req.header('Referer') || '/');

@@ -1,0 +1,166 @@
+<% layout('pages/base_layout') %>
+<div class="container py-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1 class="mb-4">Form Peralihan Hak</h1>
+
+      <form action="<%= form_action %>" method="POST" class="row g-3">
+        <!-- No Akta -->
+        <div class="col-md-6">
+          <label for="no_akta" class="form-label">No. Akta</label>
+          <input type="number" class="form-control" id="no_akta" name="no_akta"
+            required value="<%= form_data?.no_akta || '' %>">
+        </div>
+
+        <!-- Tanggal Akta -->
+        <div class="col-md-6">
+          <label for="tgl_akta" class="form-label">Tanggal Akta</label>
+          <input type="date" class="form-control" id="tgl_akta" name="tgl_akta"
+            value="<%= form_data?.tgl_akta ? form_data.tgl_akta.toISOString().split('T')[0] : '' %>">
+        </div>
+
+        <!-- Produk -->
+        <div class="col-md-6">
+          <label for="produk" class="form-label">Produk</label>
+          <select class="form-select" id="produk" name="produk" required>
+            <option value="">-- Pilih --</option>
+            <% ['AJB','HIBAH','WARIS','APHB'].forEach(opt => { %>
+              <option value="<%= opt %>" <%= form_data?.produk === opt ? 'selected' : '' %>><%= opt %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <!-- BPHTB -->
+        <div class="col-md-6">
+          <label for="bphtb_id" class="form-label">BPHTB ID</label>
+          <input type="number" class="form-control" id="bphtb_id" name="bphtb_id"
+            value="<%= form_data?.bphtb_id || '' %>">
+        </div>
+
+        <!-- Alas Hak -->
+        <div class="col-md-6">
+          <label for="alas_hak_id" class="form-label">Alas Hak ID</label>
+          <input type="number" class="form-control" id="alas_hak_id" name="alas_hak_id"
+            value="<%= form_data?.alas_hak_id || '' %>">
+        </div>
+
+        <!-- Checkbox Options -->
+        <div class="col-md-12">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="pph" name="pph" value="true"
+              <%= form_data?.pph ? 'checked' : '' %>>
+            <label class="form-check-label" for="pph">PPH</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="ceking_shm" name="ceking_shm" value="true"
+              <%= form_data?.ceking_shm ? 'checked' : '' %>>
+            <label class="form-check-label" for="ceking_shm">Ceking SHM</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="znt_shm" name="znt_shm" value="true"
+              <%= form_data?.znt_shm ? 'checked' : '' %>>
+            <label class="form-check-label" for="znt_shm">ZNT SHM</label>
+          </div>
+        </div>
+
+        <!-- Catatan -->
+        <div class="col-12">
+          <label for="catatan" class="form-label">Catatan</label>
+          <textarea class="form-control" id="catatan" name="catatan"><%= form_data?.catatan || '' %></textarea>
+        </div>
+
+        <!-- ==================== Bagian Relasi ==================== -->
+
+        <!-- Penerima Hak -->
+        <div class="col-md-6">
+          <label class="form-label">Penerima Hak</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="penerima_nik" placeholder="Masukkan NIK">
+            <a class="btn btn-primary" id="add_penerima">+</a>
+            <a href="/client/form" target="_blank" class="btn btn-outline-primary">Tambah Client</a>
+          </div>
+          <ul id="penerima_list" class="list-group">
+            <% if(form_data.PenerimaHak && form_data.PenerimaHak.length > 0) { %>
+              <% for (let p of form_data.PenerimaHak) { %>
+                <li id="penerima_<%= p.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><%= p.first_name %> <%= p.last_name %></span>
+                  <input type="hidden" name="penerima_id" value="<%= p.client_id %>">
+                  <a data-owner="<%= p.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+
+        <!-- Pihak Persetujuan -->
+        <div class="col-md-6">
+          <label class="form-label">Pihak Persetujuan</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="persetujuan_nik" placeholder="Masukkan NIK">
+            <a class="btn btn-primary" id="add_persetujuan">+</a>
+          </div>
+          <ul id="persetujuan_list" class="list-group">
+            <% if(form_data.PihakPersetujuan && form_data.PihakPersetujuan.length > 0) { %>
+              <% for (let p of form_data.PihakPersetujuan) { %>
+                <li id="persetujuan_<%= p.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><%= p.first_name %> <%= p.last_name %></span>
+                  <input type="hidden" name="persetujuan_id" value="<%= p.client_id %>">
+                  <a data-owner="<%= p.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+
+        <!-- Kuasa Jual -->
+        <div class="col-md-6">
+          <label class="form-label">Kuasa Jual</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="kuasa_jual_nik" placeholder="Masukkan NIK">
+            <a class="btn btn-primary" id="add_kuasa_jual">+</a>
+          </div>
+          <ul id="kuasa_jual_list" class="list-group">
+            <% if(form_data.KuasaJual && form_data.KuasaJual.length > 0) { %>
+              <% for (let k of form_data.KuasaJual) { %>
+                <li id="kuasa_jual_<%= k.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><%= k.first_name %> <%= k.last_name %></span>
+                  <input type="hidden" name="kuasa_jual_id" value="<%= k.client_id %>">
+                  <a data-owner="<%= k.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+
+        <!-- Kuasa Beli -->
+        <div class="col-md-6">
+          <label class="form-label">Kuasa Beli</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="kuasa_beli_nik" placeholder="Masukkan NIK">
+            <a class="btn btn-primary" id="add_kuasa_beli">+</a>
+          </div>
+          <ul id="kuasa_beli_list" class="list-group">
+            <% if(form_data.KuasaBeli && form_data.KuasaBeli.length > 0) { %>
+              <% for (let k of form_data.KuasaBeli) { %>
+                <li id="kuasa_beli_<%= k.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><%= k.first_name %> <%= k.last_name %></span>
+                  <input type="hidden" name="kuasa_beli_id" value="<%= k.client_id %>">
+                  <a data-owner="<%= k.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          <a href="/admin/dashboard" class="btn btn-outline-primary">Dashboard</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/peralihan_hak_form_page.js"></script>

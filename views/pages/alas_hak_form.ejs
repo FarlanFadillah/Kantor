@@ -83,19 +83,12 @@
             </div>
 
             <!-- owner -->
-             <div class="col-md-6">
-               <label for="client_nik" class="form-label">Nik</label>
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" id="client_nik" value="<%=form_data?.client_nik || ''%>">
-                <a class="btn btn-primary" id="add_owner_list">+</a>
-                <a href="/client/form" target="_blank" class="btn btn-outline-primary">Tambah Client</a>
-              </div>
-
-              <label for="client_fullname" class="form-label">Nama Pemilik</label>
-              <input style="background-color: lightgray;" readonly type="text" class="form-control" id="client_fullname" value="<%=form_data?.client_fullname || ''%>">
-              
-            </div>
-
+            <%-include('../partials/client_search', {
+              extraContent : `
+              <a class="btn btn-primary" id="add_owner_list">+</a>
+              `
+            })%>
+            
               <div class="col-md-6" id="owner_list">
                   <label for="owner_list_view">Atas Nama</label>
                   <ul id="owner_list_view" class="list-group">
@@ -129,3 +122,4 @@
 </div>
 
 <script src="/js/alashak_form_page.js"></script>
+<script src="/js/client_search.js"></script>

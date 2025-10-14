@@ -6,7 +6,7 @@ document.querySelector('#no_alas_hak').addEventListener('keyup', async (event)=>
     console.log(event.target.value);
     try {
         const data = await searchAlasHak(event.target.value);
-
+        // console.log(JSON.stringify(data));
         dropdown_menu_alashak.innerHTML = '';
         for(const alasHak of data.data){
             const li = document.createElement('li');

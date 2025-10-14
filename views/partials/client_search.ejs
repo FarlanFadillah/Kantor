@@ -4,7 +4,7 @@
     <label for="nik_wajib_pajak" class="form-label">NIK<span class="text-danger">*</span></label>
     <div class="input-group mb-3 dropdown">
         <input autocomplete="off" type="text" id="client_nik" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.client_nik || ''%>" >
-        <a href="/client/form" target="_blank" class="btn btn-primary">+</a>
+        <a href="/client/form" target="_blank" class="btn btn-outline-primary">New</a>
         <ul class="dropdown-menu" id="client-dropdown-menu">
             <!--<li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li> -->
@@ -17,6 +17,9 @@
     <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
     <div class="input-group mb-3">
         <input type="text" id="client_fullname" class="form-control" readonly value="<%=form_data?.first_name || ''%> <%=form_data?.last_name || ''%>" style="background-color: lightgray">
-        <a id="rm_client" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+        <a id="rm_client" class="btn btn-danger btn-sm remove-owner-btn">reset</a>
+         <% if (typeof extraContent !== 'undefined' && extraContent) { %>
+            <%- extraContent %>
+        <% } %>
     </div>
 </div>

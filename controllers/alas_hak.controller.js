@@ -27,8 +27,6 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
         form = reduceAlasHakTable(form, await mainModel.getAllColumnName('Alas_Hak'));
         res.locals.form_data = form;
     }
-    
-
     res.status(200).render('pages/alas_hak_form');
 });
 
@@ -128,7 +126,7 @@ const deleteAlasHak = asyncHandler(async (req, res, next)=>{
  * is updateAlasHakOwner
  */
 const updateAlasHak = asyncHandler(async (req, res, next)=>{
-    console.log(req.body);
+    //console.log(req.body);
 
     // getting the required fields
     // prevent other column added
@@ -136,7 +134,7 @@ const updateAlasHak = asyncHandler(async (req, res, next)=>{
     let column_name = await mainModel.getAllColumnName('Alas_Hak');
     
     const fields = getRequireData(column_name, matchedData(req));
-    console.log('fields', fields);
+    //console.log('fields', fields);
 
     await mainModel.update('Alas_Hak', fields, req.query);
 
@@ -154,12 +152,17 @@ const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
     let {client_id} = req.body;
     const alasHak_id = res.locals.alasHak.id;
 
+    // debuging delete later
+    //console.log(req.body);
+
     
     if(client_id !== undefined){
         if(!Array.isArray(client_id)) client_id = [client_id];
     
         for(const id of client_id){
-            await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id});
+            if(id){
+                await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id});
+            }
         }
     }
 
@@ -179,7 +182,7 @@ const updateAlasHakOwner = asyncHandler (async (req, res, next)=>{
     if(client_id && client_id.length > 0){
         for(const id of client_id){
             console.log(id);
-            await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id})
+            if(id) await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id})
         }
     }
 

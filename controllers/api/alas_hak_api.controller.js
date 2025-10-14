@@ -25,7 +25,7 @@ const getAlasHak = asyncHandler(async (req, res, next)=>{
  * Search alas hak by no_alas_hak
  */
 const searchAlasHak = asyncHandler(async(req, res, next)=>{
-    if(req.query) 
+    if(!req.query) 
         return res.status(200).json({success : false, msg : 'no_alas_hak is undefined'})
 
     const data = await mainModel.search('Alas_Hak', req.query, ['no_alas_hak', 'kel', 'id']);
