@@ -25,7 +25,7 @@ const optionalClientTextFields = [
 const requiredBphtbTextField = [
     'produk',
     'alas_hak_id',
-    'wajib_pajak',
+    'client_id',
     
 ]
 
@@ -54,7 +54,6 @@ const optionalAlasHakTextField = [
 ]
 
 // PBB
-
 const requiredPbbTextField = [
     'provinsi',
     'kab_kota',
@@ -67,6 +66,8 @@ const optionalPbbTextField = [
     'luas_tanah',
     'luas_bangunan',
     'njop',
+    'client_id',
+    'alas_hak_id'
 ]
 
 module.exports = {

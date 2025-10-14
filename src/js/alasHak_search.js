@@ -1,12 +1,13 @@
 const id_alas_hak = document.querySelector('#alas_hak_id');
 const alas_hak = document.querySelector('#alas_hak');
-const dropdown_menu = document.querySelector('.dropdown-menu');
+const dropdown_menu_alashak = document.querySelector('#alashak-dropdown-menu');
 
 document.querySelector('#no_alas_hak').addEventListener('keyup', async (event)=>{
+    console.log(event.target.value);
     try {
         const data = await searchAlasHak(event.target.value);
 
-        dropdown_menu.innerHTML = '';
+        dropdown_menu_alashak.innerHTML = '';
         for(const alasHak of data.data){
             const li = document.createElement('li');
             const a = document.createElement('a');
@@ -24,10 +25,10 @@ document.querySelector('#no_alas_hak').addEventListener('keyup', async (event)=>
                 id_alas_hak.value = data.id;
             })
             li.appendChild(a);
-            dropdown_menu.appendChild(li);
+            dropdown_menu_alashak.appendChild(li);
         }
     } catch (error) {
-        dropdown_menu.innerHTML = '';
+        dropdown_menu_alashak.innerHTML = '';
     }
 });
 
@@ -46,3 +47,10 @@ async function searchAlasHak(no_alas_hak){
         console.log(error);
     }
 }
+
+// remove current alas hak
+document.querySelector('#rm_alas_hak').addEventListener('click', (e)=>{
+    alas_hak.value = null;
+    id_alas_hak.value = null;
+    no_alas_hak.value = null;
+})

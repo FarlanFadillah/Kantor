@@ -40,35 +40,10 @@
           </div>
 
           <!-- Client -->
-          <div class="col-md-6">
-            <label for="nik_wajib_pajak" class="form-label">NIK (Client)</label>
-            <div class="input-group mb-3">
-              <input type="text" id="nik_wajib_pajak" class="form-control" value="<%= form_data?.nik_client || '' %>">
-              <a href="/client/form" target="_blank" class="btn btn-primary">+</a>
-            </div>
-
-            <input hidden type="text" id="id_wajib_pajak" name="client_id" class="form-control" value="<%= form_data?.client_id || '' %>">
-
-            <label for="wajib_pajak" class="form-label">Nama Client</label>
-            <div class="input-group mb-3">
-              <input type="text" id="wajib_pajak" class="form-control" readonly value="<%= form_data?.client_first_name%> <%= form_data?.client_last_name || '' %>" style="background-color: lightgray">
-              <a id="rm_wajib_pajak" class="btn btn-danger btn-sm remove-owner-btn">x</a>
-            </div>
-          </div>
+          <%-include('../partials/client_search')%>
 
           <!-- Alas Hak -->
-          <div class="col-md-6">
-            <label for="no_alas_hak" class="form-label">No. Alas Hak</label>
-            <input type="text" id="no_alas_hak" class="form-control" value="<%= form_data?.no_alas_hak || '' %>">
-
-            <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" value="<%= form_data?.alas_hak_id || '' %>">
-
-            <label for="alas_hak" class="form-label">Alas Hak</label>
-            <div class="input-group mb-3">
-              <input type="text" id="alas_hak" class="form-control" readonly value="<%= form_data?.no_alas_hak || '' %>/<%= form_data?.alas_hak_kel  %>" style="background-color: lightgray">
-              <a id="rm_alas_hak" class="btn btn-danger btn-sm remove-owner-btn">x</a>
-            </div>
-          </div>
+          <%-include('../partials/alashak_search')%>
 
           <!-- Informasi Tanah -->
           <div class="col-md-6">
@@ -100,3 +75,5 @@
 </div>
 
 <script src="/js/pbb_form_page.js"></script>
+<script src="/js/client_search.js"></script>
+<script src="/js/alashak_search.js"></script>

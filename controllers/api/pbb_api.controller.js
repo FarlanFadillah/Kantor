@@ -12,7 +12,16 @@ const verifyPbb = asyncHandler(async(req, res, next)=>{
     res.status(200).json({success : true, data : pbb || null});
 });
 
+const searchPbb = asyncHandler(async(req, res, next)=>{
+    if(!req.query) return res.status(400).json({success : false, msg : 'Key and Value missing'});
+
+    const pbb = await mainModel.search('PBB_SKNJOP', req.query, ['id', 'nop', 'kel']);
+
+    res.status(200).json({success : true, data : pbb})
+})
+
 
 module.exports = {
-    verifyPbb
+    verifyPbb,
+    searchPbb
 }

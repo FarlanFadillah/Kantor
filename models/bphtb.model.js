@@ -5,7 +5,7 @@ const { CustomError } = require('../utils/custom.error');
 async function getBphtbAllList(){
     try {
         return await db('Bphtb')
-        .leftJoin('Clients', 'Bphtb.wajib_pajak', 'Clients.id')
+        .leftJoin('Clients', 'Bphtb.client_id', 'Clients.id')
         .leftJoin('Alas_Hak', 'Bphtb.alas_hak_id', 'Alas_Hak.id')
         .select(
             'Bphtb.id as id', 'Bphtb.produk as produk', 
@@ -25,7 +25,7 @@ async function getBphtbAllList(){
 async function getBphtbData(id){
     try {
         return await db('Bphtb').where('Bphtb.id', id)
-        .leftJoin('Clients', 'Bphtb.wajib_pajak', 'Clients.id')
+        .leftJoin('Clients', 'Bphtb.client_id', 'Clients.id')
         .leftJoin('Alas_Hak', 'Bphtb.alas_hak_id', 'Alas_Hak.id')
         .leftJoin('PBB_SKNJOP', 'Bphtb.pbb_id', 'PBB_SKNJOP.id')
         .select(

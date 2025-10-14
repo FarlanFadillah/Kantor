@@ -17,6 +17,16 @@ const verifyClientsNik = asyncHandler(async (req, res, next) => {
     res.status(200).json({success : true, user : client});
 });
 
+
+const searchClient = asyncHandler(async(req, res, next)=>{
+    if(!req.query) return res.status(404).json({success : false, msg : 'key and value missing'});
+
+    const client = await mainModel.search('Clients', req.query, ['id', 'nik', 'first_name', 'last_name']);
+
+    res.status(200).json({success : true, data : client});
+})
+
 module.exports = {
-    verifyClientsNik
+    verifyClientsNik,
+    searchClient
 }

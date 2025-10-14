@@ -37,7 +37,7 @@
                 <% if (pbb.client_id) { %>
                     <dd class="col-sm-9">
                         <a href="/client/view?id=<%= pbb.client_id %>">
-                            <%= pbb.client_first_name %> <%= pbb.client_last_name || '' %>
+                            <%= pbb.first_name %> <%= pbb.last_name || '' %>
                         </a>
                     </dd>
                 <% } else { %>

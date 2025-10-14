@@ -94,6 +94,8 @@ app.get('/knex/test', async (req, res)=>{
 
 // public ssr route (order is important)
 app.use('/auth', userRoute);
+
+// error page debuging delete later!!
 app.use('/error', (req, res, next) => {
     next(new CustomError('User not found', 'error', 401));
 })
