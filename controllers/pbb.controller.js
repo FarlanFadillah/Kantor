@@ -35,6 +35,7 @@ const renderPbbFormPage = asyncHandler(async (req, res, next)=>{
  * these routes will populate the table page template.
 */
 const renderPbbListPage = asyncHandler(async (req, res, next)=>{
+    res.locals.table_name = 'PBB';
     res.locals.title = 'PBB List';
     // total pages
     res.locals.totalPages = Math.ceil(await mainModel.count('PBB_SKNJOP') / Number(res.locals.limit));

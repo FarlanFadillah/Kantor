@@ -36,6 +36,7 @@ const renderClientFormPage = asyncHandler(async (req, res, next) => {
  * these routes will populate the table page template.
 */
 const renderClientListPage = asyncHandler(async (req, res, next) => {
+    res.locals.table_name = 'Client';
     res.locals.title = 'Client List';
 
     // total pages

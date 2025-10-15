@@ -57,6 +57,7 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
  * these routes will populate the table page template.
 */
 const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
+    res.locals.table_name = 'Alas Hak';
     res.locals.title = 'Alas Hak List';
     // total pages
     res.locals.totalPages = Math.ceil(await mainModel.count('Alas_Hak') / Number(res.locals.limit));
