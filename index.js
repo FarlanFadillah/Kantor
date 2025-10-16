@@ -24,7 +24,7 @@ const bphtbRoute = require('./routes/bphtb.router');
 const clientRoute = require('./routes/client.router');
 const alasHakRoute = require('./routes/alas_hak.router');
 const pbbRoute = require('./routes/pbb.router');
-const pHakRoute = require('./routes/peralihan_hak.router');
+const pHakRoute = require('./routes/alih_hak.router');
 
 // api routes
 const client_apiRoute = require('./routes/api/client_api.router');

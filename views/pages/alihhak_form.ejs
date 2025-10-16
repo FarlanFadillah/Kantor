@@ -74,71 +74,72 @@
         <!-- ==================== Bagian Relasi ==================== -->
 
         <!-- Penerima Hak -->
-        <%-include('../partials/client_search', {
-          extraContent : `
-          <a class="btn btn-primary" id="add_penerima_hak_list">+</a>
-          `,
-          field_name : 'Pihak Persetujuan'
-        })%>
-
-        <!-- Pihak Persetujuan -->
-        <div class="col-md-6">
-          <label class="form-label">Pihak Persetujuan</label>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" id="persetujuan_nik" placeholder="Masukkan NIK">
-            <a class="btn btn-primary" id="add_persetujuan">+</a>
+        <div class="px-3">
+          <div class="row border border-primary rounded">
+            <h3>Penerima Hak</h3>
+            <%-include('../partials/client_search', {
+              extraContent : `
+              <a class="btn btn-primary add-list" data-field="penerima_hak" id="add_penerima_hak_list">+</a>
+              `
+            })%>
+  
+            <%-include('../partials/client_list_form', {
+              field : 'penerima_hak'
+            }) %>
           </div>
-          <ul id="persetujuan_list" class="list-group">
-            <% if(form_data.PihakPersetujuan && form_data.PihakPersetujuan.length > 0) { %>
-              <% for (let p of form_data.PihakPersetujuan) { %>
-                <li id="persetujuan_<%= p.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><%= p.first_name %> <%= p.last_name %></span>
-                  <input type="hidden" name="persetujuan_id" value="<%= p.client_id %>">
-                  <a data-owner="<%= p.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
-                </li>
-              <% } %>
-            <% } %>
-          </ul>
         </div>
 
-        <!-- Kuasa Jual -->
-        <div class="col-md-6">
-          <label class="form-label">Kuasa Jual</label>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" id="kuasa_jual_nik" placeholder="Masukkan NIK">
-            <a class="btn btn-primary" id="add_kuasa_jual">+</a>
+        <!-- Pihak Persetujuan -->
+        <div class="px-3">
+        <div class="row border border-primary rounded">
+            <h3>Pihak Persetujuan</h3>
+            <%-include('../partials/client_search', {
+              extraContent : `
+              <a class="btn btn-primary add-list" data-field="pihak_persetujuan" id="add_pihak_persetujuan_list">+</a>
+              `
+            })%>
+
+            <%-include('../partials/client_list_form', {
+              field : 'pihak_persetujuan'
+            }) %>
           </div>
-          <ul id="kuasa_jual_list" class="list-group">
-            <% if(form_data.KuasaJual && form_data.KuasaJual.length > 0) { %>
-              <% for (let k of form_data.KuasaJual) { %>
-                <li id="kuasa_jual_<%= k.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><%= k.first_name %> <%= k.last_name %></span>
-                  <input type="hidden" name="kuasa_jual_id" value="<%= k.client_id %>">
-                  <a data-owner="<%= k.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
-                </li>
-              <% } %>
-            <% } %>
-          </ul>
+        </div>
+
+
+        <!-- Kuasa Jual -->
+        <div class="px-3">
+          <div class="row border border-primary rounded">
+            <h3>Kuasa Jual</h3>
+            <%-include('../partials/client_search', {
+              extraContent : `
+              <a class="btn btn-primary add-list" data-field="kuasa_jual" id="add_kuasa_jual_list">+</a>
+              `
+            })%>
+
+            <%-include('../partials/client_list_form', {
+              field : 'kuasa_jual'
+            }) %>
+          </div>
         </div>
 
         <!-- Kuasa Beli -->
-        <div class="col-md-6">
-          <label class="form-label">Kuasa Beli</label>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" id="kuasa_beli_nik" placeholder="Masukkan NIK">
-            <a class="btn btn-primary" id="add_kuasa_beli">+</a>
+        <div class="px-3">
+          <div class="row border border-primary rounded">
+            <h3>Kuasa Beli</h3>
+            <%-include('../partials/client_search', {
+              extraContent : `
+              <a class="btn btn-primary add-list" data-field="kuasa_beli" id="add_kuasa_beli_list">+</a>
+              `
+            })%>
+
+            <%-include('../partials/client_list_form', {
+              field : 'kuasa_beli'
+            }) %>
           </div>
-          <ul id="kuasa_beli_list" class="list-group">
-            <% if(form_data.KuasaBeli && form_data.KuasaBeli.length > 0) { %>
-              <% for (let k of form_data.KuasaBeli) { %>
-                <li id="kuasa_beli_<%= k.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><%= k.first_name %> <%= k.last_name %></span>
-                  <input type="hidden" name="kuasa_beli_id" value="<%= k.client_id %>">
-                  <a data-owner="<%= k.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
-                </li>
-              <% } %>
-            <% } %>
-          </ul>
+        </div>
+        <div class="col-12" id="msgs">
+
+
         </div>
 
         <div class="col-12">
@@ -151,4 +152,4 @@
 </div>
 
 <script src="/js/client_search.js"></script>
-<script src="/js/alihhak_search.js"></script>
+<script src="/js/alihhak_form_page.js"></script>

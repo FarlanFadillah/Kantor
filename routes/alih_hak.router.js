@@ -1,4 +1,4 @@
-const { renderForm } = require('../controllers/peralihan_hak.controller');
+const { renderForm } = require('../controllers/alih_hak.controller');
 const { getFormState } = require('../middlewares/form.middleware');
 
 const router = require('express').Router();

@@ -6,7 +6,7 @@ const client_nik = document.querySelectorAll('#client_nik');
 client_nik.forEach((element)=>{
     element.addEventListener('keyup', async (event)=>{
         const dropdown_menu_client = element.parentElement.querySelector('#client-dropdown-menu');
-        const  client_id = element.closest('div').parentElement.querySelector('#client_id');
+        const client_id = element.closest('div').parentElement.querySelector('#client_id');
         const client_fullname = element.closest('div').parentElement.querySelector('.input-group > #client_fullname');
         try {
             const nik = event.target.value;

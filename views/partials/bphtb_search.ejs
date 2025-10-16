@@ -1,10 +1,11 @@
-<!-- Wajib Pajak -->
+<!-- BPHTB -->
 <!--Nik For verify client-->
-<div class="col-md-5">
+<div class="col-md-6">
     <label for="nik_wajib_pajak" class="form-label">NIK 
         <% if (typeof field_name !== 'undefined' && field_name) { %>
             <%= field_name %>
         <% } %>
+        <span class="text-danger">*</span>
     </label>
     <div class="input-group mb-3 dropdown">
         <input autocomplete="off" type="text" id="client_nik" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.client_nik || ''%>" >
@@ -18,7 +19,7 @@
 
     <input hidden type="text" id="client_id" name="client_id" class="form-control" value="<%= form_data?.client_id || '' %>">
 
-    <label for="wajib_pajak" class="form-label">Full Name</label>
+    <label for="wajib_pajak" class="form-label">Wajib Pajak <span class="text-danger">*</span></label>
     <div class="input-group mb-3">
         <input type="text" id="client_fullname" class="form-control" readonly value="<%=form_data?.first_name || ''%> <%=form_data?.last_name || ''%>" style="background-color: lightgray">
         <a id="rm_client" class="btn btn-danger btn-sm remove-owner-btn">reset</a>
