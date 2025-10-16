@@ -1,7 +1,12 @@
 <!-- Wajib Pajak -->
 <!--Nik For verify client-->
 <div class="col-md-6">
-    <label for="nik_wajib_pajak" class="form-label">NIK<span class="text-danger">*</span></label>
+    <label for="nik_wajib_pajak" class="form-label">NIK 
+        <% if (typeof field_name !== 'undefined' && field_name) { %>
+            <%= field_name %>
+        <% } %>
+        <span class="text-danger">*</span>
+    </label>
     <div class="input-group mb-3 dropdown">
         <input autocomplete="off" type="text" id="client_nik" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.client_nik || ''%>" >
         <a href="/client/form" target="_blank" class="btn btn-outline-primary">New</a>

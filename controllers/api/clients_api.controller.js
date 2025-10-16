@@ -17,9 +17,11 @@ const verifyClientsNik = asyncHandler(async (req, res, next) => {
     res.status(200).json({success : true, user : client});
 });
 
-
+/**
+ * Search client with key (column name) and value with query paramater
+ */
 const searchClient = asyncHandler(async(req, res, next)=>{
-    if(!req.query) return res.status(404).json({success : false, msg : 'key and value missing'});
+    if(!req.query || !req.query.key || !req.query.value) return res.status(404).json({success : false, msg : 'key and value missing'});
 
     const client = await mainModel.search('Clients', req.query, ['id', 'nik', 'first_name', 'last_name']);
 

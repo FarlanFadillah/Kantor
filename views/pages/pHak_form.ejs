@@ -74,25 +74,12 @@
         <!-- ==================== Bagian Relasi ==================== -->
 
         <!-- Penerima Hak -->
-        <div class="col-md-6">
-          <label class="form-label">Penerima Hak</label>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" id="penerima_nik" placeholder="Masukkan NIK">
-            <a class="btn btn-primary" id="add_penerima">+</a>
-            <a href="/client/form" target="_blank" class="btn btn-outline-primary">Tambah Client</a>
-          </div>
-          <ul id="penerima_list" class="list-group">
-            <% if(form_data.PenerimaHak && form_data.PenerimaHak.length > 0) { %>
-              <% for (let p of form_data.PenerimaHak) { %>
-                <li id="penerima_<%= p.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><%= p.first_name %> <%= p.last_name %></span>
-                  <input type="hidden" name="penerima_id" value="<%= p.client_id %>">
-                  <a data-owner="<%= p.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
-                </li>
-              <% } %>
-            <% } %>
-          </ul>
-        </div>
+        <%-include('../partials/client_search', {
+          extraContent : `
+          <a class="btn btn-primary" id="add_penerima_hak_list">+</a>
+          `,
+          field_name : 'Pihak Persetujuan'
+        })%>
 
         <!-- Pihak Persetujuan -->
         <div class="col-md-6">
@@ -163,4 +150,5 @@
   </div>
 </div>
 
-<script src="/js/peralihan_hak_form_page.js"></script>
+<script src="/js/client_search.js"></script>
+<script src="/js/alihhak_search.js"></script>
