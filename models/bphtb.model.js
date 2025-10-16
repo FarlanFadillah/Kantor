@@ -39,11 +39,31 @@ async function getBphtbData(id){
         )
         .first();
     } catch (error) {
-        
+        throw new CustomError(error.message, 'error');
+    }
+}
+
+
+async function searchBphtbWithReferences(query){
+    try {
+        return await db('BPHTB')
+        .leftJoin('Alas_Hak', 'BPHTB.alas_hak_id', 'Alas_Hak.id')
+        .leftJoin('Clients', 'BPHTB.client_id', 'Clients.id')
+        .leftJoin('PBB_SKNJOP', 'BPHTB.pbb_id', 'PBB_SKNJOP.id')
+        .select(
+            'BPHTB.id', 'BPHTB.produk',
+            'Alas_Hak.no_alas_hak',
+            'Clients.first_name', 'Clients.last_name',
+            'PBB_SKNJOP.nop'
+        )
+        .whereLike('BPHTB.'+query.key, '%'+query.value+'%');
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
     }
 }
 
 module.exports = {
     getBphtbAllList,
-    getBphtbData
+    getBphtbData,
+    searchBphtbWithReferences
 }

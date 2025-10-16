@@ -1,9 +1,8 @@
-const id_alas_hak = document.querySelector('#alas_hak_id');
+const alas_hak_id = document.querySelector('#alas_hak_id');
 const alas_hak = document.querySelector('#alas_hak');
 const dropdown_menu_alashak = document.querySelector('#alashak-dropdown-menu');
-
-document.querySelector('#no_alas_hak').addEventListener('keyup', async (event)=>{
-    console.log(event.target.value);
+const no_alas_hak = document.querySelector('#no_alas_hak');
+no_alas_hak.addEventListener('keyup', async (event)=>{
     try {
         const data = await searchAlasHak(event.target.value);
         // console.log(JSON.stringify(data));
@@ -22,7 +21,7 @@ document.querySelector('#no_alas_hak').addEventListener('keyup', async (event)=>
             a.addEventListener('click', (event)=>{
                 const data = event.target.dataset;
                 alas_hak.value = data.no_alas_hak + "/" + data.kel;
-                id_alas_hak.value = data.id;
+                alas_hak_id.value = data.id;
             })
             li.appendChild(a);
             dropdown_menu_alashak.appendChild(li);
@@ -51,6 +50,7 @@ async function searchAlasHak(no_alas_hak){
 // remove current alas hak
 document.querySelector('#rm_alas_hak').addEventListener('click', (e)=>{
     alas_hak.value = null;
-    id_alas_hak.value = null;
+    alas_hak_id.value = null;
     no_alas_hak.value = null;
+    dropdown_menu_alashak.innerHTML = '';
 })

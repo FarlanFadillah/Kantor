@@ -30,6 +30,7 @@ const pHakRoute = require('./routes/alih_hak.router');
 const client_apiRoute = require('./routes/api/client_api.router');
 const alas_hak_apiRoute = require('./routes/api/alas_hak_api.router');
 const pbb_apiRoute = require('./routes/api/pbb_api.router');
+const bphtb_apiRoute = require('./routes/api/bphtb_api.router')
 
 // middlewares
 const session = require('./middlewares/sesison.middleware');
@@ -80,6 +81,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/api/client', client_apiRoute);
 app.use('/api/alas_hak', alas_hak_apiRoute);
 app.use('/api/pbb', pbb_apiRoute);
+app.use('/api/bphtb', bphtb_apiRoute);
 
 // debuging
 app.get('/knex/test', async (req, res)=>{

@@ -55,3 +55,72 @@ document.querySelectorAll('.client_list').forEach((element)=>{
     }
 })
 })
+
+
+// BPHTB SECTION
+const find_bphtb_btn = document.querySelector('#find-bphtb');
+const bphtb_table_body = document.querySelector('#bphtb_table_body');
+const close_bphtb_modal_btn = document.querySelector('#btn-close-bphtb-modal');
+var myModal = new bootstrap.Modal(document.getElementById('bphtb_list'));
+const bphtb_items = document.querySelectorAll('#bphtb_item');
+
+find_bphtb_btn.addEventListener('click', async(event)=>{
+    if(alas_hak_id.value === '') {
+        bphtb_table_body.innerHTML = `
+        <td colspan="100%" class="text-center py-3">
+            <h2>Pilih Alas Hak terlebih dahulu</h2>
+        </td>`;
+        return myModal.toggle();
+    }
+    
+    try {
+        const res = await searchBphtb(alas_hak_id.value);
+        fillBphtbTable(res);
+        myModal.toggle();
+    } catch (error) {
+        
+    }
+});
+
+close_bphtb_modal_btn.addEventListener('click', (event)=>{
+    bphtb_table_body.innerHTML = '';
+})
+
+function fillBphtbTable(data){
+    console.log(data);
+    let i = 1;
+    for(const bphtb of data.data){
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        bphtb_table_body.innerHTML += `
+        <tr>
+            <th scope="row">${i}</th>
+            <td>${bphtb.nop || ''}</td>
+            <td>${bphtb.no_alas_hak || ''}</td>
+            <td>${bphtb.produk || ''}</td>
+            <td>${bphtb.first_name || ''} ${bphtb.last_name || ''}</td>
+            <td><a class="btn btn-sm btn-info" id="bphtb_item" data-bphtb_id="${bphtb.id}">Pilih</a></td>
+        </tr>
+        `
+        i++;
+    }
+}
+
+
+bphtb_items.forEach((element)=>{
+    element.addEventListener('click', (event)=>{
+        console.log(event.target.value);
+    })
+})
+
+
+
+async function searchBphtb(alas_hak_id) {
+    try {
+        const res = await fetch(`/api/bphtb/search?key=alas_hak_id&value=${alas_hak_id}`);
+
+        return res.json();
+    } catch (error) {
+        
+    }
+}

@@ -30,18 +30,47 @@
           </select>
         </div>
 
+        <!-- Alas Hak -->
+        <%-include('../partials/alashak_search')%>
+
         <!-- BPHTB -->
         <div class="col-md-6">
           <label for="bphtb_id" class="form-label">BPHTB ID</label>
-          <input type="number" class="form-control" id="bphtb_id" name="bphtb_id"
+          <div class="input-group">
+            <input type="number" class="form-control" id="bphtb_id" name="bphtb_id"
             value="<%= form_data?.bphtb_id || '' %>">
+            <a id="find-bphtb" class="btn btn-outline-primary">Find</a>
+          </div>
         </div>
+        
 
-        <!-- Alas Hak -->
-        <div class="col-md-6">
-          <label for="alas_hak_id" class="form-label">Alas Hak ID</label>
-          <input type="number" class="form-control" id="alas_hak_id" name="alas_hak_id"
-            value="<%= form_data?.alas_hak_id || '' %>">
+        <!-- BPHTB LIST -->
+        <div class="modal modal-lg fade" tabindex="-1" id="bphtb_list">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">BPHTB List</h5>
+                <button type="button" id="btn-close-bphtb-modal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">NOP</th>
+                      <th scope="col">Alas Hak</th>
+                      <th scope="col">Produk</th>
+                      <th scope="col">Wajib Pajak</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bphtb_table_body">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Checkbox Options -->
@@ -152,4 +181,5 @@
 </div>
 
 <script src="/js/client_search.js"></script>
+<script src="/js/alashak_search.js"></script>
 <script src="/js/alihhak_form_page.js"></script>
