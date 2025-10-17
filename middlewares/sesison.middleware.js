@@ -58,7 +58,7 @@ const my_session = new session({
     resave: true,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60, // one hour
+        maxAge: 1000 * 60 * 60 * 6, // SIX hours
     },
     rolling: true // <---- THIS refreshes the cookie on every response
 

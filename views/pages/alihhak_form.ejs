@@ -35,10 +35,13 @@
 
         <!-- BPHTB -->
         <div class="col-md-6">
-          <label for="bphtb_id" class="form-label">BPHTB ID</label>
+          <label for="bphtb_wajib_pajak" class="form-label">BPHTB</label>
+          <input type="hidden" class="form-control" id="bphtb_id" name="bphtb_id"
+          value="<%= form_data?.bphtb_id || '' %>">
           <div class="input-group">
-            <input type="number" class="form-control" id="bphtb_id" name="bphtb_id"
-            value="<%= form_data?.bphtb_id || '' %>">
+            <input style="background-color: lightgray" readonly type="text" class="form-control" id="bphtb_wajib_pajak"
+            value="<%= form_data?.nop || '' %>">
+            <a id="reset-bphtb" class="btn btn-outline-info">Reset</a>
             <a id="find-bphtb" class="btn btn-outline-primary">Find</a>
           </div>
         </div>

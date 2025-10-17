@@ -59,10 +59,15 @@ document.querySelectorAll('.client_list').forEach((element)=>{
 
 // BPHTB SECTION
 const find_bphtb_btn = document.querySelector('#find-bphtb');
-const bphtb_table_body = document.querySelector('#bphtb_table_body');
+const reset_bphtb_btn = document.querySelector('#reset-bphtb');
 const close_bphtb_modal_btn = document.querySelector('#btn-close-bphtb-modal');
+
 var myModal = new bootstrap.Modal(document.getElementById('bphtb_list'));
-const bphtb_items = document.querySelectorAll('#bphtb_item');
+
+const bphtb_table_body = document.querySelector('#bphtb_table_body');
+
+const bphtb_id = document.querySelector('#bphtb_id');
+const bphtb_wajib_pajak = document.querySelector('#bphtb_wajib_pajak');
 
 find_bphtb_btn.addEventListener('click', async(event)=>{
     if(alas_hak_id.value === '') {
@@ -86,24 +91,73 @@ close_bphtb_modal_btn.addEventListener('click', (event)=>{
     bphtb_table_body.innerHTML = '';
 })
 
+reset_bphtb_btn.addEventListener('click', (event)=>{
+    bphtb_id.value = null;
+    bphtb_wajib_pajak.value = null;
+})
+
 function fillBphtbTable(data){
     console.log(data);
     let i = 1;
     for(const bphtb of data.data){
         const tr = document.createElement('tr');
+
         const th = document.createElement('th');
-        bphtb_table_body.innerHTML += `
-        <tr>
-            <th scope="row">${i}</th>
-            <td>${bphtb.nop || ''}</td>
-            <td>${bphtb.no_alas_hak || ''}</td>
-            <td>${bphtb.produk || ''}</td>
-            <td>${bphtb.first_name || ''} ${bphtb.last_name || ''}</td>
-            <td><a class="btn btn-sm btn-info" id="bphtb_item" data-bphtb_id="${bphtb.id}">Pilih</a></td>
-        </tr>
-        `
+        th.innerHTML = i;
+        th.scope = 'row';
+
+        const td_nop = document.createElement('td');
+        td_nop.innerHTML = bphtb.nop || '';
+
+        const td_no_alas_hak = document.createElement('td');
+        td_no_alas_hak.innerHTML = bphtb.no_alas_hak || '';
+        
+        const td_produk = document.createElement('td');
+        td_produk.innerHTML = bphtb.produk || '';
+
+        const td_fullname = document.createElement('td');
+        td_fullname.innerHTML = (bphtb.first_name || '') + ' ' + (bphtb.last_name || '');
+
+        const td_btn = document.createElement('td');
+
+        const add_btn = document.createElement('a');
+        add_btn.innerHTML = 'Pilih';
+        add_btn.classList = 'btn btn-sm btn-info';
+        add_btn.id = 'bphtb_item';
+        add_btn.dataset.bphtb_id = bphtb.id;
+        add_btn.dataset.bphtb_wajib_pajak = (bphtb.first_name || '') + ' ' + (bphtb.last_name || '') ;
+        add_btn.addEventListener('click', (event)=>{
+            bphtb_id.value = event.target.dataset.bphtb_id;
+            bphtb_wajib_pajak.value = event.target.dataset.bphtb_wajib_pajak;
+            closeBphtbTableModel();
+        });
+        td_btn.appendChild(add_btn);
+
+        tr.appendChild(th);
+        tr.appendChild(td_nop);
+        tr.appendChild(td_no_alas_hak);
+        tr.appendChild(td_produk);
+        tr.appendChild(td_fullname);
+        tr.appendChild(td_btn);
+
+        bphtb_table_body.appendChild(tr);
+
         i++;
     }
+}
+
+//<tr>
+//    <th scope="row">${i}</th>
+//    <td>${bphtb.nop || ''}</td>
+//    <td>${bphtb.no_alas_hak || ''}</td>
+//    <td>${bphtb.produk || ''}</td>
+//    <td>${bphtb.first_name || ''} ${bphtb.last_name || ''}</td>
+//    <td><a class="btn btn-sm btn-info" id="bphtb_item" data-bphtb_id="${bphtb.id}">Pilih</a></td>
+//</tr>
+        
+function closeBphtbTableModel(){
+    myModal.hide();
+    bphtb_table_body.innerHTML = '';
 }
 
 
