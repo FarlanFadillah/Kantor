@@ -5,12 +5,12 @@
     <ul id="<%=field%>_list_view" class="list-group">
         <% if(form_data[field] && form_data[field].length > 0) {%>
         <% for (let client of form_data[field]) { %>
-            <li id="client_<%= client.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
+            <li id="client_<%= client.id %>" class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
-                    <%= owner.first_name %> <%= client.last_name %>
-                    <input type="hidden" class="client_id" name="<%=field%>_id" value="<%= client.client_id %>">
+                    <%= client.first_name %> <%= client.last_name %>
+                    <input type="hidden" class="client_id" name="<%=field%>_id" value="<%= client.id %>">
                     </span>
-                    <a id="rm_client" data-field="<%=field%>" data-client="<%= client.client_id %>" class="btn btn-danger btn-sm remove-client-btn">x</a>
+                    <a id="rm_client" data-field="<%=field%>" data-client="<%= client.id %>" class="btn btn-danger btn-sm remove-client-btn">x</a>
             </li>
         <% } %>
         <% } %>

@@ -66,8 +66,19 @@ const optionalPbbTextField = [
     'luas_tanah',
     'luas_bangunan',
     'njop',
-    'client_id',
-    'alas_hak_id'
+]
+
+
+// ALIH HAK
+
+const requiredAlihHakTextField = [
+    'produk'
+]
+
+const optionalAlihHakTextField = [
+    'tgl_akta',
+    'catatan',
+
 ]
 
 module.exports = {
@@ -78,5 +89,7 @@ module.exports = {
     requiredAlasHakTextField,
     optionalAlasHakTextField,
     requiredPbbTextField,
-    optionalPbbTextField
+    optionalPbbTextField,
+    requiredAlihHakTextField,
+    optionalAlihHakTextField
 }

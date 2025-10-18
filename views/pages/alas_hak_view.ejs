@@ -40,11 +40,13 @@
             <dd class="col-sm-9"><%= alas_hak.tgl_surat_ukur ? alas_hak.tgl_surat_ukur.toLocaleString() : '-' %></dd>
 
             <dt class="col-sm-3">Atas Nama</dt>
-            <% if(alas_hak.Clients.length > 0) {%>
+            <% if(alas_hak.clients.length > 0) {%>
               <dd class="col-sm-9">
                 <ul>
-                  <% for(const owner of alas_hak.Clients) {%>
-                    <li><a href="/client/view?id=<%= owner.client_id %>"><%=owner.first_name%> <%= owner?.last_name || '' %></a></li>
+                  <% for(const owner of alas_hak.clients) {%>
+                    <li><a href="/client/view?id=<%= owner.id %>" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                      <%=owner.first_name%> <%= owner?.last_name || '' %>
+                    </a></li>
                   <% } %>
                 </ul>
               </dd>

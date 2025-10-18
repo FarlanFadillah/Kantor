@@ -9,7 +9,7 @@
         <div class="col-md-6">
           <label for="no_akta" class="form-label">No. Akta</label>
           <input type="number" class="form-control" id="no_akta" name="no_akta"
-            required value="<%= form_data?.no_akta || '' %>">
+            value="<%= form_data?.no_akta || '' %>">
         </div>
 
         <!-- Tanggal Akta -->
@@ -37,10 +37,10 @@
         <div class="col-md-6">
           <label for="bphtb_wajib_pajak" class="form-label">BPHTB</label>
           <input type="hidden" class="form-control" id="bphtb_id" name="bphtb_id"
-          value="<%= form_data?.bphtb_id || '' %>">
+          value="<%= form_data?.bphtb?.id || '' %>">
           <div class="input-group">
             <input style="background-color: lightgray" readonly type="text" class="form-control" id="bphtb_wajib_pajak"
-            value="<%= form_data?.nop || '' %>">
+            value="<%= form_data?.bphtb?.nop || '' %>">
             <a id="reset-bphtb" class="btn btn-outline-info">Reset</a>
             <a id="find-bphtb" class="btn btn-outline-primary">Find</a>
           </div>
@@ -144,12 +144,12 @@
             <h3>Kuasa Jual</h3>
             <%-include('../partials/client_search', {
               extraContent : `
-              <a class="btn btn-primary add-list" data-field="kuasa_jual" id="add_kuasa_jual_list">+</a>
+              <a class="btn btn-primary add-list" data-field="kuasa_pemberi" id="add_kuasa_pemberi_list">+</a>
               `
             })%>
 
             <%-include('../partials/client_list_form', {
-              field : 'kuasa_jual'
+              field : 'kuasa_pemberi'
             }) %>
           </div>
         </div>
@@ -160,12 +160,12 @@
             <h3>Kuasa Beli</h3>
             <%-include('../partials/client_search', {
               extraContent : `
-              <a class="btn btn-primary add-list" data-field="kuasa_beli" id="add_kuasa_beli_list">+</a>
+              <a class="btn btn-primary add-list" data-field="kuasa_penerima" id="add_kuasa_penerima_list">+</a>
               `
             })%>
 
             <%-include('../partials/client_list_form', {
-              field : 'kuasa_beli'
+              field : 'kuasa_penerima'
             }) %>
           </div>
         </div>

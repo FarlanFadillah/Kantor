@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-  return knex.schema.createTable('peralihan_hak', table =>{
+  return knex.schema.createTable('Alih_Hak', table =>{
     table.increments('id').primary();
     table.integer('no_akta');
     table.datetime('tgl_akta');
@@ -14,22 +14,25 @@ exports.up = function(knex) {
     table.boolean('ceking_shm').defaultTo(false);
     table.boolean('znt_shm').defaultTo(false);
     table.string('catatan');
+
+    table.datetime('added_at').defaultTo(knex.fn.now());
+    table.datetime('updated_at').defaultTo(knex.fn.now());
   })
   .createTable('penerima_hak', table=>{
     table.integer('client_id').references('Clients.id').onUpdate('CASCADE');
-    table.integer('ph_id').references('peralihan_hak.id').onUpdate('CASCADE');
+    table.integer('alih_hak_id').references('Alih_Hak.id').onUpdate('CASCADE').onDelete('CASCADE');
   })
   .createTable('pihak_persetujuan', table=>{
     table.integer('client_id').references('Clients.id').onUpdate('CASCADE');
-    table.integer('ph_id').references('perlihan_hak.id').onUpdate('CASCADE'); 
+    table.integer('alih_hak_id').references('Alih_Hak.id').onUpdate('CASCADE').onDelete('CASCADE'); 
   })
-  .createTable('kuasa_jual', table=>{
+  .createTable('kuasa_pemberi', table=>{
     table.integer('client_id').references('Clients.id').onUpdate('CASCADE');
-    table.integer('ph_id').references('perlihan_hak.id').onUpdate('CASCADE'); 
+    table.integer('alih_hak_id').references('Alih_Hak.id').onUpdate('CASCADE').onDelete('CASCADE'); 
   })
-  .createTable('kuasa_beli', table=>{
+  .createTable('kuasa_penerima', table=>{
     table.integer('client_id').references('Clients.id').onUpdate('CASCADE');
-    table.integer('ph_id').references('perlihan_hak.id').onUpdate('CASCADE'); 
+    table.integer('alih_hak_id').references('Alih_Hak.id').onUpdate('CASCADE').onDelete('CASCADE'); 
   })
 };
 
@@ -38,9 +41,9 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable('peralihan_hak')
+  return knex.schema.dropTable('Alih_Hak')
   .dropTable('penerima_hak')
   .dropTable('pihak_persetujuan')
-  .dropTable('kuasa_jual')
-  .dropTable('kuasa_beli')
+  .dropTable('kuasa_pemberi')
+  .dropTable('kuasa_penerima')
 };

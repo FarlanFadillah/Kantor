@@ -28,7 +28,21 @@ const optionalTextValidator = (field) => {
         .escape()
 }
 
+
+
+const optionalIDvalidator = (field) =>{
+    return validator.body(field)
+    .trim()
+    .custom(value => {
+        return value ? !isNaN(value) : true;
+    })
+    .customSanitizer(value=>{
+        return value || null;
+    })
+}
+
 module.exports = {
     requiredTextValidator,
-    optionalTextValidator
+    optionalTextValidator,
+    optionalIDvalidator
 }

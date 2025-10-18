@@ -8,33 +8,33 @@
         <div class="row g-3">
 
           <!-- NOP -->
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="nop" class="form-label">NOP <span class="text-danger">*</span></label>
             <input type="text" id="nop" name="nop" class="form-control" required value="<%= form_data?.nop || '' %>">
           </div>
 
           <!-- Alamat -->
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
             <input type="text" id="provinsi" name="provinsi" class="form-control" required value="<%= form_data?.provinsi || '' %>">
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="kab_kota" class="form-label">Kabupaten/Kota <span class="text-danger">*</span></label>
             <input type="text" id="kab_kota" name="kab_kota" class="form-control" required value="<%= form_data?.kab_kota || '' %>">
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
             <input type="text" id="kec" name="kec" class="form-control" required value="<%= form_data?.kec || '' %>">
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="kel" class="form-label">Kelurahan <span class="text-danger">*</span></label>
             <input type="text" id="kel" name="kel" class="form-control" required value="<%= form_data?.kel || '' %>">
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="jor" class="form-label">Jorong</label>
             <input type="text" id="jor" name="jor" class="form-control" value="<%= form_data?.jor || '' %>">
           </div>
@@ -46,17 +46,17 @@
           <%-include('../partials/alashak_search')%>
 
           <!-- Informasi Tanah -->
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="luas_tanah" class="form-label">Luas Tanah (m²)</label>
             <input type="number" id="luas_tanah" name="luas_tanah" class="form-control" min="0" step="1" value="<%= form_data?.luas_tanah || 0 %>">
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="luas_bangunan" class="form-label">Luas Bangunan (m²)</label>
             <input type="number" id="luas_bangunan" name="luas_bangunan" class="form-control" min="0" step="1" value="<%= form_data?.luas_bangunan || 0 %>">
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label for="njop" class="form-label">NJOP</label>
             <input type="number" id="njop" name="njop" class="form-control" min="0" step="1" value="<%= form_data?.njop || '' %>">
           </div>

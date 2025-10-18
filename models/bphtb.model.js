@@ -22,22 +22,54 @@ async function getBphtbAllList(){
     }
 }
 
+// async function getBphtbData(id){
+//     try {
+//         return await db('Bphtb').where('Bphtb.id', id)
+//         .leftJoin('Clients', 'Bphtb.client_id', 'Clients.id')
+//         .leftJoin('Alas_Hak', 'Bphtb.alas_hak_id', 'Alas_Hak.id')
+//         .leftJoin('PBB_SKNJOP', 'Bphtb.pbb_id', 'PBB_SKNJOP.id')
+//         .select(
+//             'Bphtb.*', 
+
+//             'Alas_Hak.no_alas_hak as no_alas_hak', 'Alas_Hak.kel as alas_hak_kel', 
+            
+//             'Clients.id as client_id', 'Clients.first_name as first_name',
+//             'Clients.last_name as last_name', 'Clients.nik as nik_wajib_pajak',
+//             'PBB_SKNJOP.nop as nop'
+//         )
+//         .first();
+//     } catch (error) {
+//         throw new CustomError(error.message, 'error');
+//     }
+// }
+
 async function getBphtbData(id){
     try {
-        return await db('Bphtb').where('Bphtb.id', id)
-        .leftJoin('Clients', 'Bphtb.client_id', 'Clients.id')
-        .leftJoin('Alas_Hak', 'Bphtb.alas_hak_id', 'Alas_Hak.id')
-        .leftJoin('PBB_SKNJOP', 'Bphtb.pbb_id', 'PBB_SKNJOP.id')
-        .select(
-            'Bphtb.*', 
+        const bphtb = await db('BPHTB').where('id', id).first();
 
-            'Alas_Hak.no_alas_hak as no_alas_hak', 'Alas_Hak.kel as alas_hak_kel', 
-            
-            'Clients.id as client_id', 'Clients.first_name as first_name',
-            'Clients.last_name as last_name', 'Clients.nik as nik_wajib_pajak',
-            'PBB_SKNJOP.nop as nop'
-        )
-        .first();
+        const [
+            client, alas_hak, pbb
+        ] = await Promise.all([
+            db('Clients')
+            .where('id', bphtb.client_id)
+            .select(
+                'id', 'first_name', 'last_name', 'nik'
+            ).first(),
+
+            db('Alas_Hak')
+            .where('id', bphtb.alas_hak_id)
+            .select(
+                'id', 'no_alas_hak', 'kel'
+            ).first(),
+
+            db('PBB_SKNJOP as pbb')
+            .where('pbb.id', bphtb.pbb_id)
+            .select(
+                'id', 'nop'
+            ).first()
+        ]);
+
+        return {...bphtb, client, alas_hak, pbb}
     } catch (error) {
         throw new CustomError(error.message, 'error');
     }
@@ -62,8 +94,38 @@ async function searchBphtbWithReferences(query){
     }
 }
 
+/**
+ * 
+ * @param {String} keyword 
+ * @param {Array} column 
+ * @returns 
+ */
+async function searchBphtbTable(keyword, column){
+    try {
+        return await db('BPHTB')
+        .leftJoin('Alas_Hak', 'BPHTB.alas_hak_id', 'Alas_Hak.id')
+        .leftJoin('Clients', 'BPHTB.client_id', 'Clients.id')
+        .leftJoin('PBB_SKNJOP', 'BPHTB.pbb_id', 'PBB_SKNJOP.id')
+        .select(
+            'BPHTB.id', 'BPHTB.produk',
+            'Alas_Hak.no_alas_hak',
+            'Clients.first_name', 'Clients.last_name',
+            'PBB_SKNJOP.nop'
+        )
+        .where(function(){
+            column.forEach((col, i)=>{
+                if(i === 0) this.where(col, 'like', `%${keyword}%`);
+                else this.orWhere(col, 'like', `%${keyword}%`);
+            })
+        });
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
+}
+
 module.exports = {
     getBphtbAllList,
     getBphtbData,
-    searchBphtbWithReferences
+    searchBphtbWithReferences,
+    searchBphtbTable
 }

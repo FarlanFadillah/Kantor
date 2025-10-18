@@ -66,7 +66,7 @@ async function addReturnColumn(table, model, column){
 
 /**
  * @param {string} table
- * @param {string} model
+ * @param {Object} model
  */
 async function add(table, model){
     try {
@@ -223,6 +223,26 @@ async function search(table, query, field = ['*']){
     }
 }
 
+/**
+ * 
+ * @param {String} table 
+ * @param {Array} column 
+ * @param {String} keyword 
+ * @returns 
+ */
+async function searchTable(table, column, keyword){
+    try {
+        return await db(table).where(function (){
+            column.forEach((col, i)=>{
+                if(i === 0) this.where(col, 'like', `%${keyword}%`);
+                else this.orWhere(col, 'like', `%${keyword}%`)
+            })
+        }).select(column)
+    } catch (error) {
+        
+    }
+}
+
 
 module.exports = {
     add,
@@ -239,6 +259,7 @@ module.exports = {
     getAllWhere,
     joinTwoTable,
     joinTableWithJunction,
-    search
+    search,
+    searchTable
 }
 

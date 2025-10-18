@@ -42,9 +42,9 @@ client_nik.forEach((element)=>{
 })
 
 
-async function searchClient(nik){
+async function searchClient(keyword){
     try {
-        const res = await fetch(`/api/client/search?key=nik&value=${nik}`)
+        const res = await fetch(`/api/client/search?keyword=${keyword}`)
         if(!res.ok){
             // Baca text biar bisa lihat error aslinya
             const text = await res.text();
@@ -57,7 +57,10 @@ async function searchClient(nik){
 }
 
 // remove current wajib pajak
-document.getElementById('rm_client').addEventListener('click', (e)=>{
-    client_fullname.value = null;
-    client_id.value = null;
-});
+document.querySelectorAll('#rm_client').forEach((element)=>{
+    element.addEventListener('click', (e)=>{
+        e.target.closest('div').querySelector('#client_fullname').value = null;
+        e.target.closest('div').parentElement.querySelector('#client_id').value = null;
+        e.target.closest('div').parentElement.querySelector('.input-group > #client_nik').value = null;
+    });
+})

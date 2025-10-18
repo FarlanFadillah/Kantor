@@ -26,7 +26,6 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
         const form_data = await bphtbModel.getBphtbData(req.query.id);
 
         res.locals.form_data = form_data;
-        
     }
 
     res.render('pages/bphtb_form');

@@ -15,6 +15,7 @@ function formErrorHandler(err, req, res, next){
     addMessage(req, err.type, err.message);
 
     console.log('form Error Handler:', err.message);
+    console.log(err.stack);
 
     // log
     //log(req, 'error', error.message, {module : 'Auth Router'});

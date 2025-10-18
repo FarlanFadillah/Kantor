@@ -51,7 +51,7 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
         'updated_at', 
         'desc'
     );
-    
+
     // view route
     res.locals.view_route = '/client/view?id=';
 

@@ -3,7 +3,7 @@
     <label for="no_alas_hak" class="form-label">No. Alas Hak <span class="text-danger">*</span></label>
     
     <div class="input-group mb-3 dropdown" data-bs-spy="scroll">
-        <input autocomplete="off" type="text" id="no_alas_hak" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.no_alas_hak || ''%>">
+        <input autocomplete="off" type="text" id="no_alas_hak" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.alas_hak?.no_alas_hak || ''%>">
         <a href="/alas_hak/form" target="_blank" class="btn btn-outline-primary">New</a>
         <ul class="dropdown-menu" id="alashak-dropdown-menu">
             <!--<li><a class="dropdown-item" href="#">Another action</a></li>
@@ -12,11 +12,11 @@
     </div>
 
 
-    <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" value="<%= form_data?.alas_hak_id || ''%>">
+    <input hidden type="text" id="alas_hak_id" name="alas_hak_id" class="form-control" value="<%= form_data?.alas_hak?.id || ''%>">
 
     <label for="alas_hak" class="form-label">Alas Hak<span class="text-danger">*</span></label>
     <div class="input-group mb-3">
-        <input type="text" id="alas_hak" class="form-control" required readonly value="<%=form_data?.no_alas_hak || ''%>/<%= form_data?.alas_hak_kel || '' %>" style="background-color: lightgray">
+        <input type="text" id="alas_hak" class="form-control" required readonly value="<%=form_data?.alas_hak?.no_alas_hak || ''%>/<%= form_data?.alas_hak?.kel || '' %>" style="background-color: lightgray">
         <a id="rm_alas_hak" class="btn btn-danger btn-sm remove-owner-btn">reset</a>
     </div>
 </div>

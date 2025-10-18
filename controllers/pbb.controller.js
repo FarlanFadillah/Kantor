@@ -21,7 +21,6 @@ const renderPbbFormPage = asyncHandler(async (req, res, next)=>{
         console.log(form);
         res.locals.form_data = form;
     }
-    
 
     res.status(200).render('pages/pbb_form');
 });
@@ -75,8 +74,6 @@ const renderPbbViewPage = asyncHandler(async (req, res, next)=>{
 
     convertLocalDT(pbb);
 
-    console.log(pbb);
-
     res.locals.pbb = pbb;
     res.status(200).render('pages/pbb_view');
 });
@@ -87,10 +84,6 @@ const renderPbbViewPage = asyncHandler(async (req, res, next)=>{
  */
 const addPbb = asyncHandler(async (req, res, next)=>{
     const data = matchedData(req);
-
-    // make sure the foreign key is not undefined
-    data.client_id = data.client_id || null;
-    data.alas_hak_id = data.alas_hak_id || null;
 
     await mainModel.add('PBB_SKNJOP', data);
     res.redirect('/pbb/list');
@@ -103,10 +96,6 @@ const updatePbb = asyncHandler(async (req, res, next) => {
     const data = matchedData(req);
 
     if(!req.query || !req.query.id) return next(new CustomError('Id is not defined', 'error', 200));
-
-    // make sure the foreign key is null
-    data.client_id = data.client_id || null;
-    data.alas_hak_id = data.alas_hak_id || null;
 
     await mainModel.update('PBB_SKNJOP', data, req.query);
 

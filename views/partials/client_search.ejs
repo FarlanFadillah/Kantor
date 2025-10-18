@@ -7,7 +7,7 @@
         <% } %>
     </label>
     <div class="input-group mb-3 dropdown">
-        <input autocomplete="off" type="text" id="client_nik" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.client_nik || ''%>" >
+        <input autocomplete="off" type="text" id="client_nik" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.client?.nik || ''%>" >
         <a href="/client/form" target="_blank" class="btn btn-outline-primary">New</a>
         <ul class="dropdown-menu" id="client-dropdown-menu">
             <!--<li><a class="dropdown-item" href="#">Another action</a></li>
@@ -16,11 +16,11 @@
     </div>
 
 
-    <input hidden type="text" id="client_id" name="client_id" class="form-control" value="<%= form_data?.client_id || '' %>">
+    <input hidden type="text" id="client_id" name="client_id" class="form-control" value="<%= form_data?.client?.id || '' %>">
 
     <label for="wajib_pajak" class="form-label">Full Name</label>
     <div class="input-group mb-3">
-        <input type="text" id="client_fullname" class="form-control" readonly value="<%=form_data?.first_name || ''%> <%=form_data?.last_name || ''%>" style="background-color: lightgray">
+        <input type="text" id="client_fullname" class="form-control" readonly value="<%=form_data?.client?.first_name || ''%> <%=form_data?.client?.last_name || ''%>" style="background-color: lightgray">
         <a id="rm_client" class="btn btn-danger btn-sm remove-owner-btn">reset</a>
          <% if (typeof extraContent !== 'undefined' && extraContent) { %>
             <%- extraContent %>

@@ -36,8 +36,8 @@
                 <dt class="col-sm-3">Client</dt>
                 <% if (pbb.client_id) { %>
                     <dd class="col-sm-9">
-                        <a href="/client/view?id=<%= pbb.client_id %>">
-                            <%= pbb.first_name %> <%= pbb.last_name || '' %>
+                        <a href="/client/view?id=<%= pbb.client?.id %>" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                            <%= pbb.client?.first_name %> <%= pbb.client?.last_name || '' %>
                         </a>
                     </dd>
                 <% } else { %>
@@ -45,10 +45,10 @@
                 <% } %>
 
                 <dt class="col-sm-3">Alas Hak</dt>
-                <% if (pbb.alas_hak_id) { %>
+                <% if (pbb.alas_hak?.id) { %>
                     <dd class="col-sm-9">
-                        <a href="/alas_hak/view?id=<%= pbb.alas_hak_id %>">
-                            <%= pbb.no_alas_hak %> / <%= pbb.alas_hak_kel%>
+                        <a href="/alas_hak/view?id=<%= pbb.alas_hak?.id %>" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                            <%= pbb.alas_hak?.no_alas_hak %> / <%= pbb.alas_hak?.kel%>
                         </a>
                     </dd>
                 <% } else { %>

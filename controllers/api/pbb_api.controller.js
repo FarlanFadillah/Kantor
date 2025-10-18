@@ -15,7 +15,7 @@ const verifyPbb = asyncHandler(async(req, res, next)=>{
 const searchPbb = asyncHandler(async(req, res, next)=>{
     if(!req.query) return res.status(400).json({success : false, msg : 'Key and Value missing'});
 
-    const pbb = await mainModel.search('PBB_SKNJOP', req.query, ['id', 'nop', 'kel']);
+    const pbb = await mainModel.searchTable('PBB_SKNJOP', ['id', 'nop', 'kel'], req.query.keyword);
 
     res.status(200).json({success : true, data : pbb})
 })

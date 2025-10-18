@@ -33,9 +33,9 @@ no_alas_hak.addEventListener('keyup', async (event)=>{
 
 
 
-async function searchAlasHak(no_alas_hak){
+async function searchAlasHak(keyword){
     try {
-        const res = await fetch(`/api/alas_hak/search?key=no_alas_hak&value=${no_alas_hak}`);
+        const res = await fetch(`/api/alas_hak/search?keyword=${keyword}`);
         if(!res.ok){
             // Baca text biar bisa lihat error aslinya
             const text = await res.text();

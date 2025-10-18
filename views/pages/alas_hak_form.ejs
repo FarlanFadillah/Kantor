@@ -93,14 +93,14 @@
               <div class="col-md-6" id="owner_list">
                   <label for="owner_list_view">Atas Nama</label>
                   <ul id="owner_list_view" class="list-group">
-                    <% if(form_data.Clients && form_data.Clients.length > 0) {%>
-                      <% for (let owner of form_data?.Clients) { %>
-                          <li id="owner_<%= owner.client_id %>" class="list-group-item d-flex justify-content-between align-items-center">
+                    <% if(form_data.clients && form_data.clients.length > 0) {%>
+                      <% for (let owner of form_data?.clients) { %>
+                          <li id="owner_<%= owner.id %>" class="list-group-item d-flex justify-content-between align-items-center">
                                 <span>
                                   <%= owner.first_name %> <%= owner.last_name %>
-                                  <input type="hidden" class="client_id" name="client_id" value="<%= owner.client_id %>">
+                                  <input type="hidden" class="client_id" name="client_id" value="<%= owner.id %>">
                                 </span>
-                                <a id="rm_owner" data-owner="<%= owner.client_id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
+                                <a id="rm_owner" data-owner="<%= owner.id %>" class="btn btn-danger btn-sm remove-owner-btn">x</a>
                           </li>
                       <% } %>
                     <% } %>

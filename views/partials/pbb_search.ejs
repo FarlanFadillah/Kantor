@@ -2,9 +2,9 @@
 
     <label for="nop" class="form-label">NOP</span></label>
     <div class="input-group mb-3 dropdown">
-        <input autocomplete="off" type="text" id="nop" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.nop || ''%>">
+        <input autocomplete="off" type="text" id="nop" data-bs-toggle="dropdown" class="form-control" value="<%=form_data?.pbb?.nop || ''%>">
         <a href="/pbb/form" target="_blank" class="btn btn-outline-primary">New</a>
-        <% if(form_data?.nop) {%>
+        <% if(form_data?.pbb?.nop) {%>
             <span class="input-group-text bg-transparent border-0" id="nop-status">
                 <i class="bi bi-check-circle-fill text-success"></i>
             </span>
@@ -20,6 +20,6 @@
         </ul>
     </div>
 
-    <input hidden type="text" id="pbb_id" name="pbb_id" class="form-control" value="<%= form_data?.pbb_id || ''%>">
+    <input hidden type="text" id="pbb_id" name="pbb_id" class="form-control" value="<%= form_data?.pbb?.id || ''%>">
     
 </div>

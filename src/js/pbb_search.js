@@ -39,9 +39,9 @@ nop_input.addEventListener('keyup', async (event)=>{
     }
 });
 
-async function searchPbb(nop){
+async function searchPbb(keyword){
     try {
-        const res = await fetch(`/api/pbb/search?key=nop&value=${nop}`)
+        const res = await fetch(`/api/pbb/search?keyword=${keyword}`)
         if(!res.ok){
             // Baca text biar bisa lihat error aslinya
             const text = await res.text();

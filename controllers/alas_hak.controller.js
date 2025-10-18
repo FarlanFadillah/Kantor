@@ -3,9 +3,9 @@ const mainModel = require('../models/main.model');
 const { matchedData } = require("express-validator");
 const { addMessage } = require("../utils/flash_messages");
 const { CustomError } = require("../utils/custom.error");
-const { getRequireData, convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
+const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const alasHakModel = require('../models/alas_hak.model');
-const {reduceAlasHakTable} = require('../helper/alas_hak_ctrl.helper');
+const {getRequireData} = require('../utils/customize_obj');
 
  
 
@@ -24,7 +24,7 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
         res.locals.form_action = `/alas_hak/form/edit?id=${req.query.id}`
         
         let form = await alasHakModel.getAlasHakData(req.query.id);
-        form = reduceAlasHakTable(form, await mainModel.getAllColumnName('Alas_Hak'));
+        
         res.locals.form_data = form;
     }
     res.status(200).render('pages/alas_hak_form');
@@ -41,8 +41,6 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
 
     let alas_hak = await alasHakModel.getAlasHakData(req.query.id);
     
-    alas_hak = reduceAlasHakTable(alas_hak, await mainModel.getAllColumnName('Alas_Hak'));
-   
     convertLocalDT(alas_hak);
 
     res.locals.alas_hak = alas_hak;
@@ -101,7 +99,7 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
     res.locals.alasHak = await mainModel.addReturnColumn('Alas_hak', fields, 'id');
 
     // flash message
-    addMessage(req, 'success', 'Alas Hak added successfully');
+    addMessage(req, 'info', 'Alas Hak added successfully');
 
     // going to addAlasHakOwner
     next();
@@ -140,7 +138,7 @@ const updateAlasHak = asyncHandler(async (req, res, next)=>{
     await mainModel.update('Alas_Hak', fields, req.query);
 
     // flash message
-    addMessage(req, 'success', 'Alas Hak updated successfully');
+    addMessage(req, 'info', 'Alas Hak updated successfully');
 
     next();
 })

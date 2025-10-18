@@ -8,8 +8,10 @@ const {optionalClientTextFields,
     requiredAlasHakTextField,
     optionalAlasHakTextField,
     requiredPbbTextField,
-    optionalPbbTextField} = require('../rules/form_fields')
-const {requiredTextValidator, optionalTextValidator} = require("../helper/validator.helper");
+    optionalPbbTextField,
+    requiredAlihHakTextField,
+    optionalAlihHakTextField} = require('../rules/form_fields')
+const {requiredTextValidator, optionalTextValidator, optionalIDvalidator} = require("../helper/validator.helper");
 const loginValidator = [
     validator.body('username').notEmpty().withMessage('Username / Email is required'),
     validator.body('password').notEmpty().withMessage('Password is required')
@@ -119,8 +121,23 @@ const pbbValidator = [
     .isNumeric().withMessage('Nop must be a numeric')
     .notEmpty().withMessage('Nop is required')
     .escape(),
+    optionalIDvalidator('client_id'),
+    optionalIDvalidator('alas_hak_id'),
     ...requiredPbbTextField.map(requiredTextValidator),
     ...optionalPbbTextField.map(optionalTextValidator)
+]
+
+// ALIH HAK VALIDATOR
+
+const alihHakValidator = [
+    optionalIDvalidator('no_akta'),
+
+    optionalIDvalidator('bphtb_id'),
+
+    optionalIDvalidator('alas_hak_id'),
+
+    ...requiredAlihHakTextField.map(requiredTextValidator),
+    ...optionalAlihHakTextField.map(optionalTextValidator)
 ]
 
 
@@ -132,5 +149,6 @@ module.exports = {
     bphtbFormValidator,
     alasHakFormValidator,
     pbbValidator,
+    alihHakValidator,
     validatorErrorHandler
 }
