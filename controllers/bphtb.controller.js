@@ -61,17 +61,17 @@ const addBphtb = asyncHandler(async (req, res, next) => {
     // make sure the foreign key is not undefined
     cleandata.pbb_id = cleandata.pbb_id || null;
 
-    await mainModel.add('Bphtb', {
+    const added_bphtb_id = await mainModel.addReturnColumn('Bphtb', {
         ...cleandata,
         perintah_bayar : req.body?.perintah_bayar || false,
         lunas : req.body?.lunas || false,
         selesai : req.body?.selesai || false
-    });
+    }, 'id');
 
     // flash message
     addMessage(req, 'info', 'Bphtb successfully created');
 
-    res.redirect('/admin/dashboard');
+    res.redirect(`/bphtb/view?id${added_bphtb_id}`);
 });
 
 /**

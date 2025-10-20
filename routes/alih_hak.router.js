@@ -2,7 +2,8 @@ const { renderAlihHakForm, addAlihHak,
         renderAlihHakListPage, addPihakPenerima, 
         addPihakPersetujuan, addKuasaPemberi, addKuasaPenerima, 
         renderAlihHakViewPage, 
-        updateAlihHak } = require('../controllers/alih_hak.controller');
+        updateAlihHak, 
+        deleteAlihHak} = require('../controllers/alih_hak.controller');
 const { formErrorHandler } = require('../middlewares/error.middleware');
 const { getFormState, saveFormState, clearFormState } = require('../middlewares/form.middleware');
 const { pagination } = require('../middlewares/pagination.middleware');
@@ -26,6 +27,8 @@ router.route('/form/edit')
                 updateAlihHak, addPihakPenerima, 
                 addPihakPersetujuan, addKuasaPemberi, 
                 addKuasaPenerima, formErrorHandler);
+
+router.post('/delete', deleteAlihHak);
 
 router.get('/list', pagination, renderAlihHakListPage);
 router.get('/view', renderAlihHakViewPage);

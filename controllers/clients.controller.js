@@ -84,12 +84,12 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
  * Add client controller
  */
 const addClient = asyncHandler(async (req, res, next) => {
-    await mainModel.add('Clients', matchedData(req));
+    const added_client_id = await mainModel.addReturnColumn('Clients', matchedData(req), 'id');
 
     // flash message
     addMessage(req, 'info', 'Client Added Successfully');
 
-    res.redirect('/admin/dashboard');
+    res.redirect(`/client/view?id${added_client_id}`);
 });
 
 /**
@@ -116,7 +116,7 @@ const updateClient = asyncHandler(async (req, res, next)=>{
     // flash message
     addMessage(req, 'info', 'Client Updated Successfully');
 
-    res.redirect('/client/list?currentPage=1');
+    res.redirect(`/client/view?id=${req.query.id}`);
 });
 
 

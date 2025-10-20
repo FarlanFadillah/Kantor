@@ -85,8 +85,8 @@ const renderPbbViewPage = asyncHandler(async (req, res, next)=>{
 const addPbb = asyncHandler(async (req, res, next)=>{
     const data = matchedData(req);
 
-    await mainModel.add('PBB_SKNJOP', data);
-    res.redirect('/pbb/list');
+    const added_pbb_id = await mainModel.addReturnColumn('PBB_SKNJOP', data, 'id');
+    res.redirect(`/pbb/view?id${added_pbb_id}`);
 });
 
 /**

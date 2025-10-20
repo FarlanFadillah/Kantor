@@ -98,8 +98,8 @@ const addAlihHak = asyncHandler(async (req, res, next)=>{
     // add data to table
     res.locals.alih_hak = await mainModel.addReturnColumn('Alih_Hak', {
         ...fields,
-        ceking_shm  : req.body.ceking || false,
-        znt_shm     : req.body.znt || false,
+        ceking_shm  : req.body.ceking_shm || false,
+        znt_shm     : req.body.znt_shm || false,
         pph         : req.body.pph || false
     }, 'id');
 
@@ -127,8 +127,8 @@ const updateAlihHak = asyncHandler(async (req, res, next)=>{
     // update data
     await mainModel.update('Alih_Hak', {
         ...fields,
-        ceking_shm  : req.body.ceking || false,
-        znt_shm     : req.body.znt || false,
+        ceking_shm  : req.body.ceking_shm || false,
+        znt_shm     : req.body.znt_shm || false,
         pph         : req.body.pph || false
     }, req.query);
 
@@ -138,6 +138,20 @@ const updateAlihHak = asyncHandler(async (req, res, next)=>{
     addMessage(req, 'info', 'Alih Hak added successfully');
 
     next();
+});
+
+/**
+ * Delete alih hak controller.
+ */
+const deleteAlihHak = asyncHandler(async (req, res, next)=>{
+    if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
+
+    await mainModel.del('Alih_Hak', req.query);
+
+    // flash message
+    addMessage(req, 'info', 'Alih Hak deleted successfully');
+
+    res.redirect('/alih_hak/list');
 })
 
 
@@ -233,7 +247,7 @@ const addKuasaPenerima = asyncHandler (async (req, res, next)=>{
         }
     }
 
-    res.redirect('/alih_hak/list');
+    res.redirect(`/alih_hak/view?id=${res.locals.alih_hak.id}`);
 })
 
 
@@ -245,6 +259,7 @@ module.exports = {
     addKuasaPemberi,
     addKuasaPenerima,
     updateAlihHak,
+    deleteAlihHak,
     renderAlihHakListPage,
     renderAlihHakViewPage
 }
