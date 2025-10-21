@@ -2,6 +2,9 @@ const asyncHandler = require("../../utils/asyncHandler");
 const mainModel = require('../../models/main.model');
 
 
+/**
+ * verify pbb by nop and return the row for certain column
+ */
 const verifyPbb = asyncHandler(async(req, res, next)=>{
     const {nop} = req.query;
 
@@ -12,6 +15,9 @@ const verifyPbb = asyncHandler(async(req, res, next)=>{
     res.status(200).json({success : true, data : pbb || null});
 });
 
+/**
+ * Search pbb by keyword for certain column name
+ */
 const searchPbb = asyncHandler(async(req, res, next)=>{
     if(!req.query) return res.status(400).json({success : false, msg : 'Key and Value missing'});
 

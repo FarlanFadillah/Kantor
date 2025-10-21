@@ -26,6 +26,9 @@ const alasHakRoute = require('./routes/alas_hak.router');
 const pbbRoute = require('./routes/pbb.router');
 const pHakRoute = require('./routes/alih_hak.router');
 
+// temp router delete later
+const debugRouter = require('./routes/debuging_router');
+
 // api routes
 const client_apiRoute = require('./routes/api/client_api.router');
 const alas_hak_apiRoute = require('./routes/api/alas_hak_api.router');
@@ -83,7 +86,7 @@ app.use('/api/alas_hak', alas_hak_apiRoute);
 app.use('/api/pbb', pbb_apiRoute);
 app.use('/api/bphtb', bphtb_apiRoute);
 
-// debuging
+// debuging DELETE LATER
 app.get('/knex/test', async (req, res)=>{
     const table_info = await db.raw('PRAGMA table_info(Alas_Hak)');
     const column_name = [];
@@ -94,6 +97,8 @@ app.get('/knex/test', async (req, res)=>{
 
     res.status(200).json(column_name);
 })
+
+app.use('/debug', debugRouter);
 
 // public ssr route (order is important)
 app.use('/auth', userRoute);

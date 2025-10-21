@@ -28,8 +28,11 @@ const optionalTextValidator = (field) => {
         .escape()
 }
 
-
-
+/**
+ * 
+ * @param {String} field 
+ * @returns validator for optional numeric id
+ */
 const optionalIDvalidator = (field) =>{
     return validator.body(field)
     .trim()

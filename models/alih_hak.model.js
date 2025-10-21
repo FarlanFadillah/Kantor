@@ -1,6 +1,13 @@
 const db = require('../database/db');
 
-
+/**
+ * 
+ * @param {Number} limit 
+ * @param {Number} offset 
+ * @param {Array} column 
+ * @param {String} order 
+ * @returns pagination alih hak data
+ */
 async function getAlihHakPagination(limit, offset, column, order = 'asc'){
     try {
         return await db('Alih_Hak')
@@ -18,6 +25,11 @@ async function getAlihHakPagination(limit, offset, column, order = 'asc'){
     }
 }
 
+/**
+ * 
+ * @param {Number} id 
+ * @returns alih hak data with all many-to-many / one-to-many relation table
+ */
 async function getAllAliHakData(id){
     try {
 
