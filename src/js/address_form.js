@@ -1,7 +1,7 @@
 const provinsi_option   = document.querySelector('#provinsi_option');
 const kab_kota_option   = document.querySelector('#kab_kota_option');
 const kec_option        = document.querySelector('#kec_option');
-
+const kel_option        = document.querySelector('#kel_option');
 // Provinsi
 provinsi_option.addEventListener('change', async (event)=>{
     try {
@@ -39,6 +39,26 @@ kab_kota_option.addEventListener('change', async (event)=>{
     } catch (error) {
         console.log(error)
     }
+});
+
+
+// Kecamatan
+kec_option.addEventListener('change', async (event)=>{
+    try {
+        kel_option.innerHTML = '<option value="" selected disabled>Pilih Kelurahan</option>'
+        kel_option.disabled = false;
+        const option = event.target.options[event.target.selectedIndex];
+        const data = await getVillages(option.dataset.code);
+        for(const region of data.kel_data.data){
+            const option = document.createElement('option');
+            option.value = region.name;
+            option.innerHTML = region.name;
+            option.dataset.code = region.code;
+            kel_option.appendChild(option);
+        }
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
@@ -65,3 +85,13 @@ async function getDistricts(code){
     }
 }
 
+
+async function getVillages(code){
+    try {
+        const res = await fetch(`/debug/api/villages?code=${code}`);
+        
+        return res.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
