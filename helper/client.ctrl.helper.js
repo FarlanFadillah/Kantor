@@ -1,14 +1,12 @@
-const wilayah_helper = require('./wilayah_api.helper');
+const wilayahModel = require('../models/wilayah_id.model')
 
 async function getAddressDetail(client_obj){
     const address_code = client_obj.address_code;
 
-    const provinsi = await wilayah_helper.getProvinsi(address_code);
-    const kabupaten = await wilayah_helper.getKabupaten(address_code);
-    const kecamatan = await wilayah_helper.getKecamatan(address_code);
-    const kelurahan = await wilayah_helper.getkelurahan(address_code);
-
-    console.log(provinsi.name, kabupaten.name, kecamatan.name, kelurahan.name);
+    const provinsi = await wilayahModel.getProvinsi(address_code);
+    const kabupaten = await wilayahModel.getKabupaten(address_code);
+    const kecamatan = await wilayahModel.getKecamatan(address_code);
+    const kelurahan = await wilayahModel.getKelurahan(address_code);
 
     client_obj.provinsi = provinsi.name;
     client_obj.kab_kota = kabupaten.name;

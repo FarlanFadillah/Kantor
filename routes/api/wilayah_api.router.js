@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const process = require('process');
+const wilayahModel = require('../../models/wilayah_id.model')
 
 // provinsi
 router.get('/provinsi', async (req, res)=>{
     try {
-        const data = await fetch(`https://api.binderbyte.com/wilayah/provinsi?api_key=${process.env.WILAYAH_API_KEY}`);
-        const provinsi_data = await data.json();
+        const data = await wilayahModel.getAllProvinsi();
 
-        res.status(200).json({provinsi : provinsi_data.value})
+        res.status(200).json({provinsi : data})
     } catch (error) {
         res.status(400).json({success : false, msg : error.message})
     }
@@ -19,12 +19,9 @@ router.get('/provinsi', async (req, res)=>{
 router.get('/kabupaten', async (req, res)=>{
     const {code} = req.query;
     try {
-        const data = await fetch(`https://api.binderbyte.com/wilayah/kabupaten?api_key=${process.env.WILAYAH_API_KEY}&id_provinsi=${code}`);
-        const kab_kota_data = await data.json();
+        const data = await wilayahModel.getKabupatenList(code);
 
-        console.log(kab_kota_data);
-
-        res.status(200).json({kab_kota : kab_kota_data.value})
+        res.status(200).json({kab_kota : data})
     } catch (error) {
         res.status(400).json({success : false, msg : error.message})
     }
@@ -34,10 +31,9 @@ router.get('/kabupaten', async (req, res)=>{
 router.get('/kecamatan', async(req, res)=>{
     const {code} = req.query;
     try {
-        const data = await fetch(`https://api.binderbyte.com/wilayah/kecamatan?api_key=${process.env.WILAYAH_API_KEY}&id_kabupaten=${code}`);
-        const kec_data = await data.json();
+        const data = await wilayahModel.getKecamatanList(code); 
 
-        res.status(200).json({kec_data : kec_data.value});
+        res.status(200).json({kec_data : data});
     } catch (error) {
         res.status(400).json({success : false, msg : error.message})
     }
@@ -47,10 +43,9 @@ router.get('/kecamatan', async(req, res)=>{
 router.get('/kelurahan', async(req, res)=>{
     const {code} = req.query;
     try {
-        const data = await fetch(`https://api.binderbyte.com/wilayah/kelurahan?api_key=${process.env.WILAYAH_API_KEY}&id_kecamatan=${code}`);
+        const data = await wilayahModel.getKelurahanList(code);
 
-        const kel_data = await data.json();
-        res.status(200).json({kel_data : kel_data.value});
+        res.status(200).json({kel_data : data});
     } catch (error) {
         res.status(400).json({success : false, msg : error.message})
     }
