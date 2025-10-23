@@ -33,7 +33,8 @@ const debugRouter = require('./routes/debuging_router');
 const client_apiRoute = require('./routes/api/client_api.router');
 const alas_hak_apiRoute = require('./routes/api/alas_hak_api.router');
 const pbb_apiRoute = require('./routes/api/pbb_api.router');
-const bphtb_apiRoute = require('./routes/api/bphtb_api.router')
+const bphtb_apiRoute = require('./routes/api/bphtb_api.router');
+const wilayah_apiRoute = require('./routes/api/wilayah_api.router')
 
 // middlewares
 const session = require('./middlewares/sesison.middleware');
@@ -85,6 +86,7 @@ app.use('/api/client', client_apiRoute);
 app.use('/api/alas_hak', alas_hak_apiRoute);
 app.use('/api/pbb', pbb_apiRoute);
 app.use('/api/bphtb', bphtb_apiRoute);
+app.use('/api/wilayah', wilayah_apiRoute)
 
 // debuging DELETE LATER
 app.get('/knex/test', async (req, res)=>{

@@ -4,10 +4,6 @@ const requiredClientTextFields = [
     "first_name",
     "job_name",
     "birth_place",
-    "provinsi",
-    "kab_kota",
-    "kec",
-    "kel",
     "birth_date",
     "marriage_status",
     "gender"
@@ -18,6 +14,7 @@ const optionalClientTextFields = [
     "jalan",
     "rt",
     "rw",
+    "address_code"
 ]
 
 

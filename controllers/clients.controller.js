@@ -4,6 +4,7 @@ const mainModel = require('../models/main.model')
 const {matchedData} = require('express-validator');
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const {CustomError} = require("../utils/custom.error");
+const { getAddressDetail } = require("../helper/client.ctrl.helper");
 
 /**
  * The form state is determined by the query parameter — if the query
@@ -45,7 +46,7 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
     // get all client order by updated_at column
     res.locals.datas = await mainModel.getPaginationList(
         'Clients', 
-        ['nik', 'first_name', 'last_name', 'gender', 'job_name', 'kab_kota', 'id'],
+        ['nik', 'first_name', 'last_name', 'gender', 'job_name', 'id'],
         res.locals.limit, 
         res.locals.offset, 
         'updated_at', 
@@ -72,11 +73,15 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client View';
 
     // get the client data by its id
-    res.locals.client_data = await mainModel.get('Clients', req.query);
+    const client_data = await mainModel.get('Clients', req.query);
 
     // convert the date time to local time asia/jakarta
-    convertLocalDT(res.locals.client_data);
+    convertLocalDT(client_data);
 
+    // get the address details
+    if(client_data.address_code) await getAddressDetail(client_data);
+
+    res.locals.client_data = client_data;
     res.status(200).render('pages/client_view_page');
 })
 

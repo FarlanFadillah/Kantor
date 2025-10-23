@@ -72,40 +72,7 @@
                     </div>
 
                     <!-- Address: provinsi -->
-                    <div class="col-12 col-md-6">
-                        <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
-                        <input value="<%-form_data?.provinsi || ''%>" type="text" class="form-control" id="provinsi" name="provinsi" required placeholder="Provinsi">
-                        <div class="invalid-feedback">Provinsi wajib diisi.</div>
-                    </div>
-
-                    <!-- kota/kab (mapped to kota_kab) -->
-                    <div class="col-12 col-md-6">
-                        <label for="kota_kab" class="form-label">Kota / Kabupaten <span class="text-danger">*</span></label>
-                        <!-- DB field in migration was `kota/kab` — HTML uses kota_kab for name attribute -->
-                        <input value="<%-form_data?.kab_kota || ''%>" type="text" class="form-control" id="kota_kab" name="kab_kota" required placeholder="Kota atau Kabupaten">
-                        <div class="invalid-feedback">Kota / Kabupaten wajib diisi.</div>
-                    </div>
-
-                    <!-- kec -->
-                    <div class="col-12 col-md-6">
-                        <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
-                        <input value="<%-form_data?.kec || ''%>" type="text" class="form-control" id="kec" name="kec" required placeholder="Kecamatan">
-                        <div class="invalid-feedback">Kecamatan wajib diisi.</div>
-                    </div>
-
-                    <!-- kel -->
-                    <div class="col-12 col-md-6">
-                        <label for="kel" class="form-label">Kelurahan / Desa <span class="text-danger">*</span></label>
-                        <input value="<%-form_data?.kel || ''%>" type="text" class="form-control" id="kel" name="kel" required placeholder="Kelurahan atau Desa">
-                        <div class="invalid-feedback">Kelurahan / Desa wajib diisi.</div>
-                    </div>
-
-                    <!-- kel -->
-                    <div class="col-12 col-md-6">
-                        <label for="jalan" class="form-label">Jalan</label>
-                        <input value="<%-form_data?.jalan || ''%>" type="text" class="form-control" id="jalan" name="jalan" placeholder="Jalan">
-                        <div class="invalid-feedback">Jalan (optional).</div>
-                    </div>
+                    <%- include('../partials/address_form') %>
 
                     <!-- rt/rw -->
                     <div class="col-12 col-md-6">
@@ -141,5 +108,6 @@
 </div>
 
 <script src="/js/client_form_page.js"></script>
+<script src="/js/address_form.js"></script>
 
 </div>
