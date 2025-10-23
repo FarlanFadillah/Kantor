@@ -14,25 +14,7 @@
           </div>
 
           <!-- Alamat -->
-          <div class="col-md-5">
-            <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
-            <input type="text" id="provinsi" name="provinsi" class="form-control" required value="<%= form_data?.provinsi || '' %>">
-          </div>
-
-          <div class="col-md-5">
-            <label for="kab_kota" class="form-label">Kabupaten/Kota <span class="text-danger">*</span></label>
-            <input type="text" id="kab_kota" name="kab_kota" class="form-control" required value="<%= form_data?.kab_kota || '' %>">
-          </div>
-
-          <div class="col-md-5">
-            <label for="kec" class="form-label">Kecamatan <span class="text-danger">*</span></label>
-            <input type="text" id="kec" name="kec" class="form-control" required value="<%= form_data?.kec || '' %>">
-          </div>
-
-          <div class="col-md-5">
-            <label for="kel" class="form-label">Kelurahan <span class="text-danger">*</span></label>
-            <input type="text" id="kel" name="kel" class="form-control" required value="<%= form_data?.kel || '' %>">
-          </div>
+          <%- include('../partials/address_form') %>
 
           <div class="col-md-5">
             <label for="jor" class="form-label">Jorong</label>
@@ -77,3 +59,4 @@
 <script src="/js/pbb_form_page.js"></script>
 <script src="/js/client_search.js"></script>
 <script src="/js/alashak_search.js"></script>
+<script src="/js/address_form.js"></script>

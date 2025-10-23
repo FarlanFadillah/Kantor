@@ -42,7 +42,7 @@ const renderPbbListPage = asyncHandler(async (req, res, next)=>{
     
     res.locals.datas = await mainModel.getPaginationList(
         'PBB_SKNJOP', 
-        ['nop', 'kel', 'luas_tanah', 'luas_bangunan', 'njop', 'id'],
+        ['nop', 'luas_tanah', 'luas_bangunan', 'njop', 'id'],
         res.locals.limit, 
         res.locals.offset, 
         'id', 
@@ -71,8 +71,6 @@ const renderPbbViewPage = asyncHandler(async (req, res, next)=>{
     if(req.query === undefined) return next(new CustomError('Not Found', 'error', 401));
 
     let pbb = await pbbModel.getPbbData(req.query.id);
-
-    convertLocalDT(pbb);
 
     res.locals.pbb = pbb;
     res.status(200).render('pages/pbb_view');

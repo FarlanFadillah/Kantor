@@ -6,6 +6,7 @@ const { CustomError } = require("../utils/custom.error");
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const alasHakModel = require('../models/alas_hak.model');
 const {getRequireData} = require('../utils/customize_obj');
+const { getAddressDetail } = require("../helper/address.form.helper");
 
  
 
@@ -41,7 +42,11 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
 
     let alas_hak = await alasHakModel.getAlasHakData(req.query.id);
     
+    // convert datetimte to local time
     convertLocalDT(alas_hak);
+
+    // get address details
+    await getAddressDetail(alas_hak);
 
     res.locals.alas_hak = alas_hak;
     res.status(200).render('pages/alas_hak_view');
@@ -63,7 +68,7 @@ const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
     
     res.locals.datas = await mainModel.getPaginationList(
         'Alas_Hak', 
-        ['no_alas_hak', 'kel', 'luas', 'tgl_surat_ukur', 'no_surat_ukur', 'id'],
+        ['no_alas_hak', 'luas', 'tgl_surat_ukur', 'no_surat_ukur', 'id'],
         res.locals.limit, 
         res.locals.offset, 
         'id', 

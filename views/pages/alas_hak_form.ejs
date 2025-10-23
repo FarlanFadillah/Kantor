@@ -34,29 +34,8 @@
               <input type="date" class="form-control" id="tgl_alas_hak" name="tgl_alas_hak" value="<%= form_data?.tgl_alas_hak ? form_data.tgl_alas_hak.toLocaleString() : '' %>">
             </div>
 
-            <!-- provinsi -->
-            <div class="col-md-6">
-              <label for="provinsi" class="form-label">Provinsi</label>
-              <input type="text" class="form-control" id="provinsi" name="provinsi" required value="<%= form_data?.provinsi || '' %>">
-            </div>
-
-            <!-- kab/kota -->
-            <div class="col-md-6">
-              <label for="kab_kota" class="form-label">Kabupaten/Kota</label>
-              <input type="text" class="form-control" id="kab_kota" name="kab_kota" required value="<%= form_data?.kab_kota || '' %>">
-            </div>
-
-            <!-- kec -->
-            <div class="col-md-6">
-              <label for="kec" class="form-label">Kecamatan</label>
-              <input type="text" class="form-control" id="kec" name="kec" required value="<%= form_data?.kec || '' %>">
-            </div>
-
-            <!-- kel -->
-            <div class="col-md-6">
-              <label for="kel" class="form-label">Kelurahan</label>
-              <input type="text" class="form-control" id="kel" name="kel" required value="<%= form_data?.kel || '' %>">
-            </div>
+            <!-- Address -->
+            <%- include('../partials/address_form') %>
 
             <!-- jor -->
             <div class="col-md-6">
@@ -124,3 +103,4 @@
 
 <script src="/js/alashak_form_page.js"></script>
 <script src="/js/client_search.js"></script>
+<script src="/js/address_form.js"></script>

@@ -76,6 +76,10 @@
 
                     <!-- rt/rw -->
                     <div class="col-12 col-md-6">
+                        <label for="rt" class="form-label">Jalan</label>
+                        <input value="<%-form_data?.jalan || ''%>" type="text" class="form-control" id="jalan" name="jalan" placeholder="Jalan">
+                        <div class="invalid-feedback">RT (optional).</div>
+
                         <label for="rt" class="form-label">RT</label>
                         <input value="<%-form_data?.rt || ''%>" type="text" class="form-control" id="rt" name="rt" placeholder="RT 000">
                         <div class="invalid-feedback">RT (optional).</div>

@@ -1,12 +1,12 @@
 <div class="card-body">
-    <h1 class="card-title mb-3">Address Form</h3>
+    <h3 class="card-title mb-3">Alamat</h3>
     <!-- Change action to your endpoint -->
     <div class="row g-3">
         
         <!-- Provinsi -->
         <div class="col-12 col-md-6">
             <label for="provinsi_option" class="form-label">Provinsi <span class="text-danger">*</span></label>
-            <select id="provinsi_option" class="form-select" required>
+            <select id="provinsi_option" class="form-select" required data-address="<%=form_data?.address_code || ''%>">
                 <option value="" selected disabled>Pilih Provinsi</option>
             </select>
         </div>

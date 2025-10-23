@@ -1,22 +1,37 @@
 const db = require('../database/db');
+const { getAddressDetail } = require('../helper/address.form.helper');
 const { CustomError } = require('../utils/custom.error');
 
 
 async function getBphtbAllList(){
     try {
-        return await db('Bphtb')
-        .leftJoin('Clients', 'Bphtb.client_id', 'Clients.id')
-        .leftJoin('Alas_Hak', 'Bphtb.alas_hak_id', 'Alas_Hak.id')
-        .select(
-            'Bphtb.id as id', 'Bphtb.produk as produk', 
-            'Bphtb.alas_hak_id', 'Bphtb.lunas', 
-            'Bphtb.hasil_survei', 
+        let bphtb_list = [];
+        const bphtb = await db('Bphtb').select('*');
+        for(const data of bphtb){
 
-            'Alas_Hak.no_alas_hak', 'Alas_Hak.kel as alas_hak_kel', 
-            
-            'Clients.id as client_id', 'Clients.first_name',
-            'Clients.last_name'
+            const [alas_hak, client] = await Promise.all([
+                db('Alas_Hak')
+                .where('id', data.alas_hak_id)
+                .select('id', 'no_alas_hak', 'address_code')
+                .first(),
+
+                db('Clients')
+                .where('id', data.client_id)
+                .select('first_name', 'last_name', 'id', 'address_code')
+                .first()
+            ])
+            bphtb_list.push({...data, alas_hak, client});
+        }
+
+        // get address detail
+        await Promise.all(
+            bphtb_list.map(async(table)=>{
+                if(table.alas_hak.address_code) await getAddressDetail(table.alas_hak);
+            })
         );
+
+
+        return bphtb_list;
     } catch (error) {
         throw new CustomError(error.message, 'error');
     }
@@ -38,7 +53,7 @@ async function getBphtbData(id){
             db('Alas_Hak')
             .where('id', bphtb.alas_hak_id)
             .select(
-                'id', 'no_alas_hak', 'kel'
+                'id', 'no_alas_hak', 'address_code'
             ).first(),
 
             db('PBB_SKNJOP as pbb')

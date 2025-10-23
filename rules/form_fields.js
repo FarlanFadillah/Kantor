@@ -35,34 +35,28 @@ const optionalBphtbTextField = [
 // ALAS HAK
 const requiredAlasHakTextField = [
     'jenis_hak',
-    'provinsi',
-    'kab_kota',
-    'kec',
-    'kel',
+    'address_code',
 ]
 
 
 const optionalAlasHakTextField = [
-    'jor',
     'tgl_alas_hak',
     'no_surat_ukur',
     'tgl_surat_ukur',
     'ket',
+    'jor',
 ]
 
 // PBB
 const requiredPbbTextField = [
-    'provinsi',
-    'kab_kota',
-    'kec',
-    'kel',
+    'address_code',
 ]
 
 const optionalPbbTextField = [
-    'jor',
     'luas_tanah',
     'luas_bangunan',
     'njop',
+    'jor',
 ]
 
 

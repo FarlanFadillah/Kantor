@@ -1,4 +1,6 @@
 const db = require('../database/db');
+const { getAddressDetail } = require('../helper/address.form.helper');
+const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
 const { CustomError } = require('../utils/custom.error');
 
 
@@ -33,9 +35,18 @@ async function getPbbData(id){
             db('Alas_Hak')
             .where('Alas_Hak.id', pbb.alas_hak_id)
             .select(
-                'id', 'no_alas_hak', 'kel'
+                'id', 'no_alas_hak', 'address_code'
             ).first()
         ])
+
+        // convert datetime to local time
+        convertLocalDT(pbb);
+
+        // get address detail for alas_hak
+        await getAddressDetail(alas_hak);
+
+        // get address detail for pbb
+        await getAddressDetail(pbb);
 
         return {...pbb, client, alas_hak};
     } catch (error) {

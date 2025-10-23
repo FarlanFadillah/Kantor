@@ -4,7 +4,7 @@ const mainModel = require('../models/main.model')
 const {matchedData} = require('express-validator');
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const {CustomError} = require("../utils/custom.error");
-const { getAddressDetail } = require("../helper/client.ctrl.helper");
+const { getAddressDetail } = require("../helper/address.form.helper");
 
 /**
  * The form state is determined by the query parameter — if the query
@@ -79,7 +79,7 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
     convertLocalDT(client_data);
 
     // get the address details
-    if(client_data.address_code) await getAddressDetail(client_data);
+    await getAddressDetail(client_data);
 
     res.locals.client_data = client_data;
     res.status(200).render('pages/client_view_page');

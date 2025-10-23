@@ -1,6 +1,7 @@
 const asyncHandler = require("../utils/asyncHandler");
 const mainModel = require('../models/main.model');
 const bphtbModel = require('../models/bphtb.model');
+const { getAddressDetail } = require("../helper/address.form.helper");
 
 /**
  * render dashboard page with bphtb list
@@ -19,8 +20,8 @@ const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     res.locals.total_pbb = await mainModel.count('PBB_SKNJOP');
 
     // getting all bphtb with join table
-    const bpthb_table = await bphtbModel.getBphtbAllList();
-    
+    let bpthb_table = await bphtbModel.getBphtbAllList();
+
     // save all bphtb data's in locals
     res.locals.bphtb = bpthb_table;
 
