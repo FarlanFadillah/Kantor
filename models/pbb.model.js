@@ -1,7 +1,9 @@
 const db = require('../database/db');
 const { getAddressDetail } = require('../helper/address.form.helper');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
+const { nop_format } = require('../rules/form_fields');
 const { CustomError } = require('../utils/custom.error');
+const { formatedString } = require('../utils/string_tools');
 
 
 
@@ -41,6 +43,9 @@ async function getPbbData(id){
 
         // convert datetime to local time
         convertLocalDT(pbb);
+
+        // formated nop
+        pbb.nop = formatedString(nop_format.format, pbb.nop, nop_format.key)
 
         // get address detail for alas_hak
         await getAddressDetail(alas_hak);

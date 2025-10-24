@@ -47,6 +47,11 @@ const optionalAlasHakTextField = [
     'jor',
 ]
 
+const no_alas_hak_format = {
+    key : /_/g,
+    format : '__.__.__.__._._____'
+}
+
 // PBB
 const requiredPbbTextField = [
     'address_code',
@@ -58,6 +63,11 @@ const optionalPbbTextField = [
     'njop',
     'jor',
 ]
+
+const nop_format = {
+    key : /_/g,
+    format : '__.__.___.___.___-____._'
+}
 
 
 // ALIH HAK
@@ -82,5 +92,7 @@ module.exports = {
     requiredPbbTextField,
     optionalPbbTextField,
     requiredAlihHakTextField,
-    optionalAlihHakTextField
+    optionalAlihHakTextField,
+    no_alas_hak_format,
+    nop_format
 }

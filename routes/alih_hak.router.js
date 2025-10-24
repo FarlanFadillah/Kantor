@@ -1,6 +1,5 @@
 const { renderAlihHakForm, addAlihHak, 
-        renderAlihHakListPage, addPihakPenerima, 
-        addPihakPersetujuan, addKuasaPemberi, addKuasaPenerima, 
+        renderAlihHakListPage, 
         renderAlihHakViewPage, 
         updateAlihHak, 
         deleteAlihHak} = require('../controllers/alih_hak.controller');
@@ -17,16 +16,12 @@ router.route('/form')
 router.route('/form/new')
         .post(...alihHakValidator, saveFormState, 
                 validatorErrorHandler, clearFormState,
-                addAlihHak, addPihakPenerima, 
-                addPihakPersetujuan, addKuasaPemberi, 
-                addKuasaPenerima, formErrorHandler);
+                addAlihHak, formErrorHandler);
 
 router.route('/form/edit')
                 .post(...alihHakValidator, saveFormState, 
                 validatorErrorHandler, clearFormState,
-                updateAlihHak, addPihakPenerima, 
-                addPihakPersetujuan, addKuasaPemberi, 
-                addKuasaPenerima, formErrorHandler);
+                updateAlihHak, formErrorHandler);
 
 router.post('/delete', deleteAlihHak);
 

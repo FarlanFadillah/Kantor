@@ -5,9 +5,6 @@ const process = require('process');
 const path = require('path');
 const engine = require('ejs-mate');
 
-// debuging : delete later please
-const db = require('./database/db')
-
 process.on('uncaughtException', err => {
     console.error('Uncaught Exception:', err);
 });
@@ -68,10 +65,10 @@ app.use((req, res, next)=>{
 })
 
 // save the previous route
-app.use((req, res, next)=>{
-    res.locals.referer = req.header('Referer') || '';
-    next();
-})
+// app.use((req, res, next)=>{
+//     res.locals.referer = req.header('Referer') || '';
+//     next();
+// })
 
 // set the static files
 app.use(express.static(path.join(__dirname, 'src')));
@@ -89,26 +86,26 @@ app.use('/api/bphtb', bphtb_apiRoute);
 app.use('/api/wilayah', wilayah_apiRoute)
 
 // debuging DELETE LATER
-app.get('/knex/test', async (req, res)=>{
-    const table_info = await db.raw('PRAGMA table_info(Alas_Hak)');
-    const column_name = [];
+// app.get('/knex/test', async (req, res)=>{
+//     const table_info = await db.raw('PRAGMA table_info(Alas_Hak)');
+//     const column_name = [];
 
-    table_info.forEach(element => {
-        if(element.notnull) column_name.push(element.name);
-    });
+//     table_info.forEach(element => {
+//         if(element.notnull) column_name.push(element.name);
+//     });
 
-    res.status(200).json(column_name);
-})
+//     res.status(200).json(column_name);
+// })
 
-app.use('/debug', debugRouter);
+// app.use('/debug', debugRouter);
 
 // public ssr route (order is important)
 app.use('/auth', userRoute);
 
 // error page debuging delete later!!
-app.use('/error', (req, res, next) => {
-    next(new CustomError('User not found', 'error', 401));
-})
+// app.use('/error', (req, res, next) => {
+//     next(new CustomError('User not found', 'error', 401));
+// })
 
 // protected ssr route (order is important)
 app.use(authentication);

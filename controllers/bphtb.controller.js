@@ -43,9 +43,6 @@ const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
 
     const bphtb = await bphtbModel.getBphtbData(req.query.id);
     
-    // convert the date time to local time asia/jakarta
-    convertLocalDT(bphtb);
-
     res.locals.bphtb = bphtb;
 
     res.status(200).render('pages/bphtb_view');

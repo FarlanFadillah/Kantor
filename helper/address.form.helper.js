@@ -1,5 +1,11 @@
 const wilayahModel = require('../models/wilayah_id.model')
 
+/**
+ * 
+ * @param {Object} obj 
+ * modified an object that contains address_code 
+ * and add addresses key value 
+ */
 async function getAddressDetail(obj){
     if(!obj.address_code) return;
     

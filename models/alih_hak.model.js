@@ -1,4 +1,6 @@
 const db = require('../database/db');
+const { getAddressDetail } = require('../helper/address.form.helper');
+const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
 
 /**
  * 
@@ -76,12 +78,16 @@ async function getAllAliHakData(id){
 
             db('Alas_Hak')
             .select(
-                'id', 'no_alas_hak', 'kel'
+                'id', 'no_alas_hak', 'address_code'
             )
             .where('Alas_Hak.id', alih_hak.alas_hak_id)
             .first()
 
         ])
+
+        convertLocalDT(alih_hak);
+
+        await getAddressDetail(alas_hak);
 
         return {...alih_hak, penerima_hak, pihak_persetujuan, kuasa_pemberi, kuasa_penerima, bphtb, alas_hak};
 

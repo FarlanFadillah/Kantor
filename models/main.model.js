@@ -1,6 +1,8 @@
 
 const db = require('../database/db');
+const { getAddressDetail } = require('../helper/address.form.helper');
 const { CustomError } = require('../utils/custom.error');
+const { getRequireData } = require('../utils/customize_obj');
 
 
 /**
@@ -50,16 +52,22 @@ async function filter(table, filter){
 }
 
 /**
- * @param {string} table
- * @param {string} model
- * @param {string} column
+ * @param {string} table table's name
+ * @param {string} model table's data
+ * @param {string} column return column
+ * @returns one or more column after inserting data
  */
 async function addReturnColumn(table, model, column){
     try {
-        const [res] = await db(table).insert(model).returning(column);
+        // getting the required fields
+        // prevent other column added
+        // helping the AlasHak_Clients table data insertion
+        let column_name = await getAllColumnName(table);
+        const fields = getRequireData(column_name, model);
+
+        const [res] = await db(table).insert(fields).returning(column);
         return res;
     }catch(err){
-        console.log(model);
         throw new CustomError(err.message, 'error');
     }
 }
@@ -97,7 +105,13 @@ async function del(table, model){
  */
 async function update(table, fields, model){
     try {
-        await db(table).update({...fields, updated_at : db.fn.now()}).where(model);
+        // getting the required fields
+        // prevent other column added
+        // helping the AlasHak_Clients table data insertion
+        let column_name = await getAllColumnName(table);
+        let data = getRequireData(column_name, fields);
+
+        await db(table).update({...data, updated_at : db.fn.now()}).where(model);
     }catch(err){
         throw new CustomError(err.message, 'error');
     }
@@ -136,7 +150,7 @@ async function getPaginationList(table, fields, limit, offset, column, order = '
 /**
  * 
  * @param {string} table 
- * @returns arrays of all column name
+ * @returns arrays of all column name from a table
  */
 async function getAllColumnName(table){
     try {
@@ -232,14 +246,22 @@ async function search(table, query, field = ['*']){
  */
 async function searchTable(table, column, keyword){
     try {
-        return await db(table).where(function (){
+        const result =  await db(table).where(function (){
             column.forEach((col, i)=>{
                 if(i === 0) this.where(col, 'like', `%${keyword}%`);
                 else this.orWhere(col, 'like', `%${keyword}%`)
             })
         }).select(column)
+
+        await Promise.all(
+            result.map(async (data)=>{
+                await getAddressDetail(data);
+            })
+        )
+
+        return result;
     } catch (error) {
-        
+        throw new CustomError(error.message, 'error');
     }
 }
 

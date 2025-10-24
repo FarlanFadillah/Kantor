@@ -1,5 +1,6 @@
 const db = require('../database/db');
 const { getAddressDetail } = require('../helper/address.form.helper');
+const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
 const { CustomError } = require('../utils/custom.error');
 
 
@@ -40,7 +41,6 @@ async function getBphtbAllList(){
 async function getBphtbData(id){
     try {
         const bphtb = await db('BPHTB').where('id', id).first();
-
         const [
             client, alas_hak, pbb
         ] = await Promise.all([
@@ -62,6 +62,10 @@ async function getBphtbData(id){
                 'id', 'nop'
             ).first()
         ]);
+
+        convertLocalDT(bphtb);
+
+        await getAddressDetail(alas_hak);
 
         return {...bphtb, client, alas_hak, pbb}
     } catch (error) {

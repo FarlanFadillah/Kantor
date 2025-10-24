@@ -2,10 +2,29 @@ const alas_hak_id = document.querySelector('#alas_hak_id');
 const alas_hak = document.querySelector('#alas_hak');
 const dropdown_menu_alashak = document.querySelector('#alashak-dropdown-menu');
 const no_alas_hak = document.querySelector('#no_alas_hak');
-no_alas_hak.addEventListener('keyup', async (event)=>{
+
+let timer;
+no_alas_hak.addEventListener('input', async (event)=>{
     try {
-        const data = await searchAlasHak(event.target.value);
-        // console.log(JSON.stringify(data));
+        if(!event.target.value) throw Error('keyword missing')
+        clearTimeout(timer);
+        timer = setTimeout(async() => await searchAlasHak(event.target.value), 300);
+    } catch (error) {
+        dropdown_menu_alashak.innerHTML = '';
+    }
+});
+
+
+
+async function searchAlasHak(keyword){
+    try {
+        const res = await fetch(`/api/alas_hak/search?keyword=${keyword}`);
+        if(!res.ok){
+            // Baca text biar bisa lihat error aslinya
+            const text = await res.text();
+            throw new Error(JSON.parse(text).msg);
+        }
+        const data = await res.json();
         dropdown_menu_alashak.innerHTML = '';
         for(const alasHak of data.data){
             const li = document.createElement('li');
@@ -28,21 +47,6 @@ no_alas_hak.addEventListener('keyup', async (event)=>{
         }
     } catch (error) {
         dropdown_menu_alashak.innerHTML = '';
-    }
-});
-
-
-
-async function searchAlasHak(keyword){
-    try {
-        const res = await fetch(`/api/alas_hak/search?keyword=${keyword}`);
-        if(!res.ok){
-            // Baca text biar bisa lihat error aslinya
-            const text = await res.text();
-            throw new Error(JSON.parse(text).msg);
-        }
-        return res.json();
-    } catch (error) {
         console.log(error);
     }
 }

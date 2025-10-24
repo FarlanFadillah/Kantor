@@ -13,6 +13,12 @@ function makeDateString(date){
     return new Date(utcDate).toLocaleDateString('en-GB', LTOptions) +" "+ new Date(utcDate).toLocaleTimeString('en-GB', LTOptions);
 }
 
+function formatedString(format, string, key){
+    let i = 0;
+    let result = format.replace(key, () => string[i++] || '');
+    return result;
+}
+
 module.exports = {
-    makeDateString, makePreviewContent
+    makeDateString, makePreviewContent, formatedString
 }

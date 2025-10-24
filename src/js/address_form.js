@@ -13,6 +13,8 @@ provinsi_option.addEventListener('change', async (event)=>{
     try {
         const option = event.target.options[event.target.selectedIndex];
         await addKabupatenList(option.dataset.code);
+        resetOption(kec_option, 'Kecamatan');
+        resetOption(kel_option, 'Kelurahan');
     } catch (error) {
         console.log(error)
     }
@@ -22,9 +24,12 @@ provinsi_option.addEventListener('change', async (event)=>{
 // Kabupaten / Kota
 kab_kota_option.addEventListener('change', async (event)=>{
     try {
-        
         const option = event.target.options[event.target.selectedIndex];
+        
+        
         await addKecamatanList(option.dataset.code);
+        resetOption(kel_option, 'Kelurahan');
+
     } catch (error) {
         console.log(error)
     }
@@ -185,4 +190,9 @@ async function getKelurahan(code){
     }
 }
 
+
+function resetOption(element, fieldName){
+    element.disabled = true;
+    element.innerHTML = `<option value="" selected disabled>Pilih ${fieldName}</option>`
+}
 

@@ -3,7 +3,7 @@ const mainModel = require('../models/main.model');
 const { matchedData } = require("express-validator");
 const { addMessage } = require("../utils/flash_messages");
 const { CustomError } = require("../utils/custom.error");
-const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
+const { convertLocalDT, addAlasHakOwner, updateAlasHakOwner } = require("../helper/alas_hak_ctrl.helper");
 const alasHakModel = require('../models/alas_hak.model');
 const {getRequireData} = require('../utils/customize_obj');
 const { getAddressDetail } = require("../helper/address.form.helper");
@@ -24,9 +24,7 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
     if(req.query.id !== undefined){
         res.locals.form_action = `/alas_hak/form/edit?id=${req.query.id}`
         
-        let form = await alasHakModel.getAlasHakData(req.query.id);
-        
-        res.locals.form_data = form;
+        res.locals.form_data = await alasHakModel.getAlasHakData(req.query.id);
     }
     res.status(200).render('pages/alas_hak_form');
 });
@@ -42,10 +40,8 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
 
     let alas_hak = await alasHakModel.getAlasHakData(req.query.id);
     
-    // convert datetimte to local time
     convertLocalDT(alas_hak);
 
-    // get address details
     await getAddressDetail(alas_hak);
 
     res.locals.alas_hak = alas_hak;
@@ -62,8 +58,10 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
 const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
     res.locals.table_name = 'Alas Hak';
     res.locals.title = 'Alas Hak List';
-    // total pages
     res.locals.totalPages = Math.ceil(await mainModel.count('Alas_Hak') / Number(res.locals.limit));
+    res.locals.view_route = '/alas_hak/view?id=';
+    res.locals.delete_route = '/alas_hak/delete?id=';
+    res.locals.form_route = '/alas_hak/form';
 
     
     res.locals.datas = await mainModel.getPaginationList(
@@ -75,126 +73,53 @@ const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
         'desc'
     );
 
-    // view route
-    res.locals.view_route = '/alas_hak/view?id=';
-
-     // delete route
-    res.locals.delete_route = '/alas_hak/delete?id=';
-
-    // form route
-    res.locals.form_route = '/alas_hak/form';
 
     res.status(200).render('pages/table_list_page');
 })
 
 /**
- * This is actually an middleware
- * after adding alasHak data the next controller 
- * is addAlasHakOwner
+ * adding alasHak data 
  */
 const addAlasHak = asyncHandler(async (req, res, next)=>{
 
-    // getting the required fields
-    // prevent other column added
-    // helping the AlasHak_Clients table data insertion
-    let column_name = await mainModel.getAllColumnName('Alas_Hak');
-    const fields = getRequireData(column_name, matchedData(req));
+    const alas_hak = await mainModel.addReturnColumn('Alas_hak', matchedData(req), 'id');
 
-    // add data to table
-    res.locals.alasHak = await mainModel.addReturnColumn('Alas_hak', fields, 'id');
+    await addAlasHakOwner(req.body.client_id, alas_hak.id);
 
-    // flash message
     addMessage(req, 'info', 'Alas Hak added successfully');
 
-    // going to addAlasHakOwner
-    next();
+    res.redirect(`/alas_hak/view?id=${res.locals.alasHak.id}`);
 });
 
 /**
- * Delete alas hak controller.
+ * Delete alas hak.
  */
 const deleteAlasHak = asyncHandler(async (req, res, next)=>{
     if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
 
     await mainModel.del('Alas_Hak', req.query);
 
-    // flash message
     addMessage(req, 'info', 'Alas Hak deleted successfully');
 
     res.redirect('/alas_hak/list');
 })
 
 /**
- * This is actually an middleware
- * after updating alasHak data the next controller 
- * is updateAlasHakOwner
+ * updating alasHak data
  */
 const updateAlasHak = asyncHandler(async (req, res, next)=>{
-    //console.log(req.body);
-
-    // getting the required fields
-    // prevent other column added
-    // helping the AlasHak_Clients table data insertion
-    let column_name = await mainModel.getAllColumnName('Alas_Hak');
     
-    const fields = getRequireData(column_name, matchedData(req));
     //console.log('fields', fields);
+    await mainModel.update('Alas_Hak', matchedData(req), req.query);
 
-    await mainModel.update('Alas_Hak', fields, req.query);
+    // update alas hak owner
+    await updateAlasHakOwner(req.body.client_id, req.query.id)
 
     // flash message
     addMessage(req, 'info', 'Alas Hak updated successfully');
 
-    next();
+    res.redirect(`/alas_hak/view?id=${req.query.id}`)
 })
-
-/**
- * Add alas hak owner controller.
- * this is will run after addAlasHak
- */
-const addAlasHakOwner = asyncHandler (async (req, res, next)=>{
-    let {client_id} = req.body;
-    const alasHak_id = res.locals.alasHak.id;
-
-    // debuging delete later
-    //console.log(req.body);
-
-    
-    if(client_id !== undefined){
-        if(!Array.isArray(client_id)) client_id = [client_id];
-    
-        for(const id of client_id){
-            if(id){
-                await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id});
-            }
-        }
-    }
-
-    res.redirect(`/alas_hak/view?id=${alasHak_id}`);
-})
-
-/**
- * Update alas hak owner controller.
- * this is will run after updateAlasHak
- */
-const updateAlasHakOwner = asyncHandler (async (req, res, next)=>{
-    const {client_id} = req.body;
-    const alasHak_id = req.query.id;
-
-    await mainModel.del('AlasHak_Clients', {alasHak_id : alasHak_id});
-
-    if(client_id && client_id.length > 0){
-        for(const id of client_id){
-            console.log(id);
-            if(id) await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alasHak_id})
-        }
-    }
-
-    res.redirect(`/alas_hak/view?id=${req.query.id}`);
-})
-
-
-
 
 module.exports = {
     renderAlasHakForm,
@@ -202,7 +127,5 @@ module.exports = {
     renderAlasHakListPage,
     addAlasHak,
     updateAlasHak,
-    addAlasHakOwner,
-    updateAlasHakOwner,
     deleteAlasHak
 }

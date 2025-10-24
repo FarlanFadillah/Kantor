@@ -1,4 +1,6 @@
+const { CustomError } = require("../utils/custom.error");
 const { makeDateString } = require("../utils/string_tools");
+const mainModel = require('../models/main.model')
 
 
 
@@ -35,7 +37,51 @@ function reduceAlasHakTable(table, columnNames){
     }, {});
 };
 
+/**
+ * 
+ * @param {Array} client_id 
+ * @param {Number} alas_hak_id 
+ * adding alas hak owner with many-to-many relation
+ * (AlasHak_Clients)
+ */
+async function addAlasHakOwner(client_id, alas_hak_id){
+    
+    if(client_id !== undefined){
+        if(!Array.isArray(client_id)) client_id = [client_id];
+    
+        try {
+            for(const id of client_id){
+            if(id){
+                await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alas_hak_id});
+            }
+        }
+        } catch (error) {
+            throw new CustomError(error.message, 'error')
+        }
+    }
+}
+
+/**
+ * 
+ * @param {Array} client_id 
+ * @param {Number} alas_hak_id 
+ * update alas hak owner
+ */
+async function updateAlasHakOwner (client_id, alas_hak_id){
+
+    await mainModel.del('AlasHak_Clients', {alasHak_id : alas_hak_id});
+
+    if(client_id && client_id.length > 0){
+        for(const id of client_id){
+            if(id) await mainModel.add('AlasHak_Clients', {client_id : id, alasHak_id : alas_hak_id})
+        }
+    }
+}
+
+
 module.exports = {
     convertLocalDT,
     reduceAlasHakTable,
+    addAlasHakOwner,
+    updateAlasHakOwner
 }
