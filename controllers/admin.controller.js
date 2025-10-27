@@ -1,7 +1,5 @@
 const asyncHandler = require("../utils/asyncHandler");
-const mainModel = require('../models/main.model');
-const bphtbModel = require('../models/bphtb.model');
-const { getAddressDetail } = require("../helper/address.form.helper");
+const { getDashboardData } = require("../services/admin.service");
 
 /**
  * render dashboard page with bphtb list
@@ -10,22 +8,13 @@ const renderDashboardPage = asyncHandler(async(req, res, next)=>{
     // set the title for the page
     res.locals.title = 'Dashboard';
 
-    // getting clients total
-    res.locals.total_clients = await mainModel.count('Clients');
+    const {total_clients, total_alas_hak, total_pbb, bphtb_data} = await getDashboardData();
 
-    // getting alas hak total
-    res.locals.total_alas_hak = await mainModel.count('Alas_Hak');
+    res.locals.total_clients = total_clients;
+    res.locals.total_alas_hak = total_alas_hak;
+    res.locals.total_pbb = total_pbb;
+    res.locals.bphtb = bphtb_data;
 
-    // getting pbb total
-    res.locals.total_pbb = await mainModel.count('PBB_SKNJOP');
-
-    // getting all bphtb with join table
-    let bpthb_table = await bphtbModel.getBphtbAllList();
-
-    // save all bphtb data's in locals
-    res.locals.bphtb = bpthb_table;
-
-    // render dashboard_page
     res.status(200).render('pages/dashboard_page');
 });
 

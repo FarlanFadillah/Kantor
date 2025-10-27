@@ -20,6 +20,8 @@ async function getAddressDetail(obj){
     obj.kab_kota = kabupaten.name;
     obj.kec = kecamatan.name;
     obj.kel = kelurahan.name;
+
+    return obj;
 }
 
 

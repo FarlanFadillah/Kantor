@@ -13,6 +13,8 @@ function convertLocalDT(data){
     data.created_at = makeDateString(data.created_at);
     data.updated_at = makeDateString(data.updated_at);
     data.added_at = makeDateString(data.added_at);
+
+    return data;
 }
 
 /**

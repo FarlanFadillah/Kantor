@@ -18,16 +18,18 @@ const { CustomError } = require('../utils/custom.error');
 async function getAlasHakData(id) {
     try {
         const alas_hak = await db('Alas_Hak').where('id', id).first();
+        
+        if (!alas_hak) {
+            throw new CustomError(`Alas_Hak with id ${id} not found`, 'error');
+        }
 
-        const [clients] = await Promise.all([
-            db('Clients')
+        const clients = await db('Clients')
             .leftJoin('AlasHak_Clients as ac', 'ac.client_id', 'Clients.id')
             .select(
                 'Clients.id', 'Clients.first_name', 
                 'Clients.last_name'
             )
             .where('ac.alasHak_id', id)
-        ])
 
         return {...alas_hak, clients};
     } catch (error) {

@@ -62,10 +62,10 @@
             Previous
         </button>
 
-        <span>Page <%=currentPage%> of <%=totalPages%></span>
+        <span>Page <%=currentPage%> of <%=total_pages%></span>
 
         <button class="btn btn-primary" onclick="goToPage(<%=Number(currentPage) + 1%>)"
-                <%=currentPage >= totalPages ? 'disabled' : ''%>>
+                <%=currentPage >= total_pages ? 'disabled' : ''%>>
             Next
         </button>
     </div>

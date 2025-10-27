@@ -7,6 +7,7 @@ const { convertLocalDT, addAlasHakOwner, updateAlasHakOwner } = require("../help
 const alasHakModel = require('../models/alas_hak.model');
 const {getRequireData} = require('../utils/customize_obj');
 const { getAddressDetail } = require("../helper/address.form.helper");
+const alasHakService = require("../services/alas_hak.service");
 
  
 
@@ -23,8 +24,7 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
     
     if(req.query.id !== undefined){
         res.locals.form_action = `/alas_hak/form/edit?id=${req.query.id}`
-        
-        res.locals.form_data = await alasHakModel.getAlasHakData(req.query.id);
+        res.locals.form_data = await alasHakService.getAlasHakFormData(req.query.id);
     }
     res.status(200).render('pages/alas_hak_form');
 });
@@ -36,15 +36,11 @@ const renderAlasHakForm = asyncHandler(async (req, res, next)=>{
 const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
     res.locals.title = 'Alas Hak View';
 
-    if(req.query === undefined) return next(new CustomError('Not Found', 'error', 401));
+    const {id} = req.query;
+    if(!id) return next(new CustomError('id is not defined', 'error', 401));
 
-    let alas_hak = await alasHakModel.getAlasHakData(req.query.id);
-    
-    convertLocalDT(alas_hak);
+    res.locals.alas_hak = await alasHakService.getAlasHakViewData(id);
 
-    await getAddressDetail(alas_hak);
-
-    res.locals.alas_hak = alas_hak;
     res.status(200).render('pages/alas_hak_view');
 });
 
@@ -58,20 +54,16 @@ const renderAlasHakViewPage = asyncHandler(async (req, res, next)=>{
 const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
     res.locals.table_name = 'Alas Hak';
     res.locals.title = 'Alas Hak List';
-    res.locals.totalPages = Math.ceil(await mainModel.count('Alas_Hak') / Number(res.locals.limit));
     res.locals.view_route = '/alas_hak/view?id=';
     res.locals.delete_route = '/alas_hak/delete?id=';
     res.locals.form_route = '/alas_hak/form';
 
+    const {limit, offset} = res.locals;
     
-    res.locals.datas = await mainModel.getPaginationList(
-        'Alas_Hak', 
-        ['no_alas_hak', 'luas', 'tgl_surat_ukur', 'no_surat_ukur', 'id'],
-        res.locals.limit, 
-        res.locals.offset, 
-        'id', 
-        'desc'
-    );
+    const {alas_hak_data, total_pages} = await alasHakService.getAlasHakListData(limit, offset);
+
+    res.locals.datas = alas_hak_data;
+    res.locals.total_pages = total_pages;
 
 
     res.status(200).render('pages/table_list_page');

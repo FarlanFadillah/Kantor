@@ -24,14 +24,6 @@ async function getBphtbAllList(){
             bphtb_list.push({...data, alas_hak, client});
         }
 
-        // get address detail
-        await Promise.all(
-            bphtb_list.map(async(table)=>{
-                if(table.alas_hak.address_code) await getAddressDetail(table.alas_hak);
-            })
-        );
-
-
         return bphtb_list;
     } catch (error) {
         throw new CustomError(error.message, 'error');
