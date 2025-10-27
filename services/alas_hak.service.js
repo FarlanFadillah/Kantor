@@ -1,5 +1,5 @@
 const { getAddressDetail } = require('../helper/address.form.helper');
-const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
+const { convertLocalDT, addAlasHakOwner } = require('../helper/alas_hak_ctrl.helper');
 const alasHakModel = require('../models/alas_hak.model');
 const mainModel = require('../models/main.model');
 const { CustomError } = require('../utils/custom.error');
@@ -49,7 +49,7 @@ async function addAlasHak(alas_hak_data, clients_id) {
     try {
         const alas_hak = await mainModel.addReturnColumn('Alas_hak', alas_hak_data, 'id');
 
-        await addAlasHakOwner(req.body.client_id, alas_hak.id);
+        await addAlasHakOwner(clients_id, alas_hak.id);
     } catch (error) {
         
     }
