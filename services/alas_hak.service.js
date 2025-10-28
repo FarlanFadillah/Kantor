@@ -1,5 +1,5 @@
 const { getAddressDetail } = require('../helper/address.form.helper');
-const { convertLocalDT, addAlasHakOwner } = require('../helper/alas_hak_ctrl.helper');
+const { convertLocalDT, addAlasHakOwner, updateAlasHakOwner } = require('../helper/alas_hak_ctrl.helper');
 const alasHakModel = require('../models/alas_hak.model');
 const mainModel = require('../models/main.model');
 const { CustomError } = require('../utils/custom.error');
@@ -49,17 +49,41 @@ async function addAlasHak(alas_hak_data, clients_id) {
     try {
         const alas_hak = await mainModel.addReturnColumn('Alas_hak', alas_hak_data, 'id');
 
-        await addAlasHakOwner(clients_id, alas_hak.id);
-    } catch (error) {
+        if (clients_id) await addAlasHakOwner(clients_id, alas_hak.id);
         
+        return alas_hak.id;
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
     }
-    
 
 }
 
+async function updateAlasHak(alas_hak_id, alas_hak_data, clients_id) {
+    try {
+        //console.log('fields', fields);
+        await mainModel.update('Alas_Hak', alas_hak_data, {id : alas_hak_id});
+
+        // update alas hak owner
+        await updateAlasHakOwner(clients_id, alas_hak_id);
+
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
+}
+
+async function deleteAlasHak(alas_hak_id) {
+    try {
+        await mainModel.del('Alas_Hak', {id : alas_hak_id});
+    } catch (error) {
+        
+    }
+}
 
 module.exports = {
     getAlasHakFormData,
     getAlasHakViewData,
-    getAlasHakListData
+    getAlasHakListData,
+    addAlasHak,
+    updateAlasHak,
+    deleteAlasHak
 }

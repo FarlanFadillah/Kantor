@@ -1,16 +1,8 @@
 const asyncHandler = require("../utils/asyncHandler");
-const mainModel = require('../models/main.model');
 const { matchedData } = require("express-validator");
 const { addMessage } = require("../utils/flash_messages");
 const { CustomError } = require("../utils/custom.error");
-const { convertLocalDT, addAlasHakOwner, updateAlasHakOwner } = require("../helper/alas_hak_ctrl.helper");
-const alasHakModel = require('../models/alas_hak.model');
-const {getRequireData} = require('../utils/customize_obj');
-const { getAddressDetail } = require("../helper/address.form.helper");
 const alasHakService = require("../services/alas_hak.service");
-
- 
-
 
 /**
  * Alas Hak Form Page.
@@ -74,13 +66,11 @@ const renderAlasHakListPage = asyncHandler(async (req, res, next)=>{
  */
 const addAlasHak = asyncHandler(async (req, res, next)=>{
 
-    const alas_hak = await mainModel.addReturnColumn('Alas_hak', matchedData(req), 'id');
-
-    await addAlasHakOwner(req.body.client_id, alas_hak.id);
+    const alas_hak_id = await alasHakService.addAlasHak(matchedData(req), req.body.client_id);
 
     addMessage(req, 'info', 'Alas Hak added successfully');
 
-    res.redirect(`/alas_hak/view?id=${res.locals.alasHak.id}`);
+    res.redirect(`/alas_hak/view?id=${alas_hak_id}`);
 });
 
 /**
@@ -89,7 +79,7 @@ const addAlasHak = asyncHandler(async (req, res, next)=>{
 const deleteAlasHak = asyncHandler(async (req, res, next)=>{
     if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
 
-    await mainModel.del('Alas_Hak', req.query);
+    await alasHakService.deleteAlasHak(req.query.id);
 
     addMessage(req, 'info', 'Alas Hak deleted successfully');
 
@@ -100,14 +90,10 @@ const deleteAlasHak = asyncHandler(async (req, res, next)=>{
  * updating alasHak data
  */
 const updateAlasHak = asyncHandler(async (req, res, next)=>{
+    if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
     
-    //console.log('fields', fields);
-    await mainModel.update('Alas_Hak', matchedData(req), req.query);
+    await alasHakService.updateAlasHak(req.query.id, matchedData(req), req.body.client_id);
 
-    // update alas hak owner
-    await updateAlasHakOwner(req.body.client_id, req.query.id)
-
-    // flash message
     addMessage(req, 'info', 'Alas Hak updated successfully');
 
     res.redirect(`/alas_hak/view?id=${req.query.id}`)

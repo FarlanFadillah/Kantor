@@ -111,6 +111,8 @@ async function update(table, fields, model){
         let column_name = await getAllColumnName(table);
         let data = getRequireData(column_name, fields);
 
+        console.log(data);
+
         await db(table).update({...data, updated_at : db.fn.now()}).where(model);
     }catch(err){
         throw new CustomError(err.message, 'error');

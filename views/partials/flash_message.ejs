@@ -6,6 +6,6 @@
     <%} else if (msg.type === 'error'){%>
         <div class="alert alert-danger" role="alert"><%=msg.text%></div>
     <%} else {%>
-        <div class="alert alert-danger" role="alert">(<%=msg.text%>) <%=msg.type%> is the wrong type of message, change that</div>
+        <div class="alert alert-danger" role="alert">(<%=msg.text%>) type : <%=msg.type%> ==> is the wrong type of message, change that</div>
     <% } %>
 <%}%>

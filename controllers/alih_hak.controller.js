@@ -8,6 +8,8 @@ const { addMessage } = require("../utils/flash_messages");
 const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const { addPihak } = require("../helper/alih_hak.ctrl.helper");
 
+const alihHakService = require('../services/alih_hak.service')
+
 
 
 /**
@@ -22,7 +24,7 @@ const renderAlihHakForm = asyncHandler(async (req, res, next)=>{
     
     if(req.query.id !== undefined){
         res.locals.form_action = `/alih_hak/form/edit?id=${req.query.id}`
-        res.locals.form_data = await alihHakModel.getAllAliHakData(req.query.id);
+        res.locals.form_data = await alihHakService.getAlihHakData(req.query.id);
     }
     res.status(200).render('pages/alihhak_form');
 });
@@ -34,9 +36,10 @@ const renderAlihHakForm = asyncHandler(async (req, res, next)=>{
 const renderAlihHakViewPage = asyncHandler(async (req, res, next)=>{
     res.locals.title = 'Alih Hak View';
 
-    if(req.query === undefined) return next(new CustomError('Not Found', 'error', 401));
+    const {id} = req.query;
+    if(!id) return next(new CustomError('Not Found', 'error', 401));
 
-    res.locals.alih_hak = await alihHakModel.getAllAliHakData(req.query.id);
+    res.locals.alih_hak = await alihHakService.getAlihHakData(req.query.id);
 
     res.status(200).render('pages/alih_hak_view');
 });
@@ -54,14 +57,14 @@ const renderAlihHakListPage = asyncHandler(async (req, res, next)=>{
     res.locals.view_route = '/alih_hak/view?id=';
     res.locals.delete_route = '/alih_hak/delete?id=';
     res.locals.form_route = '/alih_hak/form';
-    res.locals.totalPages = Math.ceil(await mainModel.count('Alih_Hak') / Number(res.locals.limit));
 
-    res.locals.datas = await alihHakModel.getAlihHakPagination(
-        res.locals.limit, 
-        res.locals.offset, 
-        'Alih_Hak.id', 
-        'desc'
-    );
+    const {limit, offset} = res.locals;
+
+    const {alih_hak_data, total_pages} = await alihHakService.getAlihHakDataList(limit, offset);
+
+    res.locals.total_pages = total_pages;
+
+    res.locals.datas = alih_hak_data;
 
     res.status(200).render('pages/table_list_page');
 });
@@ -73,21 +76,24 @@ const renderAlihHakListPage = asyncHandler(async (req, res, next)=>{
  */
 const addAlihHak = asyncHandler(async (req, res, next)=>{
 
-    const alih_hak = await mainModel.addReturnColumn('Alih_Hak', {
-        ...matchedData(req),
-        ceking_shm  : req.body.ceking_shm || false,
-        znt_shm     : req.body.znt_shm || false,
-        pph         : req.body.pph || false
-    }, 'id');
+    const {penerima_hak_id, 
+        pihak_persetujuan_id, 
+        kuasa_pemberi_id, 
+        kuasa_penerima_id} = req.body;
 
-    await addPihak('penerima_hak', req.body.penerima_hak_id, alih_hak.id);
-    await addPihak('pihak_persetujuan', req.body.pihak_persetujuan_id, alih_hak.id);
-    await addPihak('kuasa_pemberi', req.body.kuasa_pemberi_id, alih_hak.id);
-    await addPihak('kuasa_penerima', req.body.kuasa_penerima_id, alih_hak.id);
+    const alih_hak_id = await alihHakService.addAlihHak(
+        matchedData(req), 
+        {
+            penerima_hak_id, 
+            pihak_persetujuan_id, 
+            kuasa_pemberi_id, 
+            kuasa_penerima_id
+        }
+    )
 
     addMessage(req, 'info', 'Alih Hak added successfully');
 
-    res.redirect(`/alih_hak/view?id=${alih_hak.id}`)
+    res.redirect(`/alih_hak/view?id=${alih_hak_id}`)
 });
 
 /**
@@ -96,22 +102,33 @@ const addAlihHak = asyncHandler(async (req, res, next)=>{
  * is for the junction tables controller
  */
 const updateAlihHak = asyncHandler(async (req, res, next)=>{
+    const {id} = req.query;
 
-    await mainModel.update('Alih_Hak', {
-        ...matchedData(req),
-        ceking_shm  : req.body.ceking_shm || false,
-        znt_shm     : req.body.znt_shm || false,
-        pph         : req.body.pph || false
-    }, req.query);
+    if(!id) return next(new CustomError('Id is undefined', 'error', 400));
 
-    await addPihak('penerima_hak', req.body.penerima_hak_id, req.query.id);
-    await addPihak('pihak_persetujuan', req.body.pihak_persetujuan_id, req.query.id);
-    await addPihak('kuasa_pemberi', req.body.kuasa_pemberi_id, req.query.id);
-    await addPihak('kuasa_penerima', req.body.kuasa_penerima_id, req.query.id);
+    const {penerima_hak_id, 
+        pihak_persetujuan_id, 
+        kuasa_pemberi_id, 
+        kuasa_penerima_id} = req.body;
+
+    await alihHakService.updateAlihHak(
+        id, 
+        {...matchedData(req), 
+            ceking_shm  : req.body.ceking_shm || false,
+            znt_shm     : req.body.znt_shm || false,
+            pph         : req.body.pph || false
+        },
+        {
+            penerima_hak_id, 
+            pihak_persetujuan_id, 
+            kuasa_pemberi_id, 
+            kuasa_penerima_id
+        } 
+    );
 
     addMessage(req, 'info', 'Alih Hak added successfully');
 
-    res.redirect(`/alih_hak/view?id=${req.query.id}`)
+    res.redirect(`/alih_hak/view?id=${id}`)
 });
 
 /**

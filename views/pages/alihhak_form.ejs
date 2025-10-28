@@ -16,7 +16,7 @@
         <div class="col-md-6">
           <label for="tgl_akta" class="form-label">Tanggal Akta</label>
           <input type="date" class="form-control" id="tgl_akta" name="tgl_akta"
-            value="<%= form_data?.tgl_akta ? form_data.tgl_akta.toISOString().split('T')[0] : '' %>">
+            value="<%= form_data?.tgl_akta || '' %>">
         </div>
 
         <!-- Produk -->

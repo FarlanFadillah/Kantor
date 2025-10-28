@@ -12,7 +12,7 @@ const {addMessage} = require("../utils/flash_messages");
  */
 function formErrorHandler(err, req, res, next){
     // flash message
-    addMessage(req, err.type, err.message);
+    addMessage(req, 'error', err.message);
 
     console.log('form Error Handler:', err.message);
     console.log(err.stack);

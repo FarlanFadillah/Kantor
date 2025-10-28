@@ -7,21 +7,23 @@ const wilayahModel = require('../models/wilayah_id.model')
  * and add addresses key value 
  */
 async function getAddressDetail(obj){
-    if(!obj.address_code) return;
+    if(!obj?.address_code) return;
+
+    const result = {...obj};
     
-    const address_code = obj.address_code;
+    const address_code = result.address_code;
 
     const provinsi = await wilayahModel.getProvinsi(address_code);
     const kabupaten = await wilayahModel.getKabupaten(address_code);
     const kecamatan = await wilayahModel.getKecamatan(address_code);
     const kelurahan = await wilayahModel.getKelurahan(address_code);
 
-    obj.provinsi = provinsi.name;
-    obj.kab_kota = kabupaten.name;
-    obj.kec = kecamatan.name;
-    obj.kel = kelurahan.name;
+    result.provinsi = provinsi.name;
+    result.kab_kota = kabupaten.name;
+    result.kec = kecamatan.name;
+    result.kel = kelurahan.name;
 
-    return obj;
+    return result;
 }
 
 

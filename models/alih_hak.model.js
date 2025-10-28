@@ -1,6 +1,7 @@
 const db = require('../database/db');
 const { getAddressDetail } = require('../helper/address.form.helper');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
+const { CustomError } = require('../utils/custom.error');
 
 /**
  * 
@@ -23,7 +24,7 @@ async function getAlihHakPagination(limit, offset, column, order = 'asc'){
             'Alih_Hak.id',
         ).limit(limit).offset(offset).orderBy(column, order);
     } catch (error) {
-        
+        throw new CustomError(error.message, 'error');
     }
 }
 
@@ -84,15 +85,9 @@ async function getAllAliHakData(id){
             .first()
 
         ])
-
-        convertLocalDT(alih_hak);
-
-        await getAddressDetail(alas_hak);
-
         return {...alih_hak, penerima_hak, pihak_persetujuan, kuasa_pemberi, kuasa_penerima, bphtb, alas_hak};
-
     } catch (error) {
-        
+        throw new CustomError(error.message, 'error');
     }
 }
 
