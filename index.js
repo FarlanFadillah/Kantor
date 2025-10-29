@@ -125,6 +125,6 @@ app.use((req, res, next)=>{
 app.use(globalErrorHandler);
 
 
-app.listen(process.env.PORT, ()=>{
+app.listen(process.env.PORT, '0.0.0.0', ()=>{
     console.log('Server is running on http://localhost:' + process.env.PORT);
 });
