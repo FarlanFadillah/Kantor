@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --env-file=.env index.js",
+    "start": "nodemon index.js",
     "makemigration": "npx knex migrate:make --knexfile ./database/knexfile.js",
     "migrate": "npx knex migrate:latest --knexfile ./database/knexfile.js",
     "rollback": "npx knex migrate:rollback --knexfile ./database/knexfile.js",
-    "rollbackTo" : "npx knex migrate:down --knexfile ./database/knexfile.js"
+    "rollbackTo": "npx knex migrate:down --knexfile ./database/knexfile.js"
   },
   "author": "alan",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dompurify": "^3.2.7",
+    "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
     "express": "^5.1.0",

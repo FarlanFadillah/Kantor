@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -83,7 +84,7 @@ app.use('/api/client', client_apiRoute);
 app.use('/api/alas_hak', alas_hak_apiRoute);
 app.use('/api/pbb', pbb_apiRoute);
 app.use('/api/bphtb', bphtb_apiRoute);
-app.use('/api/wilayah', wilayah_apiRoute)
+app.use('/api/wilayah', wilayah_apiRoute);
 
 // debuging DELETE LATER
 // app.get('/knex/test', async (req, res)=>{
