@@ -1,6 +1,6 @@
 
 const db = require('../database/db');
-const { getAddressDetail } = require('../helper/address.form.helper');
+const { addAddressDetail } = require('../helper/address.form.helper');
 const { CustomError } = require('../utils/custom.error');
 const { getRequireData } = require('../utils/customize_obj');
 
@@ -110,8 +110,6 @@ async function update(table, fields, model){
         // helping the AlasHak_Clients table data insertion
         let column_name = await getAllColumnName(table);
         let data = getRequireData(column_name, fields);
-
-        console.log(data);
 
         await db(table).update({...data, updated_at : db.fn.now()}).where(model);
     }catch(err){
@@ -257,7 +255,7 @@ async function searchTable(table, column, keyword){
 
         await Promise.all(
             result.map(async (data)=>{
-                await getAddressDetail(data);
+                await addAddressDetail(data);
             })
         )
 

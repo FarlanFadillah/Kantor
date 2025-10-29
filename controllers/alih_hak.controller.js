@@ -82,7 +82,11 @@ const addAlihHak = asyncHandler(async (req, res, next)=>{
         kuasa_penerima_id} = req.body;
 
     const alih_hak_id = await alihHakService.addAlihHak(
-        matchedData(req), 
+        {...matchedData(req), 
+            ceking_shm  : req.body.ceking_shm || false,
+            znt_shm     : req.body.znt_shm || false,
+            pph         : req.body.pph || false
+        }, 
         {
             penerima_hak_id, 
             pihak_persetujuan_id, 
@@ -137,7 +141,7 @@ const updateAlihHak = asyncHandler(async (req, res, next)=>{
 const deleteAlihHak = asyncHandler(async (req, res, next)=>{
     if(!req.query) return next(new CustomError('Id is not defined', 'error', 401));
 
-    await mainModel.del('Alih_Hak', req.query);
+    await alihHakService.deleteAlihHak(req.query.id);
 
     // flash message
     addMessage(req, 'info', 'Alih Hak deleted successfully');

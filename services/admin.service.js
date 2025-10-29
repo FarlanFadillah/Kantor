@@ -1,6 +1,6 @@
 const mainModel = require('../models/main.model');
 const bphtbModel = require('../models/bphtb.model');
-const { getAddressDetail } = require('../helper/address.form.helper');
+const { addAddressDetail } = require('../helper/address.form.helper');
 
 async function getDashboardData(){
     const [total_clients, total_alas_hak, total_pbb, bphtb_data] = await Promise.all([
@@ -13,7 +13,7 @@ async function getDashboardData(){
     // get address detail
     await Promise.all(
         bphtb_data.map(async(table)=>{
-            if(table.alas_hak.address_code) await getAddressDetail(table.alas_hak);
+            if(table.alas_hak.address_code) await addAddressDetail(table.alas_hak);
         })
     );
 

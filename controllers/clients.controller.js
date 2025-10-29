@@ -6,6 +6,8 @@ const { convertLocalDT } = require("../helper/alas_hak_ctrl.helper");
 const {CustomError} = require("../utils/custom.error");
 const { getAddressDetail } = require("../helper/address.form.helper");
 
+const clientService = require('../services/clients.service');
+
 /**
  * The form state is determined by the query parameter — if the query
  * contains an id, the form is filled with existing data; if the id is undefined, 
@@ -14,15 +16,16 @@ const { getAddressDetail } = require("../helper/address.form.helper");
 const renderClientFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client Form';
     res.locals.form_action = '/client/form/new';
+    const {id} = req.query;
 
     // this scenario when a user request for an empty form
-    if(req.query.id !== undefined) {
+    if(id !== undefined) {
         // form action
-        res.locals.form_action = `/client/edit?id=${req.query.id}`;
+        res.locals.form_action = `/client/edit?id=${id}`;
 
         // this scenario when a user request to edit a client's data that exist
         // by getting the data by its id
-        res.locals.form_data = await mainModel.get('Clients', req.query);
+        res.locals.form_data = await clientService.getClientData(id);
         return res.status(200).render('pages/client_form');
     }
     
@@ -39,28 +42,17 @@ const renderClientFormPage = asyncHandler(async (req, res, next) => {
 const renderClientListPage = asyncHandler(async (req, res, next) => {
     res.locals.table_name = 'Client';
     res.locals.title = 'Client List';
-
-    // total pages
-    res.locals.totalPages = Math.ceil(await mainModel.count('Clients') / Number(res.locals.limit));
-
-    // get all client order by updated_at column
-    res.locals.datas = await mainModel.getPaginationList(
-        'Clients', 
-        ['nik', 'first_name', 'last_name', 'gender', 'job_name', 'id'],
-        res.locals.limit, 
-        res.locals.offset, 
-        'updated_at', 
-        'desc'
-    );
-
-    // view route
     res.locals.view_route = '/client/view?id=';
-
-    // delete route
     res.locals.delete_route = '/client/delete?id=';
-
-    // form route
     res.locals.form_route = '/client/form';
+
+    const {limit, offset} = res.locals;
+
+    const {clients_data, total_pages} = await clientService.getClientDataList(limit, offset)
+
+    res.locals.total_pages = total_pages;
+    res.locals.datas = clients_data
+
 
     res.status(200).render('pages/table_list_page');
 });
@@ -72,16 +64,10 @@ const renderClientListPage = asyncHandler(async (req, res, next) => {
 const renderClientViewPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Client View';
 
-    // get the client data by its id
-    const client_data = await mainModel.get('Clients', req.query);
+    const {id} = req.query;
+    if(id === undefined) return next(new CustomError('client id undefined', 'error', 400))
 
-    // convert the date time to local time asia/jakarta
-    convertLocalDT(client_data);
-
-    // get the address details
-    await getAddressDetail(client_data);
-
-    res.locals.client_data = client_data;
+    res.locals.client_data = await clientService.getClientData(id);
     res.status(200).render('pages/client_view_page');
 })
 
@@ -89,22 +75,23 @@ const renderClientViewPage = asyncHandler(async (req, res, next) => {
  * Add client controller
  */
 const addClient = asyncHandler(async (req, res, next) => {
-    const added_client_id = await mainModel.addReturnColumn('Clients', matchedData(req), 'id');
+
+    const client_id = await clientService.addClient(matchedData(req));
 
     // flash message
     addMessage(req, 'info', 'Client Added Successfully');
 
-    res.redirect(`/client/view?id${added_client_id}`);
+    res.redirect(`/client/view?id=${client_id}`);
 });
 
 /**
  * Delete client controller
  */
 const deleteClient = asyncHandler(async (req, res, next) => {
+    const {id} = req.query
+    if(id === undefined) return next(new CustomError('Id is not defined', 'error', 200));
 
-    if(!req.query) return next(new CustomError('Id is not defined', 'error', 200));
-
-    await mainModel.del('Clients', req.query);
+    await clientService.deleteClient(id);
 
     // flash message
     addMessage(req, 'info', 'Client Deleted Successfully');
@@ -116,7 +103,10 @@ const deleteClient = asyncHandler(async (req, res, next) => {
  * Update client controller
  */
 const updateClient = asyncHandler(async (req, res, next)=>{
-    await mainModel.update('Clients', req.body, req.query);
+    const {id} = req.query;
+    if(id === undefined) return next(new CustomError('Id is not defined', 'error', 200));
+
+    await clientService.updateClient(id, matchedData(req));
 
     // flash message
     addMessage(req, 'info', 'Client Updated Successfully');

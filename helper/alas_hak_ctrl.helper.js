@@ -10,12 +10,9 @@ const mainModel = require('../models/main.model')
  * @return converted date time to local time asia/jakarta
  */
 function convertLocalDT(data){
-    const result = {...data};
-    result.created_at = makeDateString(data.created_at);
-    result.updated_at = makeDateString(data.updated_at);
-    result.added_at = makeDateString(data.added_at);
-
-    return result;
+    data.created_at = makeDateString(data.created_at);
+    data.updated_at = makeDateString(data.updated_at);
+    data.added_at = makeDateString(data.added_at);
 }
 
 /**

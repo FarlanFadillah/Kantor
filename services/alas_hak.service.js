@@ -1,4 +1,4 @@
-const { getAddressDetail } = require('../helper/address.form.helper');
+const { addAddressDetail } = require('../helper/address.form.helper');
 const { convertLocalDT, addAlasHakOwner, updateAlasHakOwner } = require('../helper/alas_hak_ctrl.helper');
 const alasHakModel = require('../models/alas_hak.model');
 const mainModel = require('../models/main.model');
@@ -16,11 +16,11 @@ async function getAlasHakViewData(id) {
     try {
         const alas_hak = await alasHakModel.getAlasHakData(id);
     
-        const alas_hak_local_time = convertLocalDT(alas_hak);
+        convertLocalDT(alas_hak);
 
-        const alas_hak_final = await getAddressDetail(alas_hak_local_time);
+        await addAddressDetail(alas_hak);
 
-        return alas_hak_final;
+        return alas_hak;
     } catch (error) {
         throw new CustomError(error.message, 'error');
     }

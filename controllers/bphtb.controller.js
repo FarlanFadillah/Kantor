@@ -6,6 +6,8 @@ const { matchedData } = require('express-validator');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
 const {CustomError} = require("../utils/custom.error");
 
+const bphtbService = require('../services/bphtb.service');
+
 /**
  * Bphtb Form Page.
  * The form state is determined by the query parameter — if the query
@@ -16,18 +18,13 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'BPHTB Form';
     res.locals.form_action = '/bphtb/form/new';
 
-    // this scenario when a user request for an empty form
-    if(req.query.id !== undefined) {
-        // form action
-        res.locals.form_action = `/bphtb/form/edit?id=${req.query.id}`;
+    const {id} = req.query;
 
-        // filled form
-        // get form_data to store the bphtb form 
-        const form_data = await bphtbModel.getBphtbData(req.query.id);
-
-        res.locals.form_data = form_data;
+    if(id !== undefined) {
+        res.locals.form_action = `/bphtb/form/edit?id=${id}`;
+        res.locals.form_data = await bphtbService.getBphtbData(id);
     }
-
+    
     res.render('pages/bphtb_form');
 });
 
@@ -38,12 +35,11 @@ const renderBphtbFormPage = asyncHandler(async (req, res, next) => {
  */
 const renderBpthbViewPage = asyncHandler(async (req, res, next) => {
     res.locals.title = 'Bphtb View'
-
-    if(req.query === undefined) return res.redirect('/admin/dashboard');
-
-    const bphtb = await bphtbModel.getBphtbData(req.query.id);
     
-    res.locals.bphtb = bphtb;
+    const {id} = req.query;
+    if(id === undefined) return next(new CustomError('bphtb id is undefined'));
+
+    res.locals.bphtb = await bphtbService.getBphtbData(id);;
 
     res.status(200).render('pages/bphtb_view');
 });

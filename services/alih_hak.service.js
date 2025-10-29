@@ -1,7 +1,7 @@
 const mainModel = require('../models/main.model');
 const alihHakModel = require('../models/alih_hak.model');
 const { convertLocalDT } = require('../helper/alas_hak_ctrl.helper');
-const { getAddressDetail } = require('../helper/address.form.helper');
+const { addAddressDetail } = require('../helper/address.form.helper');
 const { CustomError } = require('../utils/custom.error');
 const { addPihak } = require('../helper/alih_hak.ctrl.helper');
 
@@ -9,11 +9,11 @@ async function getAlihHakData(id) {
     try {
         const alih_hak = await alihHakModel.getAllAliHakData(id);
         
-        const alih_hak_final = convertLocalDT(alih_hak);
+        convertLocalDT(alih_hak);
 
-        alih_hak_final.alas_hak = await getAddressDetail(alih_hak_final.alas_hak);
+        await addAddressDetail(alih_hak);
 
-        return alih_hak_final;
+        return alih_hak;
     } catch (error) {
         throw new CustomError(error.message, 'error');
     }
@@ -40,9 +40,6 @@ async function addAlihHak(alih_hak_data, clients_id){
     try {
         const alih_hak = await mainModel.addReturnColumn('Alih_Hak', {
             ...alih_hak_data,
-            ceking_shm  : alih_hak_data.ceking_shm || false,
-            znt_shm     : alih_hak_data.znt_shm || false,
-            pph         : alih_hak_data.pph || false
         }, 'id');
 
         const {penerima_hak_id, 
@@ -78,7 +75,14 @@ async function updateAlihHak(alih_hak_id, alih_hak_data, clients_id){
         await addPihak('kuasa_penerima', kuasa_penerima_id, alih_hak_id);
 
     } catch (error) {
-        console.log(alih_hak_id, alih_hak_data, clients_id);
+        throw new CustomError(error.message, 'error');
+    }
+}
+
+async function deleteAlihHak(alih_hak_id){
+    try {
+        await mainModel.del('Alih_Hak', {id : alih_hak_id});
+    } catch (error) {
         throw new CustomError(error.message, 'error');
     }
 }
@@ -87,5 +91,6 @@ module.exports = {
     getAlihHakData,
     getAlihHakDataList,
     addAlihHak,
-    updateAlihHak
+    updateAlihHak,
+    deleteAlihHak
 }
