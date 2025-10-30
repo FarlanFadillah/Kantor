@@ -19,6 +19,24 @@ async function getBphtbData(bphtb_id){
 }
 
 
+async function addBphtb(bphtb_data){
+    try {
+
+        // making sure the pbb_id is either have value or null
+        bphtb_data.pbb_id = bphtb_data.id || null;
+
+        const bphtb = await mainModel.addReturnColumn('Bphtb', {
+            ...bphtb_data
+        }, 'id');
+
+        return bphtb.id;
+    } catch (error) {
+        throw new CustomError(error.message, 'error');
+    }
+}
+
+
 module.exports = {
-    getBphtbData
+    getBphtbData,
+    addBphtb
 }
